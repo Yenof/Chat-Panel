@@ -40,7 +40,7 @@ public class ChatPanelPlugin extends Plugin
     {
         chatPanelSidebar = new ChatPanelSidebar(config);
 
-        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/net/runelite/client/plugins/chatpanel/ChatPanelimg.png");
+        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/resources/ChatPanelimg.png");
 
         navButton = NavigationButton.builder()
                 .tooltip("Chat Panel")
