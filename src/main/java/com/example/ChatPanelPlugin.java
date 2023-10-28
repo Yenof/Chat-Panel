@@ -61,23 +61,26 @@ public class ChatPanelPlugin extends Plugin
     @Subscribe
     public void onChatMessage(ChatMessage event)
     {
+        String cleanedName = cleanString(event.getName());
+        String cleanedMessage = cleanString(event.getMessage());
+
         switch (event.getType())
         {
             case PUBLICCHAT:
-                chatPanelSidebar.addPublicChatMessage(event.getName(), event.getMessage());
+                chatPanelSidebar.addPublicChatMessage(cleanedName, cleanedMessage);
                 break;
             case PRIVATECHAT:
-                chatPanelSidebar.addPrivateChatMessage(event.getName(), event.getMessage());
+                chatPanelSidebar.addPrivateChatMessage(cleanedName, cleanedMessage);
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
             case CLAN_GUEST_MESSAGE:
             case CLAN_GIM_CHAT:
             case CLAN_GUEST_CHAT:
-                chatPanelSidebar.addClanChatMessage(event.getName(), event.getMessage());
+                chatPanelSidebar.addClanChatMessage(cleanedName, cleanedMessage);
                 break;
             case PRIVATECHATOUT:
-                chatPanelSidebar.addPrivateChatMessage("You", event.getMessage());
+                chatPanelSidebar.addPrivateChatMessage("You", cleanedMessage);
                 break;
             case GAMEMESSAGE:
             case ENGINE:
@@ -86,9 +89,14 @@ public class ChatPanelPlugin extends Plugin
             case ITEM_EXAMINE:
             case OBJECT_EXAMINE:
             case WELCOME:
-                chatPanelSidebar.addGameChatMessage(event.getMessage());
+                chatPanelSidebar.addGameChatMessage(cleanedMessage);
                 break;
         }
+    }
+
+    private String cleanString(String message)
+    {
+        return message.replaceAll("<img=[0-9]+>", "");
     }
 
     @Subscribe
