@@ -40,7 +40,7 @@ public class ChatPanelPlugin extends Plugin
     {
         chatPanelSidebar = new ChatPanelSidebar(config);
 
-        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/resources/ChatPanelimg.png");
+        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/ChatPanelimg.png");
 
         navButton = NavigationButton.builder()
                 .tooltip("Chat Panel")
