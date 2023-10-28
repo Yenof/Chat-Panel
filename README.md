@@ -1,7 +1,8 @@
 Chat Panel Plugin.
 
 A plugin that adds in-game chat to the side panel.
-![image](https://github.com/Yenof/Chat-Panel/assets/122739279/ce3defb6-6cab-4a7f-9e15-6e469205a4f1)
+
+![image](https://github.com/Yenof/Chat-Panel/assets/122739279/0cf70f0f-879d-4328-b989-43587e80991c)
 
 
 
