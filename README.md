@@ -1,4 +1,4 @@
-Chat Panel Plugin.
+# Chat Panel Plugin
 
 A plugin that adds in-game chat to the side panel.
 Has tabs for Public, Private, Clan, Game. 
