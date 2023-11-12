@@ -8,8 +8,6 @@ import javax.swing.text.BadLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea publicChatArea;
     private final JTextArea privateChatArea;
@@ -18,6 +16,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea gameChatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
+    private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
 
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
@@ -35,7 +34,6 @@ public class ChatPanelSidebar extends PluginPanel {
         tabbedPane.addTab("Game", createScrollPane(gameChatArea));
 
         add(tabbedPane, BorderLayout.CENTER);
-
         updateChatStyles();
     }
 
@@ -62,15 +60,47 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void updateChatStyles() {
-        publicChatArea.setForeground(config.publicChatColor());
-        publicChatArea.setFont(new Font("SansSerif", Font.PLAIN, config.publicChatFontSize()));
-        privateChatArea.setForeground(config.privateChatColor());
-        privateChatArea.setFont(new Font("SansSerif", Font.PLAIN, config.privateChatFontSize()));
-        clanChatArea.setForeground(config.clanChatColor());
-        clanChatArea.setFont(new Font("SansSerif", Font.PLAIN, config.clanChatFontSize()));
-        gameChatArea.setForeground(config.gameChatColor());
-        gameChatArea.setFont(new Font("SansSerif", Font.PLAIN, config.gameChatFontSize()));
+        setFont();
+        setColors();
+        setScrollPaneSizes();
+    }
 
+    private void setFont() {
+        Font font = getFontFromConfig();
+
+        publicChatArea.setFont(font);
+        privateChatArea.setFont(font);
+        clanChatArea.setFont(font);
+        gameChatArea.setFont(font);
+    }
+
+    private Font getFontFromConfig() {
+        int fontSize = config.publicChatFontSize();
+        Font selectedFont;
+
+        switch (config.fontStyle()) {
+            case BOLD:
+                selectedFont = new Font("Bold", Font.BOLD, fontSize);
+                break;
+            case ITALIC:
+                selectedFont = new Font("Italic", Font.ITALIC, fontSize);
+                break;
+            default:
+                selectedFont = new Font("Plain", Font.PLAIN, fontSize);
+                break;
+        }
+
+        return selectedFont;
+    }
+
+
+    private void setColors() {
+        publicChatArea.setForeground(config.publicChatColor());
+        privateChatArea.setForeground(config.privateChatColor());
+        clanChatArea.setForeground(config.clanChatColor());
+        gameChatArea.setForeground(config.gameChatColor());}
+
+    private void setScrollPaneSizes() {
         setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
         setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(1));
         setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(2));
@@ -93,9 +123,6 @@ public class ChatPanelSidebar extends PluginPanel {
         addMessageToChatArea(gameChatArea, message);
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
-
-
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();
@@ -103,10 +130,7 @@ public class ChatPanelSidebar extends PluginPanel {
 
             boolean shouldAutoScroll = (verticalScrollBar.getValue() + verticalScrollBar.getVisibleAmount() == verticalScrollBar.getMaximum());
 
-            // Append the new message
             chatArea.append(formattedMessage + "\n");
-
-            // Remove old messages if exceeding max lines
             try {
                 int excess = chatArea.getLineCount() - MAX_CHAT_LINES;
                 if (excess > 0) {
@@ -117,11 +141,9 @@ public class ChatPanelSidebar extends PluginPanel {
                 logger.error("Error managing chat lines", e);
             }
 
-            // Only auto-scroll if the user was at the bottom
             if (shouldAutoScroll) {
                 chatArea.setCaretPosition(chatArea.getDocument().getLength());
             }
         });
     }
 }
-
