@@ -5,8 +5,24 @@ import net.runelite.client.config.*;
 import java.awt.*;
 
 @ConfigGroup("chatpanel")
-public interface ChatPanelConfig extends Config
-{
+public interface ChatPanelConfig extends Config {
+    enum FontStyle {
+        PLAIN("Plain"),
+        BOLD("Bold"),
+        ITALIC("Italic");
+
+        private final String name;
+
+        FontStyle(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
     @ConfigSection(
             name = "General",
             description = "General settings",
@@ -14,6 +30,15 @@ public interface ChatPanelConfig extends Config
     )
     String generalSection = "general";
 
+    @ConfigItem(
+            keyName = "fontStyle",
+            name = "Font Style",
+            description = "Choose the font style for the chat panel",
+            section = generalSection
+    )
+    default FontStyle fontStyle() {
+        return FontStyle.PLAIN;
+    }
     @ConfigSection(
             name = "Public Chat",
             description = "Settings for public chat",
