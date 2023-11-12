@@ -10,4 +10,5 @@ Has tabs for Public, Private, Clan, Game.
 Configurable chat colors and font size. (Min size 5, max 50)
 
 
-![image](https://github.com/Yenof/Chat-Panel/assets/122739279/aa1773af-3375-45d9-8375-d49aa5ca6a79)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/ffae31bd-7442-4bc0-be87-4675780cee5c)
+
