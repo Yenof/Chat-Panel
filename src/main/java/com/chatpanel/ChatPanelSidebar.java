@@ -60,22 +60,19 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void updateChatStyles() {
-        setFont();
+        setFontSize();
         setColors();
         setScrollPaneSizes();
     }
 
-    private void setFont() {
-        Font font = getFontFromConfig();
-
-        publicChatArea.setFont(font);
-        privateChatArea.setFont(font);
-        clanChatArea.setFont(font);
-        gameChatArea.setFont(font);
+    private void setFontSize() {
+        publicChatArea.setFont(getFontFromConfig(config.publicChatFontSize()));
+        privateChatArea.setFont(getFontFromConfig(config.privateChatFontSize()));
+        clanChatArea.setFont(getFontFromConfig(config.clanChatFontSize()));
+        gameChatArea.setFont(getFontFromConfig(config.gameChatFontSize()));
     }
 
-    private Font getFontFromConfig() {
-        int fontSize = config.publicChatFontSize();
+    private Font getFontFromConfig(int fontSize) {
         Font selectedFont;
 
         switch (config.fontStyle()) {
@@ -92,7 +89,6 @@ public class ChatPanelSidebar extends PluginPanel {
 
         return selectedFont;
     }
-
 
     private void setColors() {
         publicChatArea.setForeground(config.publicChatColor());
