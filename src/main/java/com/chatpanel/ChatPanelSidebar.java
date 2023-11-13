@@ -120,10 +120,10 @@ public class ChatPanelSidebar extends PluginPanel {
             addMessageToChatArea(gameChatArea, message);
         }
     }
-
     private boolean shouldHideGameChatMessage(String message) {
-        return message.contains("Price of") && message.contains("GE average") && message.contains("HA value");
+        return message.contains("<colNORMAL>");
     }
+    
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();
