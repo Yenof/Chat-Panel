@@ -67,9 +67,11 @@ public class ChatPanelPlugin extends Plugin
         switch (event.getType())
         {
             case PUBLICCHAT:
+            case MODCHAT:
                 chatPanelSidebar.addPublicChatMessage(cleanedName, cleanedMessage);
                 break;
             case PRIVATECHAT:
+            case MODPRIVATECHAT:
                 chatPanelSidebar.addPrivateChatMessage(cleanedName, cleanedMessage);
                 break;
             case CLAN_CHAT:
@@ -86,6 +88,7 @@ public class ChatPanelPlugin extends Plugin
             case ENGINE:
             case NPC_EXAMINE:
             case SPAM:
+            case DIALOG:
             case ITEM_EXAMINE:
             case OBJECT_EXAMINE:
             case WELCOME:
