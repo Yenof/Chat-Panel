@@ -2,7 +2,7 @@
 
 A plugin that adds in-game chat to the side panel.
 
-Has tabs for Public, Private, Clan, Game (including examine text). Text can be copied with Ctrl+V.
+Has tabs for Public, Private, Clan, Game (including examine text). Text can be copied with Ctrl+C.
 
 ![image](https://github.com/Yenof/Chat-Panel/assets/122739279/0cf70f0f-879d-4328-b989-43587e80991c)![image](https://github.com/Yenof/chat-panel/assets/122739279/3c9ebc7d-15c7-4231-b7b1-6571dd0eedbc)
 
