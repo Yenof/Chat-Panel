@@ -1,14 +1,20 @@
 # Chat Panel Plugin
 
 A plugin that adds in-game chat to the side panel.
-Has tabs for Public, Private, Clan, Game. 
+
+Has tabs for Public, Private, Clan, Game.  
 
 ![image](https://github.com/Yenof/Chat-Panel/assets/122739279/0cf70f0f-879d-4328-b989-43587e80991c)
 
 
 
-Configurable chat colors and font size. (Min size 5, max 50)
+Configurable chat colors and Font size. (Min size 5, max 50)
+
+Options for Bold, Italic, and Plain text. 
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/c5b21154-cbe3-4078-91d2-fcb66a70170f)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/ffae31bd-7442-4bc0-be87-4675780cee5c)
+Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
+Max lines of chat is 10,000.
