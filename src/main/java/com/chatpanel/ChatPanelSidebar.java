@@ -43,7 +43,6 @@ public class ChatPanelSidebar extends PluginPanel {
         chatArea.setWrapStyleWord(true);
         chatArea.setEditable(false);
         chatArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-        chatArea.setBackground(Color.BLACK);
         return chatArea;
     }
 
