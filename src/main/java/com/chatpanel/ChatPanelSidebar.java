@@ -112,7 +112,11 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void addClanChatMessage(String name, String message) {
-        addMessageToChatArea(clanChatArea, "[" + name + "]: " + message);
+        if (name.isEmpty()) {
+            addMessageToChatArea(clanChatArea, message);
+        } else {
+            addMessageToChatArea(clanChatArea, "[" + name + "]: " + message);
+        }
     }
 
     public void addGameChatMessage(String message) {
