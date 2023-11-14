@@ -133,14 +133,10 @@ public class ChatPanelSidebar extends PluginPanel {
         return message.contains("<colNORMAL>");
     }
     public void addTimestamp(String timestamp) {
-        // Handle the addition of timestamp, apply formatting, etc.
-        // For example:
         publicChatArea.append(timestamp);
     }
 
     public void addCleanedName(String cleanedName) {
-        // Handle the addition of cleaned name, apply formatting, etc.
-        // For example:
         publicChatArea.append(cleanedName);
     }
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
