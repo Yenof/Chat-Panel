@@ -123,6 +123,7 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void addGameChatMessage(String timestamp, String cleanedMessage) {
+        cleanedMessage = filterGameChatMessage(cleanedMessage);
         if (shouldHideGameChatMessage(cleanedMessage)) {
             return;
         }
@@ -131,12 +132,12 @@ public class ChatPanelSidebar extends PluginPanel {
                 : timestamp + cleanedMessage;
         addMessageToChatArea(gameChatArea, formattedMessage);
     }
-
-    private boolean shouldHideGameChatMessage(String message) {
-        String cleanedMessage = message.replaceAll("<col=[0-9a-fA-F]+>", "");
-        return cleanedMessage.contains("<colNORMAL>");
+    private String filterGameChatMessage(String message) {
+        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "");
     }
-    
+    private boolean shouldHideGameChatMessage(String message) {
+        return message.contains("<colNORMAL>");
+    }
     public void addTimestamp(String timestamp) {
         publicChatArea.append(timestamp);
     }
