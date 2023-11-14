@@ -133,7 +133,7 @@ public class ChatPanelSidebar extends PluginPanel {
         addMessageToChatArea(gameChatArea, formattedMessage);
     }
     private String filterGameChatMessage(String message) {
-        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "");
+        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ");
     }
     private boolean shouldHideGameChatMessage(String message) {
         return message.contains("<colNORMAL>");
