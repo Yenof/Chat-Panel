@@ -133,7 +133,7 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private boolean shouldHideGameChatMessage(String message) {
-        return message.contains("<colNORMAL>");
+        return message.contains("<colNORMAL>") || message.contains("<col=");
     }
     
     public void addTimestamp(String timestamp) {
