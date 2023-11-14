@@ -21,6 +21,7 @@ public interface ChatPanelConfig extends Config {
         public String toString() {
             return name;
         }
+
     }
 
     @ConfigSection(
@@ -38,6 +39,24 @@ public interface ChatPanelConfig extends Config {
     )
     default FontStyle fontStyle() {
         return FontStyle.PLAIN;
+    }
+    @ConfigItem(
+            keyName = "showTimestamp",
+            name = "Show Timestamp",
+            description = "Toggle to show timestamps in chat messages",
+            section = generalSection
+    )
+    default boolean showTimestamp() {
+        return false;
+    }
+    @ConfigItem(
+            keyName = "use24HourTimestamp",
+            name = "Use 24-Hour Timestamp",
+            description = "Toggle to use 24-hour time format timestamp",
+            section = generalSection
+    )
+    default boolean use24HourFormat() {
+        return false;
     }
     @ConfigSection(
             name = "Public Chat",
@@ -156,7 +175,7 @@ public interface ChatPanelConfig extends Config {
     )
     default Color gameChatColor()
     {
-        return new Color(0xFFFFFF); // Default white color for game chat
+        return new Color(0xFFFFFF);
     }
 
     @Range(min = 5, max = 50)
