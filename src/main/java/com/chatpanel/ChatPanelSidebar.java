@@ -102,31 +102,47 @@ public class ChatPanelSidebar extends PluginPanel {
         setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(3));
     }
 
-    public void addPublicChatMessage(String name, String message) {
-        addMessageToChatArea(publicChatArea, "[" + name + "]: " + message);
+    public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
+        String formattedMessage = config.showTimestamp()
+                ? "" + timestamp + " [" + cleanedName + "]: " + message
+                : "" + timestamp + "[" + cleanedName + "]: " + message;
+        addMessageToChatArea(publicChatArea, formattedMessage);
     }
 
-    public void addPrivateChatMessage(String name, String message) {
-        addMessageToChatArea(privateChatArea, "[" + name + "]: " + message);
+    public void addPrivateChatMessage(String timestamp, String name, String message) {
+        String formattedMessage = config.showTimestamp()
+                ? "" + timestamp + " " + "[" + name + "]: " + message
+                : "[" + name + "]: " + message;
+        addMessageToChatArea(privateChatArea, formattedMessage);
+    }
+    public void addClanChatMessage(String timestamp, String name, String message) {
+        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+                ? "" + timestamp + " " + "[" + name + "]: " + message
+                : (name.isEmpty() ? message : "[" + name + "]: " + message);
+        addMessageToChatArea(clanChatArea, formattedMessage);
     }
 
-    public void addClanChatMessage(String name, String message) {
-        if (name.isEmpty()) {
-            addMessageToChatArea(clanChatArea, message);
-        } else {
-            addMessageToChatArea(clanChatArea, "[" + name + "]: " + message);
-        }
+    public void addGameChatMessage(String timestamp, String cleanedMessage) {
+        String formattedMessage = config.showTimestamp()
+                ? "[" + timestamp + "] " + cleanedMessage
+                : timestamp + cleanedMessage;
+        addMessageToChatArea(gameChatArea, formattedMessage);
     }
 
-    public void addGameChatMessage(String message) {
-        if (!shouldHideGameChatMessage(message)) {
-            addMessageToChatArea(gameChatArea, message);
-        }
-    }
     private boolean shouldHideGameChatMessage(String message) {
         return message.contains("<colNORMAL>");
     }
-    
+    public void addTimestamp(String timestamp) {
+        // Handle the addition of timestamp, apply formatting, etc.
+        // For example:
+        publicChatArea.append(timestamp);
+    }
+
+    public void addCleanedName(String cleanedName) {
+        // Handle the addition of cleaned name, apply formatting, etc.
+        // For example:
+        publicChatArea.append(cleanedName);
+    }
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();
