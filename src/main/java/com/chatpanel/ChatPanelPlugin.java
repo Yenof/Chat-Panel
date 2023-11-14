@@ -112,7 +112,7 @@ public class ChatPanelPlugin extends Plugin
     }
     private String cleanString(String message)
     {
-        return message.replaceAll("<img=[0-9]+>", "");
+        return message.replaceAll("<img=[0-9]+>", "").replace("<lt>", "<").replace("<gt>", ">");
     }
 
     @Subscribe
