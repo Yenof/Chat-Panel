@@ -123,6 +123,9 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void addGameChatMessage(String timestamp, String cleanedMessage) {
+        if (shouldHideGameChatMessage(cleanedMessage)) {
+            return;
+        }
         String formattedMessage = config.showTimestamp()
                 ? "[" + timestamp + "] " + cleanedMessage
                 : timestamp + cleanedMessage;
@@ -132,6 +135,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private boolean shouldHideGameChatMessage(String message) {
         return message.contains("<colNORMAL>");
     }
+    
     public void addTimestamp(String timestamp) {
         publicChatArea.append(timestamp);
     }
