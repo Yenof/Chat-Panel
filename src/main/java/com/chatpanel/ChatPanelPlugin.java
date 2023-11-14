@@ -12,6 +12,8 @@ import net.runelite.client.util.ImageUtil;
 import net.runelite.client.events.ConfigChanged;
 import javax.inject.Inject;
 import java.awt.image.BufferedImage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @PluginDescriptor(
         name = "Chat Panel",
@@ -63,26 +65,27 @@ public class ChatPanelPlugin extends Plugin
     {
         String cleanedName = cleanString(event.getName());
         String cleanedMessage = cleanString(event.getMessage());
+        String timestamp = config.showTimestamp() ? getCurrentTimestamp() : "";
 
         switch (event.getType())
         {
             case PUBLICCHAT:
             case MODCHAT:
-                chatPanelSidebar.addPublicChatMessage(cleanedName, cleanedMessage);
+                chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);
                 break;
             case PRIVATECHAT:
             case MODPRIVATECHAT:
-                chatPanelSidebar.addPrivateChatMessage(cleanedName, cleanedMessage);
+                chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
             case CLAN_GUEST_MESSAGE:
             case CLAN_GIM_CHAT:
             case CLAN_GUEST_CHAT:
-                chatPanelSidebar.addClanChatMessage(cleanedName, cleanedMessage);
+                chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);
                 break;
             case PRIVATECHATOUT:
-                chatPanelSidebar.addPrivateChatMessage("You", cleanedMessage);
+                chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);
                 break;
             case GAMEMESSAGE:
             case ENGINE:
@@ -92,11 +95,21 @@ public class ChatPanelPlugin extends Plugin
             case ITEM_EXAMINE:
             case OBJECT_EXAMINE:
             case WELCOME:
-                chatPanelSidebar.addGameChatMessage(cleanedMessage);
+                chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);
                 break;
         }
     }
+    private String getCurrentTimestamp() {
+        SimpleDateFormat dateFormat;
 
+        if (config.use24HourFormat()) {
+            dateFormat = new SimpleDateFormat("HH:mm");
+        } else {
+            dateFormat = new SimpleDateFormat("hh:mm");
+        }
+
+        return dateFormat.format(new Date());
+    }
     private String cleanString(String message)
     {
         return message.replaceAll("<img=[0-9]+>", "");
