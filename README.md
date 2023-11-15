@@ -30,6 +30,6 @@ Timestamp can be shown.
 
 ## Notes:
 
-Scroll and click to lock position while reading, return to the bottom to resume snapping to most current message.
+Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
 
 Max lines of chat is 10,000.
