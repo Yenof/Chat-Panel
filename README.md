@@ -25,3 +25,8 @@ Chat Area Height can be adjusted, recommended to be less than the height of your
 Timestamp can be shown.
 
 Max lines of chat is 10,000.
+
+
+Notes:
+
+Scroll and click to lock position while reading, return to the bottom to resume snapping to most current message.
