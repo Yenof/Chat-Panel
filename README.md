@@ -11,22 +11,25 @@ Has tabs for Public, Private, Clan, Game (including examine text). Text can be c
 
 
 
+## Configuration
 
 Configurable chat colors and Font size. (Min size 5, max 50)
 
 Options for Bold, Italic, and Plain text. 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/1c04bec9-87c5-4029-9be0-a27910bef7bf)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
-
-
-
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
 Timestamp can be shown.
 
-Max lines of chat is 10,000.
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/1c04bec9-87c5-4029-9be0-a27910bef7bf)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
 
 
-Notes:
+
+
+
+## Notes:
 
 Scroll and click to lock position while reading, return to the bottom to resume snapping to most current message.
+
+Max lines of chat is 10,000.
