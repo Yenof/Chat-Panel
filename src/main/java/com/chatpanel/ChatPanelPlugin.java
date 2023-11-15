@@ -17,7 +17,7 @@ import java.util.Date;
 
 @PluginDescriptor(
         name = "Chat Panel",
-        description = "Capture chat messages and display them in a RuneLite panel",
+        description = "Displays chat messages in a side panel",
         tags = {"chat", "panel", "capture", "messages"}
 )
 public class ChatPanelPlugin extends Plugin
