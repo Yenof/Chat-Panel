@@ -15,7 +15,7 @@ Has tabs for Public, Private, Clan, Game (including examine text). Text can be c
 
 Configurable chat colors and Font size. (Min size 5, max 50)
 
-Options for Bold, Italic, and Plain text. 
+Options for Bold, Italic, and Plain font styles. 
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
