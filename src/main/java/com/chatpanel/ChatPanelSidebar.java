@@ -4,6 +4,8 @@ import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.text.BadLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +19,16 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
-
+    private boolean isPopout = false;
+    private JFrame popoutFrame;
+    private JButton popoutButton;
+    private JButton popinButton;
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
         setLayout(new BorderLayout());
+        popoutButton = new JButton("Pop out");
+        popoutButton.addActionListener(e -> togglePopout());
+        add(popoutButton, BorderLayout.SOUTH);
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
@@ -36,7 +44,48 @@ public class ChatPanelSidebar extends PluginPanel {
         add(tabbedPane, BorderLayout.CENTER);
         updateChatStyles();
     }
+    private void togglePopout() {
+        if (isPopout) {
+            // Restore to side panel
+            isPopout = false;
+            popoutFrame.dispose();
+            addComponentsForSidePanel();
+            add(tabbedPane, BorderLayout.CENTER);
+            updateChatStyles();
+        } else {
+            isPopout = true;
+            popoutFrame = new JFrame("Chat Panel");
+            popoutFrame.add(tabbedPane);
+            addComponentsForPopout();
+            popoutFrame.setSize(300, 400); 
+            popoutFrame.setLocationRelativeTo(null);
+            popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            
+            popoutFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    togglePopout();
+                }
+            });
 
+            popoutFrame.setVisible(true);
+        }
+
+    }
+
+    private void addComponentsForSidePanel() {
+        add(popoutButton, BorderLayout.SOUTH);
+        if (popinButton != null) {
+            remove(popinButton);
+        }
+    }
+
+    private void addComponentsForPopout() {
+        popinButton = new JButton("Pop In");
+        popinButton.addActionListener(e -> togglePopout());
+        popoutFrame.add(popinButton, BorderLayout.SOUTH);
+        remove(popoutButton);
+    }
     private JTextArea createChatArea() {
         JTextArea chatArea = new JTextArea();
         chatArea.setLineWrap(true);
@@ -90,9 +139,13 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private void setColors() {
+        publicChatArea.setBackground(config.publicChatBackground());
         publicChatArea.setForeground(config.publicChatColor());
+        privateChatArea.setBackground(config.privateChatBackground());
         privateChatArea.setForeground(config.privateChatColor());
+        clanChatArea.setBackground(config.clanChatBackgroundColor());
         clanChatArea.setForeground(config.clanChatColor());
+        gameChatArea.setBackground(config.gameChatBackgroundColor());
         gameChatArea.setForeground(config.gameChatColor());}
 
     private void setScrollPaneSizes() {
