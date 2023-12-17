@@ -109,11 +109,21 @@ public interface ChatPanelConfig extends Config {
         return new Color(0xF1FF00);
     }
 
+    @ConfigItem(
+            keyName = "publicChatBackground",
+            name = "Public Chat Background color",
+            description = "Configures the background color of the public chat.",
+            section = publicChatSection
+    )
+    default Color publicChatBackground()
+    {
+        return new Color(0x282828);
+    }
     @Range(min = 5, max = 50)
     @ConfigItem(
             keyName = "publicChatFontSize",
             name = "Public Chat Font Size",
-            description = "Configures the font size of the public chat messages.",
+            description = "Configures the font size of the public chat messages. (Max 50)",
             section = publicChatSection
     )
     default int publicChatFontSize()
@@ -131,12 +141,21 @@ public interface ChatPanelConfig extends Config {
     {
         return new Color(0x0AFF00);
     }
-
+    @ConfigItem(
+            keyName = "privateChatBackground",
+            name = "Private Chat Background Color",
+            description = "Configures the background color of the private chat.",
+            section = privateChatSection
+    )
+    default Color privateChatBackground()
+    {
+        return new Color(0x282828);
+    }
     @Range(min = 5, max = 50)
     @ConfigItem(
             keyName = "privateChatFontSize",
             name = "Private Chat Font Size",
-            description = "Configures the font size of the private chat messages.",
+            description = "Configures the font size of the private chat messages. (Max 50)",
             section = privateChatSection
     )
     default int privateChatFontSize()
@@ -154,12 +173,21 @@ public interface ChatPanelConfig extends Config {
     {
         return new Color(0x007DFF);
     }
-
+    @ConfigItem(
+            keyName = "clanChatBackgroundColor",
+            name = "Clan Chat Background Color",
+            description = "Configures the background color of the clan chat.",
+            section = clanChatSection
+    )
+    default Color clanChatBackgroundColor()
+    {
+        return new Color(0x282828);
+    }
     @Range(min = 5, max = 50)
     @ConfigItem(
             keyName = "clanChatFontSize",
             name = "Clan Chat Font Size",
-            description = "Configures the font size of the clan chat messages.",
+            description = "Configures the font size of the clan chat messages. (Max 50)",
             section = clanChatSection
     )
     default int clanChatFontSize()
@@ -177,16 +205,27 @@ public interface ChatPanelConfig extends Config {
     {
         return new Color(0xFFFFFF);
     }
+    @ConfigItem(
+            keyName = "gameChatBackgroundColor",
+            name = "Game Chat Background Color",
+            description = "Configures the background color of the game chat.",
+            section = gameChatSection
+    )
+    default Color gameChatBackgroundColor()
+    {
+        return new Color(0x282828);
+    }
 
     @Range(min = 5, max = 50)
     @ConfigItem(
             keyName = "gameChatFontSize",
             name = "Game Chat Font Size",
-            description = "Configures the font size of the game chat messages.",
+            description = "Configures the font size of the game chat messages. (Max 50)",
             section = gameChatSection
     )
     default int gameChatFontSize()
     {
         return 12;
     }
+
 }
