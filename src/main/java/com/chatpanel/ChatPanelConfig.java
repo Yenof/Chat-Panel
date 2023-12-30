@@ -95,7 +95,7 @@ public interface ChatPanelConfig extends Config {
     )
     default int chatAreaHeight()
     {
-        return 445;
+        return 435;
     }
 
     @ConfigItem(
