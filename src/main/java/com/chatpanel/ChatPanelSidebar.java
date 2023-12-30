@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.chatpanel;
+package com.chatpanel;
 
 import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;

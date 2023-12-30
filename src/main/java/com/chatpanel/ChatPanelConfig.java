@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.chatpanel;
+package com.chatpanel;
 
 import net.runelite.client.config.*;
 
@@ -95,7 +95,7 @@ public interface ChatPanelConfig extends Config {
     )
     default int chatAreaHeight()
     {
-        return 750;
+        return 445;
     }
 
     @ConfigItem(

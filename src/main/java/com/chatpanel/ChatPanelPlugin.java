@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.chatpanel;
+package com.chatpanel;
 
 import com.google.inject.Provides;
 import net.runelite.api.events.ChatMessage;
