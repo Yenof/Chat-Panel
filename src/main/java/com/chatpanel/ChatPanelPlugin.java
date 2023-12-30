@@ -18,7 +18,7 @@ import java.util.Date;
 @PluginDescriptor(
         name = "Chat Panel",
         description = "Displays chat messages in a side panel",
-        tags = {"chat", "panel", "capture", "messages"}
+        tags = {"chat", "panel", "capture", "messages", "font style", "private", "accessibility", "copy"}
 )
 public class ChatPanelPlugin extends Plugin
 {
