@@ -35,7 +35,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "fontStyle",
             name = "Font Style",
             description = "Choose the font style for the chat panel",
-            section = generalSection
+            section = generalSection,
+            position = 3
     )
     default FontStyle fontStyle() {
         return FontStyle.PLAIN;
@@ -44,7 +45,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "showTimestamp",
             name = "Show Timestamp",
             description = "Toggle to show timestamps in chat messages",
-            section = generalSection
+            section = generalSection,
+            position = 4
     )
     default boolean showTimestamp() {
         return false;
@@ -53,7 +55,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "use24HourTimestamp",
             name = "Use 24-Hour Timestamp",
             description = "Toggle to use 24-hour time format timestamp",
-            section = generalSection
+            section = generalSection,
+            position = 5
     )
     default boolean use24HourFormat() {
         return false;
@@ -86,12 +89,13 @@ public interface ChatPanelConfig extends Config {
     )
     String gameChatSection = "gameChat";
 
-    @Range(min = 50)
+    @Range(min = 50, max = 5000)
     @ConfigItem(
             keyName = "chatAreaHeight",
             name = "Chat Area Height",
             description = "Configures the height of the chat area. Recommended below window height",
-            section = generalSection
+            section = generalSection,
+            position = 1
     )
     default int chatAreaHeight()
     {
@@ -228,4 +232,14 @@ public interface ChatPanelConfig extends Config {
         return 12;
     }
 
+    @Range (min = 1, max =10)
+    @ConfigItem(
+            keyName = "lineSpacing",
+            name = "Line Spacing",
+            description = "Adjust the spacing between chat messages",
+            section = generalSection,
+            position = 2
+
+    )
+    default int lineSpacing(){return 1;}
 }
