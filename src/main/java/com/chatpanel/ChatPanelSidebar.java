@@ -57,10 +57,10 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutFrame = new JFrame("Chat Panel");
             popoutFrame.add(tabbedPane);
             addComponentsForPopout();
-            popoutFrame.setSize(300, 400); 
+            popoutFrame.setSize(300, 400);
             popoutFrame.setLocationRelativeTo(null);
             popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            
+
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -204,6 +204,12 @@ public class ChatPanelSidebar extends PluginPanel {
             JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
             boolean shouldAutoScroll = (verticalScrollBar.getValue() + verticalScrollBar.getVisibleAmount() == verticalScrollBar.getMaximum());
+            double spacing = config.lineSpacing();
+            int extraLines = (int) Math.round(spacing - 1.0);
+
+            for (int i = 0; i < extraLines; i++) {
+                chatArea.append("\n");
+            }
 
             chatArea.append(formattedMessage + "\n");
             try {
