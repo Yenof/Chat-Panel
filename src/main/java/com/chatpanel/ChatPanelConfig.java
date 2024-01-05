@@ -232,7 +232,7 @@ public interface ChatPanelConfig extends Config {
         return 12;
     }
 
-    @Range (min = 1, max =10)
+    @Range ( max =10)
     @ConfigItem(
             keyName = "lineSpacing",
             name = "Line Spacing",
@@ -241,5 +241,5 @@ public interface ChatPanelConfig extends Config {
             position = 2
 
     )
-    default int lineSpacing(){return 1;}
+    default int lineSpacing(){return 0;}
 }
