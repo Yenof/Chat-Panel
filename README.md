@@ -26,8 +26,7 @@ Chat Area Height can be adjusted, recommended to be less than the height of your
 
 Timestamp can be shown.
 
-
-![image](https://github.com/Yenof/chat-panel/assets/122739279/8fe8964c-d0b9-4ec9-a3c2-076df34f1c95)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+![Screenshot from 2024-01-04 21-44-16](https://github.com/Yenof/chat-panel/assets/122739279/3c3bb43d-4ca6-4aed-9406-a097f2d9f600)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
 
 
 
