@@ -204,9 +204,7 @@ public class ChatPanelSidebar extends PluginPanel {
             JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
             boolean shouldAutoScroll = (verticalScrollBar.getValue() + verticalScrollBar.getVisibleAmount() == verticalScrollBar.getMaximum());
-            double spacing = config.lineSpacing();
-            int extraLines = (int) Math.round(spacing - 1.0);
-
+            int extraLines = config.lineSpacing();
             for (int i = 0; i < extraLines; i++) {
                 chatArea.append("\n");
             }
