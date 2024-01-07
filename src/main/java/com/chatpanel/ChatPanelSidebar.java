@@ -23,12 +23,18 @@ public class ChatPanelSidebar extends PluginPanel {
     private JFrame popoutFrame;
     private JButton popoutButton;
     private JButton popinButton;
+    private JButton popinButton2;
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
         setLayout(new BorderLayout());
         popoutButton = new JButton("Pop out");
         popoutButton.addActionListener(e -> togglePopout());
         add(popoutButton, BorderLayout.SOUTH);
+
+        popinButton2 = new JButton("Pop in");
+        popinButton2.addActionListener(e -> togglePopout());
+        popinButton2.setVisible(true);
+        add(popinButton2, BorderLayout.SOUTH);
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
@@ -58,6 +64,7 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutFrame.add(tabbedPane);
             addComponentsForPopout();
             popoutFrame.setSize(300, 400);
+            popoutFrame.setMinimumSize(new Dimension(40, 10));
             popoutFrame.setLocationRelativeTo(null);
             popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -74,9 +81,16 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private void addComponentsForSidePanel() {
-        add(popoutButton, BorderLayout.SOUTH);
+        if (popoutButton != null) {
+            popoutButton.setVisible(true);
+        }
         if (popinButton != null) {
+            popinButton.setVisible(false);
+            add(popoutButton, BorderLayout.SOUTH);
             remove(popinButton);
+        }
+        if (popinButton2 != null) {
+            popinButton2.setVisible(false);
         }
     }
 
@@ -85,6 +99,10 @@ public class ChatPanelSidebar extends PluginPanel {
         popinButton.addActionListener(e -> togglePopout());
         popoutFrame.add(popinButton, BorderLayout.SOUTH);
         remove(popoutButton);
+        if (popinButton2 != null) {
+            popinButton2.setVisible(true);
+            add(popinButton2, BorderLayout.SOUTH);
+        }
     }
     private JTextArea createChatArea() {
         JTextArea chatArea = new JTextArea();
