@@ -21,9 +21,9 @@ public class ChatPanelSidebar extends PluginPanel {
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
     private boolean isPopout = false;
     private JFrame popoutFrame;
-    private JButton popoutButton;
+    private final JButton popoutButton;
     private JButton popinButton;
-    private JButton popinButton2;
+    private final JButton popinButton2;
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
         setLayout(new BorderLayout());
@@ -67,7 +67,9 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutFrame.setMinimumSize(new Dimension(40, 10));
             popoutFrame.setLocationRelativeTo(null);
             popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
+            if (config.popoutAlwaysOnTop()) {
+                popoutFrame.setAlwaysOnTop(true);
+            }
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
