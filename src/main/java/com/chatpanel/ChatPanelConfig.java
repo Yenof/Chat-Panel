@@ -242,4 +242,15 @@ public interface ChatPanelConfig extends Config {
 
     )
     default int lineSpacing(){return 0;}
+
+    @ConfigItem(
+            keyName = "popoutAlwaysOnTop",
+            name = "Pop out Always on Top",
+            description = "Keep the pop out window always on top of other windows",
+            section = generalSection,
+            position = 7
+    )
+    default boolean popoutAlwaysOnTop() {
+        return false;
+    }
 }
