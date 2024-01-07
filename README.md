@@ -4,7 +4,8 @@ A plugin that adds in-game chat to the side panel or seperate popout window.
 
 Has tabs for Public, Private, Clan, Game (including examine text). Text can be copied with Ctrl+C.
 
-![image](https://github.com/Yenof/Chat-Panel/assets/122739279/0cf70f0f-879d-4328-b989-43587e80991c)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/264de5b8-c226-491b-a467-33c1de68a2d8)
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/264de5b8-c226-491b-a467-33c1de68a2d8)
 
 
 
@@ -23,6 +24,8 @@ Adjustable Font size. (Min size 5, max 50)
 Options for Bold, Italic, and Plain font styles. 
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
+
+Spaces between lines can be added.
 
 Timestamp can be shown.
 
