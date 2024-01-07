@@ -29,7 +29,9 @@ Spaces between lines can be added.
 
 Timestamp can be shown.
 
-![Screenshot from 2024-01-04 21-44-16](https://github.com/Yenof/chat-panel/assets/122739279/3c3bb43d-4ca6-4aed-9406-a097f2d9f600)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+Always on top option for pop out window.
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/c4a8a2ae-a17e-4e25-b790-9db3f838c79d)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
 
 
 
