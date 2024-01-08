@@ -23,18 +23,18 @@ public class ChatPanelSidebar extends PluginPanel {
     private JFrame popoutFrame;
     private final JButton popoutButton;
     private JButton popinButton;
-    private final JButton popinButton2;
+    private JButton popinButton2;
+
     public ChatPanelSidebar(ChatPanelConfig config) {
+
         this.config = config;
         setLayout(new BorderLayout());
         popoutButton = new JButton("Pop out");
+        popoutButton.setVisible(true);
         popoutButton.addActionListener(e -> togglePopout());
         add(popoutButton, BorderLayout.SOUTH);
 
-        popinButton2 = new JButton("Pop in");
-        popinButton2.addActionListener(e -> togglePopout());
-        popinButton2.setVisible(true);
-        add(popinButton2, BorderLayout.SOUTH);
+
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
@@ -70,6 +70,7 @@ public class ChatPanelSidebar extends PluginPanel {
             if (config.popoutAlwaysOnTop()) {
                 popoutFrame.setAlwaysOnTop(true);
             }
+
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -100,6 +101,9 @@ public class ChatPanelSidebar extends PluginPanel {
         popinButton = new JButton("Pop In");
         popinButton.addActionListener(e -> togglePopout());
         popoutFrame.add(popinButton, BorderLayout.SOUTH);
+        popinButton2 = new JButton("Pop in");
+        popinButton2.addActionListener(e -> togglePopout());
+        add(popinButton2, BorderLayout.SOUTH);
         remove(popoutButton);
         if (popinButton2 != null) {
             popinButton2.setVisible(true);
