@@ -14,6 +14,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea publicChatArea;
     private final JTextArea privateChatArea;
     private final JTextArea clanChatArea;
+    private final JTextArea friendsChatArea;
     private static final int MAX_CHAT_LINES = 10000;
     private final JTextArea gameChatArea;
     private final JTabbedPane tabbedPane;
@@ -24,6 +25,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JButton popoutButton;
     private JButton popinButton;
     private JButton popinButton2;
+    private final JTextArea allChatArea;
 
     public ChatPanelSidebar(ChatPanelConfig config) {
 
@@ -35,21 +37,44 @@ public class ChatPanelSidebar extends PluginPanel {
         add(popoutButton, BorderLayout.SOUTH);
 
 
-
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
         clanChatArea = createChatArea();
+        friendsChatArea= createChatArea();
         gameChatArea = createChatArea();
+        allChatArea = createChatArea();
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-        tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-        tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-        tabbedPane.addTab("Game", createScrollPane(gameChatArea));
+        createTabs();
 
         add(tabbedPane, BorderLayout.CENTER);
         updateChatStyles();
     }
+
+    private void createTabs() {
+        if (config.showPublicChat()) {
+            tabbedPane.addTab("Public", createScrollPane(publicChatArea));
+        }
+
+        if (config.showPrivateChat()) {
+            tabbedPane.addTab("Private", createScrollPane(privateChatArea));
+        }
+
+        if (config.showClanChat()) {
+            tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
+        }
+
+        if (config.showGameChat()) {
+            tabbedPane.addTab("Game", createScrollPane(gameChatArea));
+        }
+        if (config.showAllChat()) {
+            tabbedPane.addTab("All", createScrollPane(allChatArea));
+        }
+        if (config.showFriendsChat()) {
+            tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
+        }
+    }
+
     private void togglePopout() {
         if (isPopout) {
             // Restore to side panel
@@ -63,7 +88,7 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutFrame = new JFrame("Chat Panel");
             popoutFrame.add(tabbedPane);
             addComponentsForPopout();
-            popoutFrame.setSize(300, 400);
+            popoutFrame.setSize(config.popoutSize());
             popoutFrame.setMinimumSize(new Dimension(40, 10));
             popoutFrame.setLocationRelativeTo(null);
             popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -77,10 +102,8 @@ public class ChatPanelSidebar extends PluginPanel {
                     togglePopout();
                 }
             });
-
             popoutFrame.setVisible(true);
         }
-
     }
 
     private void addComponentsForSidePanel() {
@@ -115,7 +138,7 @@ public class ChatPanelSidebar extends PluginPanel {
         chatArea.setLineWrap(true);
         chatArea.setWrapStyleWord(true);
         chatArea.setEditable(false);
-        chatArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+        chatArea.setBorder(new EmptyBorder(5, 2, 5, 2));
         return chatArea;
     }
 
@@ -141,7 +164,9 @@ public class ChatPanelSidebar extends PluginPanel {
         publicChatArea.setFont(getFontFromConfig(config.publicChatFontSize()));
         privateChatArea.setFont(getFontFromConfig(config.privateChatFontSize()));
         clanChatArea.setFont(getFontFromConfig(config.clanChatFontSize()));
+        friendsChatArea.setFont(getFontFromConfig(config.friendsChatFontSize()));
         gameChatArea.setFont(getFontFromConfig(config.gameChatFontSize()));
+        allChatArea.setFont(getFontFromConfig(config.allChatFontSize()));
     }
 
     private Font getFontFromConfig(int fontSize) {
@@ -158,7 +183,6 @@ public class ChatPanelSidebar extends PluginPanel {
                 selectedFont = new Font("Plain", Font.PLAIN, fontSize);
                 break;
         }
-
         return selectedFont;
     }
 
@@ -169,15 +193,28 @@ public class ChatPanelSidebar extends PluginPanel {
         privateChatArea.setForeground(config.privateChatColor());
         clanChatArea.setBackground(config.clanChatBackgroundColor());
         clanChatArea.setForeground(config.clanChatColor());
+        friendsChatArea.setBackground(config.friendsChatBackground());
+        friendsChatArea.setForeground(config.friendsChatColor());
         gameChatArea.setBackground(config.gameChatBackgroundColor());
-        gameChatArea.setForeground(config.gameChatColor());}
+        gameChatArea.setForeground(config.gameChatColor());
+        allChatArea.setBackground(config.allChatBackground());
+        allChatArea.setForeground(config.allChatColor());}
 
     private void setScrollPaneSizes() {
-        setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
-        setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(1));
-        setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(2));
-        setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(3));
+        if (tabbedPane.getTabCount() > 0) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
+        }
+        if (tabbedPane.getTabCount() > 1) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(1));
+        }
+        if (tabbedPane.getTabCount() > 2) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(2));
+        }
+        if (tabbedPane.getTabCount() > 3) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(3));
+        }
     }
+
 
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
         String formattedMessage = config.showTimestamp()
@@ -198,6 +235,22 @@ public class ChatPanelSidebar extends PluginPanel {
                 : (name.isEmpty() ? message : "[" + name + "]: " + message);
         addMessageToChatArea(clanChatArea, formattedMessage);
     }
+    public void addFriendsChatMessage(String timestamp, String name, String message) {
+        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+                ? "" + timestamp + " " + "[" + name + "]: " + message
+                : (name.isEmpty() ? message : "[" + name + "]: " + message);
+        addMessageToChatArea(friendsChatArea, formattedMessage);
+    }
+    public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+        cleanedMessage = filterAllChatMessage(cleanedMessage);
+        String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
+        String formattedMessage = config.showTimestamp()
+                ? "[" + timestamp + "] " + s + cleanedMessage
+                : s + cleanedMessage;
+        if (!shouldHideAllChatMessage(formattedMessage)) {
+            addMessageToChatArea(allChatArea, formattedMessage);
+        }
+    }
 
     public void addGameChatMessage(String timestamp, String cleanedMessage) {
         cleanedMessage = filterGameChatMessage(cleanedMessage);
@@ -210,10 +263,16 @@ public class ChatPanelSidebar extends PluginPanel {
         addMessageToChatArea(gameChatArea, formattedMessage);
     }
     private String filterGameChatMessage(String message) {
-        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("|", ": ");
+        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("|", ": ").replace("<colHIGHLIGHT>", "");
     }
     private boolean shouldHideGameChatMessage(String message) {
         return message.contains("<colNORMAL>");
+    }
+    private String filterAllChatMessage(String message) {
+        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("|", ": ").replace("<colHIGHLIGHT>", "").replace("<colNORMAL>", "");
+    }
+    private boolean shouldHideAllChatMessage(String message) {
+        return message.contains("<colNORMALimpossible>");
     }
     public void addTimestamp(String timestamp) {
         publicChatArea.append(timestamp);
