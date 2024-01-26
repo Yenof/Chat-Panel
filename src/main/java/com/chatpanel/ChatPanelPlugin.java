@@ -81,12 +81,20 @@ public class ChatPanelPlugin extends Plugin
             case CLAN_MESSAGE:
             case CLAN_GUEST_MESSAGE:
             case CLAN_GIM_CHAT:
+            case CLAN_GIM_MESSAGE:
             case CLAN_GUEST_CHAT:
+            case CHALREQ_CLANCHAT:
                 chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);
                 break;
             case PRIVATECHATOUT:
                 chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);
                 break;
+            case FRIENDSCHAT:
+            case CHALREQ_FRIENDSCHAT:
+            case FRIENDSCHATNOTIFICATION:
+                chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);
+                break;
+            case BROADCAST:
             case GAMEMESSAGE:
             case ENGINE:
             case NPC_EXAMINE:
@@ -95,9 +103,19 @@ public class ChatPanelPlugin extends Plugin
             case ITEM_EXAMINE:
             case OBJECT_EXAMINE:
             case WELCOME:
+            case TRADE:
+            case TRADE_SENT:
+            case TRADEREQ:
+            case CONSOLE:
+            case MODAUTOTYPER:
+            case CHALREQ_TRADE:
+            case IGNORENOTIFICATION:
+            case FRIENDNOTIFICATION:
                 chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);
                 break;
+            case UNKNOWN:
         }
+        chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
     }
     private String getCurrentTimestamp() {
         SimpleDateFormat dateFormat;
