@@ -5,7 +5,13 @@ A plugin that adds in-game chat to the side panel or seperate popout window.
 By default has tabs for Public, Private, Clan, Game (including examine text).
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/870cbf81-f4dc-4251-8a00-fcf432f51c55)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/cfa6f204-3f40-4732-b94f-b30db4c072c1)
+
+
+
+
+
+
 
 
 
