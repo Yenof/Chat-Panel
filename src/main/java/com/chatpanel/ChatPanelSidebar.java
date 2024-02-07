@@ -9,6 +9,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.text.BadLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.IllegalComponentStateException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea publicChatArea;
@@ -22,25 +25,28 @@ public class ChatPanelSidebar extends PluginPanel {
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
     private boolean isPopout = false;
     private JFrame popoutFrame;
-    private final JButton popoutButton;
+    private JButton popoutButton;
     private JButton popinButton;
     private JButton popinButton2;
     private final JTextArea allChatArea;
+    private boolean overrideUndecorated;
 
     public ChatPanelSidebar(ChatPanelConfig config) {
 
         this.config = config;
         setLayout(new BorderLayout());
-        popoutButton = new JButton("Pop out");
-        popoutButton.setVisible(true);
-        popoutButton.addActionListener(e -> togglePopout());
-        add(popoutButton, BorderLayout.SOUTH);
+        if (!config.hidepopoutbutton()) {
+            popoutButton = new JButton("Pop out");
+            popoutButton.setVisible(true);
+            popoutButton.addActionListener(e -> togglePopout());
+            add(popoutButton, BorderLayout.SOUTH);
+        }
 
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
         clanChatArea = createChatArea();
-        friendsChatArea= createChatArea();
+        friendsChatArea = createChatArea();
         gameChatArea = createChatArea();
         allChatArea = createChatArea();
 
@@ -49,29 +55,53 @@ public class ChatPanelSidebar extends PluginPanel {
 
         add(tabbedPane, BorderLayout.CENTER);
         updateChatStyles();
+        tabbedPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isMiddleMouseButton(e)) {
+                    int tabIndex = tabbedPane.indexAtLocation(e.getX(), e.getY());
+                    if (tabIndex != -1) {
+                        resetTabHistory(tabIndex);
+                    }
+                }
+            }
+        });
     }
 
+    private void resetTabHistory(int tabIndex) {
+        Component tabComponent = tabbedPane.getComponentAt(tabIndex);
+        if (tabComponent instanceof JScrollPane) {
+            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
+            chatArea.setText("");
+        }
+    }
     private void createTabs() {
         if (config.showPublicChat()) {
             tabbedPane.addTab("Public", createScrollPane(publicChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "MMB to clear history");
         }
 
         if (config.showPrivateChat()) {
             tabbedPane.addTab("Private", createScrollPane(privateChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "MMB to clear history");
         }
 
         if (config.showClanChat()) {
             tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "MMB to clear history");
         }
 
         if (config.showGameChat()) {
             tabbedPane.addTab("Game", createScrollPane(gameChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "MMB to clear history");
         }
         if (config.showAllChat()) {
             tabbedPane.addTab("All", createScrollPane(allChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "MMB to clear history");
         }
         if (config.showFriendsChat()) {
             tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "MMB to clear history");
         }
     }
 
@@ -85,9 +115,13 @@ public class ChatPanelSidebar extends PluginPanel {
             updateChatStyles();
         } else {
             isPopout = true;
-            popoutFrame = new JFrame("Chat Panel");
+            popoutFrame = new JFrame("Chat Panel") {
+                @Override
+                public boolean isUndecorated() {
+                    return overrideUndecorated || super.isUndecorated();
+                }
+            };
             popoutFrame.add(tabbedPane);
-            addComponentsForPopout();
             popoutFrame.setSize(config.popoutSize());
             popoutFrame.setMinimumSize(new Dimension(40, 10));
             popoutFrame.setLocationRelativeTo(null);
@@ -96,6 +130,8 @@ public class ChatPanelSidebar extends PluginPanel {
                 popoutFrame.setAlwaysOnTop(true);
             }
 
+            setCactus(config.popoutOpacity() / 100.0f);
+            addComponentsForPopout();
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -103,6 +139,24 @@ public class ChatPanelSidebar extends PluginPanel {
                 }
             });
             popoutFrame.setVisible(true);
+        }
+    }
+
+    void setCactus(float opacity)
+    {
+        overrideUndecorated = true;
+        try
+        {
+            popoutFrame.setOpacity(config.popoutOpacity() / 100.0f);
+        }
+        catch (IllegalComponentStateException | UnsupportedOperationException | IllegalArgumentException ex)
+        {
+            logger.warn("unable to set opacity {}", opacity, ex);
+        }
+        finally
+        {
+            overrideUndecorated = false;
+
         }
     }
 
@@ -132,6 +186,9 @@ public class ChatPanelSidebar extends PluginPanel {
             popinButton2.setVisible(true);
             add(popinButton2, BorderLayout.SOUTH);
         }
+    }
+    public boolean isPopout() {
+        return isPopout;
     }
     private JTextArea createChatArea() {
         JTextArea chatArea = new JTextArea();
@@ -274,13 +331,13 @@ public class ChatPanelSidebar extends PluginPanel {
     private boolean shouldHideAllChatMessage(String message) {
         return message.contains("<colNORMALimpossible>");
     }
-    public void addTimestamp(String timestamp) {
-        publicChatArea.append(timestamp);
-    }
-
-    public void addCleanedName(String cleanedName) {
-        publicChatArea.append(cleanedName);
-    }
+   // Idk why these were here, maybe from prior attempt at formatting, don't think they are needed...
+    // public void addTimestamp(String timestamp) {
+    //    publicChatArea.append(timestamp);
+   // }
+   // public void addCleanedName(String cleanedName) {
+    //    publicChatArea.append(cleanedName);
+  //  }
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();

@@ -47,7 +47,7 @@ public class ChatPanelPlugin extends Plugin
         navButton = NavigationButton.builder()
                 .tooltip("Chat Panel")
                 .icon(icon)
-                .priority(5)
+                .priority(config.iconPosition())
                 .panel(chatPanelSidebar)
                 .build();
 
@@ -140,6 +140,7 @@ public class ChatPanelPlugin extends Plugin
         {
             return;
         }
+        chatPanelSidebar.setCactus(config.popoutOpacity() / 100.0f);
         chatPanelSidebar.updateChatStyles();
     }
 }

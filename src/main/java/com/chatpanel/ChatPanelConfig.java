@@ -86,7 +86,7 @@ public interface ChatPanelConfig extends Config {
             name = "Font Style",
             description = "Choose the font style for the chat panel",
             section = generalSection,
-            position = 3
+            position = 4
     )
     default FontStyle fontStyle() {
         return FontStyle.PLAIN;
@@ -96,7 +96,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Timestamp",
             description = "Toggle to show timestamps in chat messages",
             section = generalSection,
-            position = 4
+            position = 5
     )
     default boolean showTimestamp() {
         return false;
@@ -106,7 +106,7 @@ public interface ChatPanelConfig extends Config {
             name = "Use 24-Hour Timestamp",
             description = "Toggle to use 24-hour time format timestamp",
             section = generalSection,
-            position = 5
+            position = 6
     )
     default boolean use24HourFormat() {
         return false;
@@ -123,6 +123,14 @@ public interface ChatPanelConfig extends Config {
     {
         return 435;
     }
+    @ConfigItem(
+            keyName = "Icon position",
+            name = "Icon position",
+            description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
+            position = 3,
+            section = generalSection
+    )
+    default int iconPosition() {return 5;}
 
     @ConfigItem(
             keyName = "publicChatColor",
@@ -334,7 +342,7 @@ public interface ChatPanelConfig extends Config {
             name = "Pop out Always on Top",
             description = "Keep the pop out window always on top of other windows",
             section = popoutSection,
-            position = 1
+            position = 2
     )
     default boolean popoutAlwaysOnTop() {
         return false;
@@ -350,6 +358,18 @@ public interface ChatPanelConfig extends Config {
     {
         return new Dimension(300, 400);
     }
+    @Range(
+            min = 10,
+            max = 100
+    )
+    @ConfigItem(
+            keyName = "PopoutOpacity",
+            name = "Window opacity",
+            description = "Set the pop out window's opacity",
+            position = 1,
+            section = popoutSection
+    )
+    default int popoutOpacity() {return 100;}
     @ConfigItem(
             keyName = "showPublicChat",
             name = "Show Public Chat",
@@ -400,4 +420,15 @@ public interface ChatPanelConfig extends Config {
             position = 3
     )
     default boolean showFriendsChat() {return false;}
+    @ConfigItem(
+            keyName = "hidepopoutbutton",
+            name = "Hide pop out button",
+            description = "Hides the pop out button, basically disables pop out mode. (Requires plugin restart)",
+            section = popoutSection,
+            position = 5
+    )
+    default boolean hidepopoutbutton() {
+        return false;
+    }
+
 }
