@@ -53,7 +53,7 @@ Pop out button can be disabled, and sidebar icon position can be adjusted.
 
 Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
 
-Click the tab with middle mouse button to clear it's history.
+Click a tab with middle mouse button to clear it's history.
 
 Text can be copied with Ctrl+C.
 
