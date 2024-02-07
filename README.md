@@ -2,10 +2,10 @@
 
 A plugin that adds in-game chat to the side panel or seperate popout window. 
 
-By default has tabs for Public, Private, Clan, Game (including examine text). Text can be copied with Ctrl+C.
+By default has tabs for Public, Private, Clan, Game (including examine text).
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/f554cf60-a052-4fad-8ed5-d4d58672d4cf)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/49763ce1-d761-4036-92c2-f2a7f8693496)
 
 
 
@@ -30,22 +30,33 @@ Can choose between 6 tabs: Public, Private, Clan, Friends Chat, Game, and All. R
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
-Timestamps and spaces between lines and can be added.
+Timestamps and spaces between lines can be added.
 
-Always on top and preset size options for pop out window.
+Always on top, preset size, and opacity options for pop out window.
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/060f0eba-b1df-46e9-9460-b81ac2a4116f)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+Pop out button can be disabled, and sidebar icon position can be adjusted.
 
+![image](https://github.com/Yenof/chat-panel/assets/122739279/b66ed83d-94bb-4e09-b061-e45d59910718)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+
+
+
+
+
+## Usage:
+
+Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
+
+Click the tab with middle mouse button to clear it's history.
+
+Text can be copied with Ctrl+C.
+
+Plugin needs to be toggled on/off after adding or removing tabs.
 
 
 
 
 ## Notes:
 
-Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
+Max lines of chat is 10,000.
 
 When toggling plugin on/off it does not remember messages. 
-
-Plugin needs to be toggled on/off after adding or removing tabs.
-
-Max lines of chat is 10,000.
