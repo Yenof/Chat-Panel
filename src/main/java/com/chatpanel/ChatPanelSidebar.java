@@ -18,6 +18,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea privateChatArea;
     private final JTextArea clanChatArea;
     private final JTextArea friendsChatArea;
+    private final JTextArea allChatArea;
     private static final int MAX_CHAT_LINES = 10000;
     private final JTextArea gameChatArea;
     private final JTabbedPane tabbedPane;
@@ -28,7 +29,6 @@ public class ChatPanelSidebar extends PluginPanel {
     private JButton popoutButton;
     private JButton popinButton;
     private JButton popinButton2;
-    private final JTextArea allChatArea;
     private boolean overrideUndecorated;
 
     public ChatPanelSidebar(ChatPanelConfig config) {
@@ -68,6 +68,41 @@ public class ChatPanelSidebar extends PluginPanel {
         });
     }
 
+    private void createTabs() {
+        tabbedPane.removeAll();
+
+        if (config.showPublicChat()) {
+            tabbedPane.addTab("Public", createScrollPane(publicChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Click with MMB to clear history");
+        }
+
+        if (config.showPrivateChat()) {
+            tabbedPane.addTab("Private", createScrollPane(privateChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Click with MMB to clear history");
+        }
+
+        if (config.showClanChat()) {
+            tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Click with MMB to clear history");
+        }
+
+        if (config.showGameChat()) {
+            tabbedPane.addTab("Game", createScrollPane(gameChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Click with MMB to clear history");
+        }
+        if (config.showAllChat()) {
+            tabbedPane.addTab("All", createScrollPane(allChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Click with MMB to clear history");
+        }
+        if (config.showFriendsChat()) {
+            tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Click with MMB to clear history");
+        }
+    }
+    public void reloadPlugin() {
+        createTabs();
+    }
+
     private void resetTabHistory(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
@@ -75,36 +110,6 @@ public class ChatPanelSidebar extends PluginPanel {
             chatArea.setText("");
         }
     }
-    private void createTabs() {
-        if (config.showPublicChat()) {
-            tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "MMB to clear history");
-        }
-
-        if (config.showPrivateChat()) {
-            tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "MMB to clear history");
-        }
-
-        if (config.showClanChat()) {
-            tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "MMB to clear history");
-        }
-
-        if (config.showGameChat()) {
-            tabbedPane.addTab("Game", createScrollPane(gameChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "MMB to clear history");
-        }
-        if (config.showAllChat()) {
-            tabbedPane.addTab("All", createScrollPane(allChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "MMB to clear history");
-        }
-        if (config.showFriendsChat()) {
-            tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "MMB to clear history");
-        }
-    }
-
     private void togglePopout() {
         if (isPopout) {
             // Restore to side panel
@@ -121,6 +126,7 @@ public class ChatPanelSidebar extends PluginPanel {
                     return overrideUndecorated || super.isUndecorated();
                 }
             };
+            addComponentsForPopout();
             popoutFrame.add(tabbedPane);
             popoutFrame.setSize(config.popoutSize());
             popoutFrame.setMinimumSize(new Dimension(40, 10));
@@ -131,7 +137,6 @@ public class ChatPanelSidebar extends PluginPanel {
             }
 
             setCactus(config.popoutOpacity() / 100.0f);
-            addComponentsForPopout();
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -270,8 +275,13 @@ public class ChatPanelSidebar extends PluginPanel {
         if (tabbedPane.getTabCount() > 3) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(3));
         }
+        if (tabbedPane.getTabCount() > 4) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(4));
+        }
+        if (tabbedPane.getTabCount() > 5) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(5));
+        }
     }
-
 
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
         String formattedMessage = config.showTimestamp()
@@ -331,13 +341,6 @@ public class ChatPanelSidebar extends PluginPanel {
     private boolean shouldHideAllChatMessage(String message) {
         return message.contains("<colNORMALimpossible>");
     }
-   // Idk why these were here, maybe from prior attempt at formatting, don't think they are needed...
-    // public void addTimestamp(String timestamp) {
-    //    publicChatArea.append(timestamp);
-   // }
-   // public void addCleanedName(String cleanedName) {
-    //    publicChatArea.append(cleanedName);
-  //  }
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();

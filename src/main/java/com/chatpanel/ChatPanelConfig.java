@@ -77,7 +77,7 @@ public interface ChatPanelConfig extends Config {
     String popoutSection = "popoutwindow";
     @ConfigSection(
             name = "Tabs",
-            description = "Tab selection. (Recommended 4. Tab changes require plugin restart.)",
+            description = "Tab selection. (Recommended 4)",
             position = 7
     )
     String tabSection = "tabselection";
@@ -373,7 +373,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showPublicChat",
             name = "Show Public Chat",
-            description = "Show/hide the Public Chat tab (Requires plugin restart)",
+            description = "Show/hide the Public Chat tab",
             section = tabSection,
             position = 0
     )
@@ -381,7 +381,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showPrivateChat",
             name = "Show Private Chat",
-            description = "Show/hide the Private Chat tab (Requires plugin restart)",
+            description = "Show/hide the Private Chat tab",
             section = tabSection,
             position = 1
     )
@@ -389,7 +389,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showClanChat",
             name = "Show Clan Chat",
-            description = "Show/hide the Clan Chat tab (Requires plugin restart)",
+            description = "Show/hide the Clan Chat tab",
             section = tabSection,
             position = 2
     )
@@ -397,7 +397,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showGameChat",
             name = "Show Game Chat",
-            description = "Show/hide the Game tab (Requires plugin restart)",
+            description = "Show/hide the Game tab",
             section = tabSection,
             position = 4
     )
@@ -405,7 +405,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showAllChat",
             name = "Show All Chat",
-            description = "Show/hide the All Chat tab (Requires plugin restart)",
+            description = "Show/hide the All Chat tab",
             section = tabSection,
             position = 5
     )
@@ -415,7 +415,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showFriendsChat",
             name = "Show Friends Chat Channel",
-            description = "Show/hide the Friends Chat tab (Requires plugin restart)",
+            description = "Show/hide the Friends Chat tab",
             section = tabSection,
             position = 3
     )
