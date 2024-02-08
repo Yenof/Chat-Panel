@@ -195,6 +195,13 @@ public class ChatPanelSidebar extends PluginPanel {
     public boolean isPopout() {
         return isPopout;
     }
+    public void closePopout() {
+        if (isPopout && popoutFrame != null) {
+            popoutFrame.dispose();
+            togglePopout();
+        }
+    }
+
     private JTextArea createChatArea() {
         JTextArea chatArea = new JTextArea();
         chatArea.setLineWrap(true);

@@ -58,6 +58,7 @@ public class ChatPanelPlugin extends Plugin
     protected void shutDown() throws Exception
     {
         clientToolbar.removeNavigation(navButton);
+        chatPanelSidebar.closePopout();
     }
 
     @Subscribe
