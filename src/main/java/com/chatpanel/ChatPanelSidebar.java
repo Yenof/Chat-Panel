@@ -4,20 +4,28 @@ import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.IllegalComponentStateException;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+
+
 
 public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea publicChatArea;
     private final JTextArea privateChatArea;
     private final JTextArea clanChatArea;
     private final JTextArea friendsChatArea;
+    private final JTextArea allChatArea;
     private static final int MAX_CHAT_LINES = 10000;
     private final JTextArea gameChatArea;
     private final JTabbedPane tabbedPane;
@@ -25,23 +33,23 @@ public class ChatPanelSidebar extends PluginPanel {
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
     private boolean isPopout = false;
     private JFrame popoutFrame;
+    private JFrame popoutTab;
     private JButton popoutButton;
     private JButton popinButton;
     private JButton popinButton2;
-    private final JTextArea allChatArea;
     private boolean overrideUndecorated;
+    private static final int AUTO_POP_DELAY_MS = 150; //This prevents the pop out window from messing up RL's icon.
+    private Timer autoPopTimer;
+    private final List<JFrame> popoutTabs = new ArrayList<>();
 
     public ChatPanelSidebar(ChatPanelConfig config) {
-
         this.config = config;
         setLayout(new BorderLayout());
-        if (!config.hidepopoutbutton()) {
+        if (!config.DisablePopout()) {
             popoutButton = new JButton("Pop out");
             popoutButton.setVisible(true);
             popoutButton.addActionListener(e -> togglePopout());
-            add(popoutButton, BorderLayout.SOUTH);
-        }
-
+            add(popoutButton, BorderLayout.SOUTH);}
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
@@ -58,53 +66,136 @@ public class ChatPanelSidebar extends PluginPanel {
         tabbedPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                SwingUtilities.isMiddleMouseButton(e);
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    int tabIndex = tabbedPane.indexAtLocation(e.getX(), e.getY());
+                    if (tabIndex != -1) {
+                        showPopupMenu(e.getComponent(), e.getX(), e.getY(), tabIndex);
+                    }
+                }
                 if (SwingUtilities.isMiddleMouseButton(e)) {
                     int tabIndex = tabbedPane.indexAtLocation(e.getX(), e.getY());
                     if (tabIndex != -1) {
-                        resetTabHistory(tabIndex);
-                    }
-                }
+                        popOutTab(tabIndex);
+                    }}
             }
         });
+        if (config.AutoPop() && !isPopout() && popoutButton != null) {
+            autoPopTimer = new Timer(AUTO_POP_DELAY_MS, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    togglePopout();
+                    autoPopTimer.stop();
+                }
+            });
+            autoPopTimer.start();
+        }
     }
+    private void showPopupMenu(Component component, int x, int y, int tabIndex) {
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem popoutItem = new JMenuItem("Pop Out");
+        popoutItem.addActionListener(e -> popOutTab(tabIndex));
+        popupMenu.add(popoutItem);
 
+        JMenuItem resetHistoryItem = new JMenuItem("Reset History");
+        resetHistoryItem.addActionListener(e -> resetTabHistory(tabIndex));
+        popupMenu.add(resetHistoryItem);
+
+        JMenuItem exportItem = new JMenuItem("Export log");
+        exportItem.addActionListener(e -> exportChatLog(tabIndex));
+        popupMenu.add(exportItem);
+
+        popupMenu.show(component, x, y);
+
+        popupMenu.show(component, x, y);
+    }
+    private void createTabs() {
+        tabbedPane.removeAll();
+
+        if (config.showPublicChat()) {
+            tabbedPane.addTab("Public", createScrollPane(publicChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Click with MMB to clear history");}
+
+        if (config.showPrivateChat()) {
+            tabbedPane.addTab("Private", createScrollPane(privateChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Click with MMB to clear history");}
+
+        if (config.showClanChat()) {
+            tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Click with MMB to clear history");}
+
+        if (config.showGameChat()) {
+            tabbedPane.addTab("Game", createScrollPane(gameChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Click with MMB to clear history");}
+
+        if (config.showAllChat()) {
+            tabbedPane.addTab("All", createScrollPane(allChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Click with MMB to clear history");}
+
+        if (config.showFriendsChat()) {
+            tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Click with MMB to clear history");}
+    }
+    public void reloadPlugin() {
+        for (JFrame popoutTab : popoutTabs) {
+            popoutTab.dispose();
+        }
+        popoutTabs.clear();
+        createTabs();
+    }
+    private String lastDirectoryPath;
+    private void exportChatLog(int tabIndex) {
+        Component tabComponent = tabbedPane.getComponentAt(tabIndex);
+        if (tabComponent instanceof JScrollPane) {
+            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
+            String chatLog = chatArea.getText();
+            JFileChooser fileChooser = new JFileChooser();
+
+            if (lastDirectoryPath != null) {
+                fileChooser.setCurrentDirectory(new File(lastDirectoryPath));
+            }
+
+            String tabName = tabbedPane.getTitleAt(tabIndex);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d_M");
+            String currentTime = dateFormat.format(new Date());
+            String defaultFileName = tabName + "_" + currentTime + ".txt";
+            fileChooser.setSelectedFile(new File(defaultFileName));
+
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
+            int result;
+            boolean overwriteConfirmed = false;
+            do {
+                result = fileChooser.showSaveDialog(this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    if (selectedFile.exists()) {
+                        int overwriteResult = JOptionPane.showConfirmDialog(this,
+                                "File already exists. Do you want to overwrite it?",
+                                "Confirm Overwrite",
+                                JOptionPane.YES_NO_OPTION);
+                        if (overwriteResult == JOptionPane.NO_OPTION) {
+                            continue;
+                        } else {
+                            overwriteConfirmed = true;
+                        }
+                    }
+                    try (PrintWriter writer = new PrintWriter(selectedFile)) {
+                        writer.println(chatLog);
+                        JOptionPane.showMessageDialog(this, "Chat log exported successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                        lastDirectoryPath = selectedFile.getParent();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, "Error exporting chat log: " + ex.getMessage(), "Unknown Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } while (result == JFileChooser.APPROVE_OPTION && !overwriteConfirmed);
+        }
+    }
     private void resetTabHistory(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
             JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
-            chatArea.setText("");
-        }
+            chatArea.setText("");}
     }
-    private void createTabs() {
-        if (config.showPublicChat()) {
-            tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "MMB to clear history");
-        }
-
-        if (config.showPrivateChat()) {
-            tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "MMB to clear history");
-        }
-
-        if (config.showClanChat()) {
-            tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "MMB to clear history");
-        }
-
-        if (config.showGameChat()) {
-            tabbedPane.addTab("Game", createScrollPane(gameChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "MMB to clear history");
-        }
-        if (config.showAllChat()) {
-            tabbedPane.addTab("All", createScrollPane(allChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "MMB to clear history");
-        }
-        if (config.showFriendsChat()) {
-            tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "MMB to clear history");
-        }
-    }
-
     private void togglePopout() {
         if (isPopout) {
             // Restore to side panel
@@ -121,6 +212,7 @@ public class ChatPanelSidebar extends PluginPanel {
                     return overrideUndecorated || super.isUndecorated();
                 }
             };
+            addComponentsForPopout();
             popoutFrame.add(tabbedPane);
             popoutFrame.setSize(config.popoutSize());
             popoutFrame.setMinimumSize(new Dimension(40, 10));
@@ -129,37 +221,93 @@ public class ChatPanelSidebar extends PluginPanel {
             if (config.popoutAlwaysOnTop()) {
                 popoutFrame.setAlwaysOnTop(true);
             }
-
             setCactus(config.popoutOpacity() / 100.0f);
-            addComponentsForPopout();
+
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    togglePopout();
+                    if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
+                        //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working :C
+                        Object[] options = {"OK", "Cancel",};
+                        int choice = JOptionPane.showOptionDialog(
+                                popoutFrame,
+                                "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin on/off with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
+                                "Closing Pop Out with Sidebar Icon Hidden",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null,
+                                options,
+                                options[0]
+                        );
+                        if (choice == JOptionPane.CANCEL_OPTION) {
+                            e.getWindow().setVisible(true);
+                        } else if (choice == JOptionPane.OK_OPTION) {
+                           // if (checkBox.isSelected()) Can't get working yet.
+                            {
+                                config.PopoutWarning();
+                            }
+                            togglePopout();
+                        }
+                    } else {
+                        togglePopout();
+                    }
                 }
             });
             popoutFrame.setVisible(true);
         }
     }
+    private void popOutTab(int tabIndex) {
+        Component tabComponent = tabbedPane.getComponentAt(tabIndex);
+        String tabTitle = tabbedPane.getTitleAt(tabIndex);
+        if (tabComponent instanceof JScrollPane) {
+            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
+            tabbedPane.remove(tabIndex);
 
-    void setCactus(float opacity)
-    {
-        overrideUndecorated = true;
-        try
-        {
-            popoutFrame.setOpacity(config.popoutOpacity() / 100.0f);
-        }
-        catch (IllegalComponentStateException | UnsupportedOperationException | IllegalArgumentException ex)
-        {
-            logger.warn("unable to set opacity {}", opacity, ex);
-        }
-        finally
-        {
-            overrideUndecorated = false;
-
+            popoutTab = new JFrame(tabTitle) {
+                @Override
+                public boolean isUndecorated() {
+                    return overrideUndecorated || super.isUndecorated();
+                }
+            };
+            popoutTab.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            popoutTab.setAlwaysOnTop(config.popoutAlwaysOnTop());
+            popoutTab.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    restorePoppedOutTab(tabIndex, chatArea, tabTitle);
+                }
+            });
+            popoutTabs.add(popoutTab);
+            JScrollPane scrollPane = new JScrollPane(chatArea);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            popoutTab.add(scrollPane);
+            setCactus(config.popoutOpacity() / 100.0f);
+            popoutTab.setSize(config.popoutSize());
+            popoutTab.setVisible(true);
         }
     }
+    private void restorePoppedOutTab(int tabIndex, JTextArea chatArea, String tabTitle) {
+        JScrollPane scrollPane = new JScrollPane(chatArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        tabbedPane.insertTab(tabTitle, null, scrollPane, null, tabbedPane.getTabCount());
+        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+    }
 
+    void setCactus(float opacity) {
+        overrideUndecorated = true;
+        try {
+            if (popoutTab != null) {
+                popoutTab.setOpacity(config.popoutOpacity() / 100.0f);
+            }
+            if (popoutFrame != null) {
+                popoutFrame.setOpacity(config.popoutOpacity() / 100.0f);
+            }
+        } catch (IllegalComponentStateException | UnsupportedOperationException | IllegalArgumentException ex) {
+            logger.warn("unable to set opacity {}", opacity, ex);
+        } finally {
+            overrideUndecorated = false;
+        }
+    }
     private void addComponentsForSidePanel() {
         if (popoutButton != null) {
             popoutButton.setVisible(true);
@@ -190,6 +338,17 @@ public class ChatPanelSidebar extends PluginPanel {
     public boolean isPopout() {
         return isPopout;
     }
+    public void closePopout() {
+        for (JFrame popoutTab : popoutTabs) {
+            popoutTab.dispose();
+        }
+        popoutTabs.clear();
+        if (popoutFrame != null) {
+            popoutFrame.dispose();
+        }
+        isPopout = false;
+    }
+
     private JTextArea createChatArea() {
         JTextArea chatArea = new JTextArea();
         chatArea.setLineWrap(true);
@@ -270,30 +429,35 @@ public class ChatPanelSidebar extends PluginPanel {
         if (tabbedPane.getTabCount() > 3) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(3));
         }
+        if (tabbedPane.getTabCount() > 4) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(4));
+        }
+        if (tabbedPane.getTabCount() > 5) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(5));
+        }
     }
 
-
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = !config.TimestampFormat().isEmpty()
                 ? "" + timestamp + " [" + cleanedName + "]: " + message
                 : "" + timestamp + "[" + cleanedName + "]: " + message;
         addMessageToChatArea(publicChatArea, formattedMessage);
     }
 
     public void addPrivateChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = !config.TimestampFormat().isEmpty()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : "[" + name + "]: " + message;
         addMessageToChatArea(privateChatArea, formattedMessage);
     }
     public void addClanChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+        String formattedMessage = !config.TimestampFormat().isEmpty() && !name.isEmpty()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : (name.isEmpty() ? message : "[" + name + "]: " + message);
         addMessageToChatArea(clanChatArea, formattedMessage);
     }
     public void addFriendsChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+        String formattedMessage = !config.TimestampFormat().isEmpty() && !name.isEmpty()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : (name.isEmpty() ? message : "[" + name + "]: " + message);
         addMessageToChatArea(friendsChatArea, formattedMessage);
@@ -301,7 +465,7 @@ public class ChatPanelSidebar extends PluginPanel {
     public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
         String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = !config.TimestampFormat().isEmpty()
                 ? "[" + timestamp + "] " + s + cleanedMessage
                 : s + cleanedMessage;
         if (!shouldHideAllChatMessage(formattedMessage)) {
@@ -314,7 +478,7 @@ public class ChatPanelSidebar extends PluginPanel {
         if (shouldHideGameChatMessage(cleanedMessage)) {
             return;
         }
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = !config.TimestampFormat().isEmpty()
                 ? "[" + timestamp + "] " + cleanedMessage
                 : timestamp + cleanedMessage;
         addMessageToChatArea(gameChatArea, formattedMessage);
@@ -331,13 +495,6 @@ public class ChatPanelSidebar extends PluginPanel {
     private boolean shouldHideAllChatMessage(String message) {
         return message.contains("<colNORMALimpossible>");
     }
-   // Idk why these were here, maybe from prior attempt at formatting, don't think they are needed...
-    // public void addTimestamp(String timestamp) {
-    //    publicChatArea.append(timestamp);
-   // }
-   // public void addCleanedName(String cleanedName) {
-    //    publicChatArea.append(cleanedName);
-  //  }
     private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
         SwingUtilities.invokeLater(() -> {
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();

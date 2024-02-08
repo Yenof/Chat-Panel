@@ -41,6 +41,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigSection(
             name = "Private Chat",
             description = "Settings for private chat",
+            closedByDefault = true,
             position = 3
     )
     String privateChatSection = "privateChat";
@@ -48,24 +49,28 @@ public interface ChatPanelConfig extends Config {
     @ConfigSection(
             name = "Clan Chat",
             description = "Settings for clan chat",
+            closedByDefault = true,
             position = 4
     )
     String clanChatSection = "clanChat";
     @ConfigSection(
             name = "Friends Chat",
             description = "Settings for friends chat",
+            closedByDefault = true,
             position = 4
     )
     String friendsChatSection = "friendsChat";
     @ConfigSection(
             name = "Game Chat",
             description = "Settings for game chat",
+            closedByDefault = true,
             position = 6
     )
     String gameChatSection = "gameChat";
     @ConfigSection(
             name = "All Chat",
             description = "Settings for the All Chat tab, not all of the chat.",
+            closedByDefault = true,
             position = 7
     )
     String allChatSection = "allChat";
@@ -77,7 +82,7 @@ public interface ChatPanelConfig extends Config {
     String popoutSection = "popoutwindow";
     @ConfigSection(
             name = "Tabs",
-            description = "Tab selection. (Recommended 4. Tab changes require plugin restart.)",
+            description = "Tab selection. (Recommended 4)",
             position = 7
     )
     String tabSection = "tabselection";
@@ -92,30 +97,20 @@ public interface ChatPanelConfig extends Config {
         return FontStyle.PLAIN;
     }
     @ConfigItem(
-            keyName = "showTimestamp",
-            name = "Show Timestamp",
-            description = "Toggle to show timestamps in chat messages",
+            keyName = "TimestampFormat",
+            name = "Timestamp Format",
+            description = "Enter a custom format (e.g. HH:mm. Sets to this on incorrect entry). Many more options for SimpleDateFormat if searched online",
             section = generalSection,
-            position = 5
+            position = 7
     )
-    default boolean showTimestamp() {
-        return false;
-    }
-    @ConfigItem(
-            keyName = "use24HourTimestamp",
-            name = "Use 24-Hour Timestamp",
-            description = "Toggle to use 24-hour time format timestamp",
-            section = generalSection,
-            position = 6
-    )
-    default boolean use24HourFormat() {
-        return false;
+    default String TimestampFormat() {
+        return "";
     }
     @Range(min = 50, max = 5000)
     @ConfigItem(
             keyName = "chatAreaHeight",
             name = "Chat Area Height",
-            description = "Configures the height of the chat area. Recommended below window height",
+            description = "Configures the height of the chat area of the side panel. Recommended below window height",
             section = generalSection,
             position = 1
     )
@@ -124,13 +119,23 @@ public interface ChatPanelConfig extends Config {
         return 435;
     }
     @ConfigItem(
-            keyName = "Icon position",
+            keyName = "iconPosition",
             name = "Icon position",
             description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
             position = 3,
             section = generalSection
     )
     default int iconPosition() {return 5;}
+    @ConfigItem(
+            keyName = "hideSidebarIcon",
+            name = "Hide Sidebar Icon",
+            description = "Only use with Auto-Pop out. Toggle plugin on/off to restore pop out window if closed. (Requires plugin restart)",
+            section = generalSection,
+            position = 7
+    )
+    default boolean hideSidebarIcon() {
+        return false;
+    }
 
     @ConfigItem(
             keyName = "publicChatColor",
@@ -371,9 +376,29 @@ public interface ChatPanelConfig extends Config {
     )
     default int popoutOpacity() {return 100;}
     @ConfigItem(
+            keyName = "AutoPop",
+            name = "Auto-Pop out window",
+            description = "Pop out window opens automatically when plugin turned on, including on launch",
+            position = 5,
+            section = popoutSection
+    )
+    default boolean AutoPop() {
+        return false;
+    }
+    @ConfigItem(
+            keyName = "DisablePopOut",
+            name = "Disable Pop Out",
+            description = "Hides the side panel pop out button, does NOT work with Auto-pop out. (Requires plugin restart)",
+            position = 6,
+            section = popoutSection
+    )
+    default boolean DisablePopout() {
+        return false;
+    }
+    @ConfigItem(
             keyName = "showPublicChat",
             name = "Show Public Chat",
-            description = "Show/hide the Public Chat tab (Requires plugin restart)",
+            description = "Show/hide the Public Chat tab",
             section = tabSection,
             position = 0
     )
@@ -381,7 +406,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showPrivateChat",
             name = "Show Private Chat",
-            description = "Show/hide the Private Chat tab (Requires plugin restart)",
+            description = "Show/hide the Private Chat tab",
             section = tabSection,
             position = 1
     )
@@ -389,7 +414,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showClanChat",
             name = "Show Clan Chat",
-            description = "Show/hide the Clan Chat tab (Requires plugin restart)",
+            description = "Show/hide the Clan Chat tab",
             section = tabSection,
             position = 2
     )
@@ -397,7 +422,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showGameChat",
             name = "Show Game Chat",
-            description = "Show/hide the Game tab (Requires plugin restart)",
+            description = "Show/hide the Game tab",
             section = tabSection,
             position = 4
     )
@@ -405,7 +430,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showAllChat",
             name = "Show All Chat",
-            description = "Show/hide the All Chat tab (Requires plugin restart)",
+            description = "Show/hide the All Chat tab",
             section = tabSection,
             position = 5
     )
@@ -415,20 +440,17 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showFriendsChat",
             name = "Show Friends Chat Channel",
-            description = "Show/hide the Friends Chat tab (Requires plugin restart)",
+            description = "Show/hide the Friends Chat tab",
             section = tabSection,
             position = 3
     )
     default boolean showFriendsChat() {return false;}
     @ConfigItem(
-            keyName = "hidepopoutbutton",
-            name = "Hide pop out button",
-            description = "Hides the pop out button, basically disables pop out mode. (Requires plugin restart)",
+            keyName = "PopoutWarning",
+            name = "Show Pop Out Closure Warning",
+            description = "Show the warning on closing the pop out window with Hide Sidebar Icon on",
             section = popoutSection,
-            position = 5
+            position = 3
     )
-    default boolean hidepopoutbutton() {
-        return false;
-    }
-
+    default boolean PopoutWarning() {return true;}
 }
