@@ -71,4 +71,4 @@ When toggling plugin on/off it does not remember messages.
 <br/>
 <br/>
 <br/>
-Please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
+I love feedback, please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
