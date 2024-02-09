@@ -4,14 +4,11 @@ import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import javax.swing.text.BadLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.IllegalComponentStateException;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea publicChatArea;
@@ -30,6 +27,8 @@ public class ChatPanelSidebar extends PluginPanel {
     private JButton popinButton;
     private JButton popinButton2;
     private boolean overrideUndecorated;
+    private static final int AUTO_POP_DELAY_MS = 150; //This prevents the pop out window from messing up RL's icon.
+    private Timer autoPopTimer;
 
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
@@ -64,7 +63,14 @@ public class ChatPanelSidebar extends PluginPanel {
             }
         });
         if (config.AutoPop() && !isPopout() && popoutButton != null) {
-            togglePopout();
+            autoPopTimer = new Timer(AUTO_POP_DELAY_MS, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    togglePopout();
+                    autoPopTimer.stop();
+                }
+            });
+            autoPopTimer.start();
         }
     }
     private void createTabs() {
