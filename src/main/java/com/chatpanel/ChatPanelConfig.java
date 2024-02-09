@@ -371,6 +371,26 @@ public interface ChatPanelConfig extends Config {
     )
     default int popoutOpacity() {return 100;}
     @ConfigItem(
+            keyName = "AutoPop",
+            name = "Auto-Pop out window",
+            description = "Pop out window opens automatically when plugin turned on, including on launch",
+            position = 5,
+            section = popoutSection
+    )
+    default boolean AutoPop() {
+        return false;
+    }
+    @ConfigItem(
+            keyName = "hidepopoutbutton",
+            name = "Hide pop out button",
+            description = "Hides the pop out button, does NOT work with Auto-pop out. (Requires plugin restart)",
+            position = 6,
+            section = popoutSection
+    )
+    default boolean hidepopoutbutton() {
+        return false;
+    }
+    @ConfigItem(
             keyName = "showPublicChat",
             name = "Show Public Chat",
             description = "Show/hide the Public Chat tab",
@@ -420,15 +440,4 @@ public interface ChatPanelConfig extends Config {
             position = 3
     )
     default boolean showFriendsChat() {return false;}
-    @ConfigItem(
-            keyName = "hidepopoutbutton",
-            name = "Hide pop out button",
-            description = "Hides the pop out button, basically disables pop out mode. (Requires plugin restart)",
-            section = popoutSection,
-            position = 5
-    )
-    default boolean hidepopoutbutton() {
-        return false;
-    }
-
 }

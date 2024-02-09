@@ -32,16 +32,13 @@ public class ChatPanelSidebar extends PluginPanel {
     private boolean overrideUndecorated;
 
     public ChatPanelSidebar(ChatPanelConfig config) {
-
         this.config = config;
         setLayout(new BorderLayout());
         if (!config.hidepopoutbutton()) {
             popoutButton = new JButton("Pop out");
             popoutButton.setVisible(true);
             popoutButton.addActionListener(e -> togglePopout());
-            add(popoutButton, BorderLayout.SOUTH);
-        }
-
+            add(popoutButton, BorderLayout.SOUTH);}
 
         publicChatArea = createChatArea();
         privateChatArea = createChatArea();
@@ -66,8 +63,10 @@ public class ChatPanelSidebar extends PluginPanel {
                 }
             }
         });
+        if (config.AutoPop() && !isPopout() && popoutButton != null) {
+            togglePopout();
+        }
     }
-
     private void createTabs() {
         tabbedPane.removeAll();
 

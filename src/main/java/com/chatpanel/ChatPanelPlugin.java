@@ -71,14 +71,12 @@ public class ChatPanelPlugin extends Plugin
             case PUBLICCHAT:
             case MODCHAT:
                 if (config.showPublicChat()) {
-                    chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);
-                }
+                    chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case PRIVATECHAT:
             case MODPRIVATECHAT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);
-                }
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
@@ -88,20 +86,17 @@ public class ChatPanelPlugin extends Plugin
             case CLAN_GUEST_CHAT:
             case CHALREQ_CLANCHAT:
                 if (config.showClanChat()) {
-                    chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);
-                }
+                    chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case PRIVATECHATOUT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);
-                }
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);}
                 break;
             case FRIENDSCHAT:
             case CHALREQ_FRIENDSCHAT:
             case FRIENDSCHATNOTIFICATION:
                 if (config.showFriendsChat()) {
-                    chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);
-                }
+                    chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case BROADCAST:
             case GAMEMESSAGE:
@@ -121,15 +116,13 @@ public class ChatPanelPlugin extends Plugin
             case IGNORENOTIFICATION:
             case FRIENDNOTIFICATION:
                 if (config.showGameChat()) {
-                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);
-                }
+                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);}
                 break;
             case UNKNOWN:
         }
 
         if (config.showAllChat()) {
-            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
-        }
+            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);}
     }
     private String getCurrentTimestamp() {
         SimpleDateFormat dateFormat;
