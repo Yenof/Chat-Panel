@@ -67,3 +67,8 @@ Max lines of chat is 10,000.
 When toggling plugin on/off it does not remember messages. 
 
 "Hide pop out button" and "Auto-pop out window" do not work together.
+
+<br/>
+<br/>
+<br/>
+Please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
