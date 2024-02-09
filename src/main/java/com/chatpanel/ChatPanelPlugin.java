@@ -17,8 +17,8 @@ import java.util.Date;
 
 @PluginDescriptor(
         name = "Chat Panel",
-        description = "Displays chat messages in a side panel",
-        tags = {"chat", "panel", "capture", "messages", "font style", "private", "accessibility", "copy"}
+        description = "Displays chat messages in a side panel or pop out window",
+        tags = {"chat", "panel", "window", "messages", "font style", "private", "accessibility", "copy"}
 )
 public class ChatPanelPlugin extends Plugin
 {
@@ -47,7 +47,7 @@ public class ChatPanelPlugin extends Plugin
         navButton = NavigationButton.builder()
                 .tooltip("Chat Panel")
                 .icon(icon)
-                .priority(5)
+                .priority(config.iconPosition())
                 .panel(chatPanelSidebar)
                 .build();
 
@@ -58,24 +58,25 @@ public class ChatPanelPlugin extends Plugin
     protected void shutDown() throws Exception
     {
         clientToolbar.removeNavigation(navButton);
+        chatPanelSidebar.closePopout();
     }
 
     @Subscribe
-    public void onChatMessage(ChatMessage event)
-    {
+    public void onChatMessage(ChatMessage event) {
         String cleanedName = cleanString(event.getName());
         String cleanedMessage = cleanString(event.getMessage());
-        String timestamp = config.showTimestamp() ? getCurrentTimestamp() : "";
+        String timestamp = config.displayTimestamp() ? getCurrentTimestamp() : "";
 
-        switch (event.getType())
-        {
+        switch (event.getType()) {
             case PUBLICCHAT:
             case MODCHAT:
-                chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);
+                if (config.showPublicChat()) {
+                    chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case PRIVATECHAT:
             case MODPRIVATECHAT:
-                chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);
+                if (config.showPrivateChat()) {
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
@@ -84,15 +85,18 @@ public class ChatPanelPlugin extends Plugin
             case CLAN_GIM_MESSAGE:
             case CLAN_GUEST_CHAT:
             case CHALREQ_CLANCHAT:
-                chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);
+                if (config.showClanChat()) {
+                    chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case PRIVATECHATOUT:
-                chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);
+                if (config.showPrivateChat()) {
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);}
                 break;
             case FRIENDSCHAT:
             case CHALREQ_FRIENDSCHAT:
             case FRIENDSCHATNOTIFICATION:
-                chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);
+                if (config.showFriendsChat()) {
+                    chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case BROADCAST:
             case GAMEMESSAGE:
@@ -111,11 +115,14 @@ public class ChatPanelPlugin extends Plugin
             case CHALREQ_TRADE:
             case IGNORENOTIFICATION:
             case FRIENDNOTIFICATION:
-                chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);
+                if (config.showGameChat()) {
+                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);}
                 break;
             case UNKNOWN:
         }
-        chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
+
+        if (config.showAllChat()) {
+            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);}
     }
     private String getCurrentTimestamp() {
         SimpleDateFormat dateFormat;
@@ -134,12 +141,16 @@ public class ChatPanelPlugin extends Plugin
     }
 
     @Subscribe
-    public void onConfigChanged(ConfigChanged event)
-    {
-        if (!"chatpanel".equals(event.getGroup()))
-        {
-            return;
+    public void onConfigChanged(ConfigChanged event) {
+        if ("chatpanel".equals(event.getGroup())) {
+            if (event.getKey().startsWith("show")) {
+                chatPanelSidebar.reloadPlugin();
+            } else {
+                chatPanelSidebar.updateChatStyles();
+                if (chatPanelSidebar.isPopout()) {
+                    chatPanelSidebar.setCactus(config.popoutOpacity());
+                }
+            }
         }
-        chatPanelSidebar.updateChatStyles();
     }
 }

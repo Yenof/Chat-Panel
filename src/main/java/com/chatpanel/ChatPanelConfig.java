@@ -77,7 +77,7 @@ public interface ChatPanelConfig extends Config {
     String popoutSection = "popoutwindow";
     @ConfigSection(
             name = "Tabs",
-            description = "Tab selection. (Recommended 4. Tab changes require plugin restart.)",
+            description = "Tab selection. (Recommended 4)",
             position = 7
     )
     String tabSection = "tabselection";
@@ -86,19 +86,19 @@ public interface ChatPanelConfig extends Config {
             name = "Font Style",
             description = "Choose the font style for the chat panel",
             section = generalSection,
-            position = 3
+            position = 4
     )
     default FontStyle fontStyle() {
         return FontStyle.PLAIN;
     }
     @ConfigItem(
-            keyName = "showTimestamp",
+            keyName = "displayTimestamp",
             name = "Show Timestamp",
             description = "Toggle to show timestamps in chat messages",
             section = generalSection,
-            position = 4
+            position = 5
     )
-    default boolean showTimestamp() {
+    default boolean displayTimestamp() {
         return false;
     }
     @ConfigItem(
@@ -106,7 +106,7 @@ public interface ChatPanelConfig extends Config {
             name = "Use 24-Hour Timestamp",
             description = "Toggle to use 24-hour time format timestamp",
             section = generalSection,
-            position = 5
+            position = 6
     )
     default boolean use24HourFormat() {
         return false;
@@ -123,6 +123,14 @@ public interface ChatPanelConfig extends Config {
     {
         return 435;
     }
+    @ConfigItem(
+            keyName = "iconPosition",
+            name = "Icon position",
+            description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
+            position = 3,
+            section = generalSection
+    )
+    default int iconPosition() {return 5;}
 
     @ConfigItem(
             keyName = "publicChatColor",
@@ -334,7 +342,7 @@ public interface ChatPanelConfig extends Config {
             name = "Pop out Always on Top",
             description = "Keep the pop out window always on top of other windows",
             section = popoutSection,
-            position = 1
+            position = 2
     )
     default boolean popoutAlwaysOnTop() {
         return false;
@@ -350,10 +358,42 @@ public interface ChatPanelConfig extends Config {
     {
         return new Dimension(300, 400);
     }
+    @Range(
+            min = 10,
+            max = 100
+    )
+    @ConfigItem(
+            keyName = "PopoutOpacity",
+            name = "Window opacity",
+            description = "Set the pop out window's opacity",
+            position = 1,
+            section = popoutSection
+    )
+    default int popoutOpacity() {return 100;}
+    @ConfigItem(
+            keyName = "AutoPop",
+            name = "Auto-Pop out window",
+            description = "Pop out window opens automatically when plugin turned on, including on launch",
+            position = 5,
+            section = popoutSection
+    )
+    default boolean AutoPop() {
+        return false;
+    }
+    @ConfigItem(
+            keyName = "hidepopoutbutton",
+            name = "Hide pop out button",
+            description = "Hides the pop out button, does NOT work with Auto-pop out. (Requires plugin restart)",
+            position = 6,
+            section = popoutSection
+    )
+    default boolean hidepopoutbutton() {
+        return false;
+    }
     @ConfigItem(
             keyName = "showPublicChat",
             name = "Show Public Chat",
-            description = "Show/hide the Public Chat tab (Requires plugin restart)",
+            description = "Show/hide the Public Chat tab",
             section = tabSection,
             position = 0
     )
@@ -361,7 +401,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showPrivateChat",
             name = "Show Private Chat",
-            description = "Show/hide the Private Chat tab (Requires plugin restart)",
+            description = "Show/hide the Private Chat tab",
             section = tabSection,
             position = 1
     )
@@ -369,7 +409,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showClanChat",
             name = "Show Clan Chat",
-            description = "Show/hide the Clan Chat tab (Requires plugin restart)",
+            description = "Show/hide the Clan Chat tab",
             section = tabSection,
             position = 2
     )
@@ -377,7 +417,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showGameChat",
             name = "Show Game Chat",
-            description = "Show/hide the Game tab (Requires plugin restart)",
+            description = "Show/hide the Game tab",
             section = tabSection,
             position = 4
     )
@@ -385,7 +425,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showAllChat",
             name = "Show All Chat",
-            description = "Show/hide the All Chat tab (Requires plugin restart)",
+            description = "Show/hide the All Chat tab",
             section = tabSection,
             position = 5
     )
@@ -395,7 +435,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "showFriendsChat",
             name = "Show Friends Chat Channel",
-            description = "Show/hide the Friends Chat tab (Requires plugin restart)",
+            description = "Show/hide the Friends Chat tab",
             section = tabSection,
             position = 3
     )
