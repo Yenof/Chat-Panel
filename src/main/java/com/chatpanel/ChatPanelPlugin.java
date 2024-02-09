@@ -65,7 +65,7 @@ public class ChatPanelPlugin extends Plugin
     public void onChatMessage(ChatMessage event) {
         String cleanedName = cleanString(event.getName());
         String cleanedMessage = cleanString(event.getMessage());
-        String timestamp = config.showTimestamp() ? getCurrentTimestamp() : "";
+        String timestamp = config.displayTimestamp() ? getCurrentTimestamp() : "";
 
         switch (event.getType()) {
             case PUBLICCHAT:
@@ -141,16 +141,16 @@ public class ChatPanelPlugin extends Plugin
     }
 
     @Subscribe
-    public void onConfigChanged(ConfigChanged event)
-    {
-        if (!"chatpanel".equals(event.getGroup()))
-        {
-            return;
-        }
-        chatPanelSidebar.updateChatStyles();
-        chatPanelSidebar.reloadPlugin();
-        if (chatPanelSidebar.isPopout()) {
-            chatPanelSidebar.setCactus(config.popoutOpacity());
+    public void onConfigChanged(ConfigChanged event) {
+        if ("chatpanel".equals(event.getGroup())) {
+            if (event.getKey().startsWith("show")) {
+                chatPanelSidebar.reloadPlugin();
+            } else {
+                chatPanelSidebar.updateChatStyles();
+                if (chatPanelSidebar.isPopout()) {
+                    chatPanelSidebar.setCactus(config.popoutOpacity());
+                }
+            }
         }
     }
 }

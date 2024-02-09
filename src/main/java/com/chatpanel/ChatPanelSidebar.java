@@ -72,31 +72,27 @@ public class ChatPanelSidebar extends PluginPanel {
 
         if (config.showPublicChat()) {
             tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Click with MMB to clear history");}
 
         if (config.showPrivateChat()) {
             tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Click with MMB to clear history");}
 
         if (config.showClanChat()) {
             tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Click with MMB to clear history");}
 
         if (config.showGameChat()) {
             tabbedPane.addTab("Game", createScrollPane(gameChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Click with MMB to clear history");}
+
         if (config.showAllChat()) {
             tabbedPane.addTab("All", createScrollPane(allChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Click with MMB to clear history");}
+
         if (config.showFriendsChat()) {
             tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Click with MMB to clear history");
-        }
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Click with MMB to clear history");}
     }
     public void reloadPlugin() {
         createTabs();
@@ -106,8 +102,7 @@ public class ChatPanelSidebar extends PluginPanel {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
             JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
-            chatArea.setText("");
-        }
+            chatArea.setText("");}
     }
     private void togglePopout() {
         if (isPopout) {
@@ -290,26 +285,26 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = config.displayTimestamp()
                 ? "" + timestamp + " [" + cleanedName + "]: " + message
                 : "" + timestamp + "[" + cleanedName + "]: " + message;
         addMessageToChatArea(publicChatArea, formattedMessage);
     }
 
     public void addPrivateChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = config.displayTimestamp()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : "[" + name + "]: " + message;
         addMessageToChatArea(privateChatArea, formattedMessage);
     }
     public void addClanChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+        String formattedMessage = config.displayTimestamp() && !name.isEmpty()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : (name.isEmpty() ? message : "[" + name + "]: " + message);
         addMessageToChatArea(clanChatArea, formattedMessage);
     }
     public void addFriendsChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = config.showTimestamp() && !name.isEmpty()
+        String formattedMessage = config.displayTimestamp() && !name.isEmpty()
                 ? "" + timestamp + " " + "[" + name + "]: " + message
                 : (name.isEmpty() ? message : "[" + name + "]: " + message);
         addMessageToChatArea(friendsChatArea, formattedMessage);
@@ -317,7 +312,7 @@ public class ChatPanelSidebar extends PluginPanel {
     public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
         String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = config.displayTimestamp()
                 ? "[" + timestamp + "] " + s + cleanedMessage
                 : s + cleanedMessage;
         if (!shouldHideAllChatMessage(formattedMessage)) {
@@ -330,7 +325,7 @@ public class ChatPanelSidebar extends PluginPanel {
         if (shouldHideGameChatMessage(cleanedMessage)) {
             return;
         }
-        String formattedMessage = config.showTimestamp()
+        String formattedMessage = config.displayTimestamp()
                 ? "[" + timestamp + "] " + cleanedMessage
                 : timestamp + cleanedMessage;
         addMessageToChatArea(gameChatArea, formattedMessage);

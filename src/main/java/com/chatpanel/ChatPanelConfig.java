@@ -92,13 +92,13 @@ public interface ChatPanelConfig extends Config {
         return FontStyle.PLAIN;
     }
     @ConfigItem(
-            keyName = "showTimestamp",
+            keyName = "displayTimestamp",
             name = "Show Timestamp",
             description = "Toggle to show timestamps in chat messages",
             section = generalSection,
             position = 5
     )
-    default boolean showTimestamp() {
+    default boolean displayTimestamp() {
         return false;
     }
     @ConfigItem(
@@ -124,7 +124,7 @@ public interface ChatPanelConfig extends Config {
         return 435;
     }
     @ConfigItem(
-            keyName = "Icon position",
+            keyName = "iconPosition",
             name = "Icon position",
             description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
             position = 3,
