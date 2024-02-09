@@ -39,11 +39,11 @@ Chat Area Height can be adjusted, recommended to be less than the height of your
 
 Timestamps and spaces between lines can be added.
 
-Always on top, preset size, and opacity options for pop out window.
+Always on top, preset size, Auto-pop, and opacity options for pop out window.
 
 Pop out button can be disabled, and sidebar icon position can be adjusted.
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/b66ed83d-94bb-4e09-b061-e45d59910718)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/89c66310-0e09-400b-a7ae-5de4d8d7ce96)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
 
 
 
@@ -56,8 +56,6 @@ Scroll and click to lock position while reading, return to the bottom to resume 
 Click a tab with middle mouse button to clear it's history.
 
 Text can be copied with Ctrl+C.
-
-Plugin needs to be toggled on/off after adding or removing tabs.
 
 
 
