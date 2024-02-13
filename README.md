@@ -1,6 +1,6 @@
 # Chat Panel Plugin
 
-A plugin that adds in-game chat to the side panel or seperate popout window. 
+A plugin that adds in-game chat to the side panel or seperate popout windows. 
 
 By default has tabs for Public, Private, Clan, Game (including examine text).
 
@@ -41,9 +41,12 @@ Timestamps and spaces between lines can be added.
 
 Always on top, preset size, Auto-pop, and opacity options for pop out window.
 
-Pop out button can be disabled, and sidebar icon position can be adjusted.
+Sidebar icon position can be adjusted.
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/89c66310-0e09-400b-a7ae-5de4d8d7ce96)![image](https://github.com/Yenof/chat-panel/assets/122739279/01688c70-a715-4bd5-b807-215c8b4a8df5)
+Can hide Sidebar icon and Pop out button (Disable Pop Out) to save screen space on small screen devices. 
+
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/25e923be-17a6-4556-b108-cacae4a79be7) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) ![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96)
 
 
 
@@ -51,12 +54,17 @@ Pop out button can be disabled, and sidebar icon position can be adjusted.
 
 ## Usage:
 
-Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
+Right clicking on a tab shows additional options like "Pop out", "Reset History", and "Export logs".
 
-Click a tab with middle mouse button to clear it's history.
+Clicking a tab with middle mouse button can also pop the tab out into it's own window.
+
+Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
 
 Text can be copied with Ctrl+C.
 
+If you have "Hide Sidebar Icon" enabled and close the pop out window, you will need to toggle the plugin on/off with Auto-Pop enabled to have it auto-pop back out.
+
+Timestamp Format can be set using SimpleDateFormat patterns.
 
 
 
@@ -67,3 +75,8 @@ Max lines of chat is 10,000.
 When toggling plugin on/off it does not remember messages. 
 
 "Hide pop out button" and "Auto-pop out window" do not work together.
+
+<br/>
+<br/>
+<br/>
+I love feedback, please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
