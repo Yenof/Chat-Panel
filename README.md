@@ -46,7 +46,7 @@ Sidebar icon position can be adjusted.
 Can hide Sidebar icon and Pop out button (Disable Pop Out) to save screen space on small screen devices. 
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/25e923be-17a6-4556-b108-cacae4a79be7) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) ![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/25e923be-17a6-4556-b108-cacae4a79be7) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
 
 
 
@@ -66,7 +66,7 @@ If you have "Hide Sidebar Icon" enabled and close the pop out window, you will n
 
 Timestamp Format can be set using SimpleDateFormat patterns.
 
-
+![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96)
 
 ## Notes:
 
