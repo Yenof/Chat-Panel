@@ -163,10 +163,9 @@ public class ChatPanelSidebar extends PluginPanel {
             fileChooser.setSelectedFile(new File(defaultFileName));
 
             fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
-            int result;
-            boolean overwriteConfirmed = false;
-            do {
-                result = fileChooser.showSaveDialog(this);
+
+            while (true) {
+                int result = fileChooser.showSaveDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     if (selectedFile.exists()) {
@@ -176,8 +175,6 @@ public class ChatPanelSidebar extends PluginPanel {
                                 JOptionPane.YES_NO_OPTION);
                         if (overwriteResult == JOptionPane.NO_OPTION) {
                             continue;
-                        } else {
-                            overwriteConfirmed = true;
                         }
                     }
                     try (PrintWriter writer = new PrintWriter(selectedFile)) {
@@ -187,10 +184,14 @@ public class ChatPanelSidebar extends PluginPanel {
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(this, "Error exporting chat log: " + ex.getMessage(), "Unknown Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    break;
+                } else {
+                    break;
                 }
-            } while (result == JFileChooser.APPROVE_OPTION && !overwriteConfirmed);
+            }
         }
     }
+
     private void resetTabHistory(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
