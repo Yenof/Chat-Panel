@@ -290,6 +290,7 @@ public class ChatPanelSidebar extends PluginPanel {
     }
     private void restorePoppedOutTab(int tabIndex, JTextArea chatArea, String tabTitle) {
         JScrollPane scrollPane = new JScrollPane(chatArea);
+        scrollPane.setPreferredSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         tabbedPane.insertTab(tabTitle, null, scrollPane, null, tabbedPane.getTabCount());
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
