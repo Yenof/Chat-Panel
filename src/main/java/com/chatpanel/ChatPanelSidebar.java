@@ -91,6 +91,7 @@ public class ChatPanelSidebar extends PluginPanel {
             autoPopTimer.start();
         }
     }
+
     private void showPopupMenu(Component component, int x, int y, int tabIndex) {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem popoutItem = new JMenuItem("Pop Out");
@@ -114,27 +115,27 @@ public class ChatPanelSidebar extends PluginPanel {
 
         if (config.showPublicChat()) {
             tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Right click for options. MMB to pop out tab");}
 
         if (config.showPrivateChat()) {
             tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Right click for options. MMB to pop out tab");}
 
         if (config.showClanChat()) {
             tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Right click for options. MMB to pop out tab");}
 
         if (config.showGameChat()) {
             tabbedPane.addTab("Game", createScrollPane(gameChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Right click for options. MMB to pop out tab");}
 
         if (config.showAllChat()) {
             tabbedPane.addTab("All", createScrollPane(allChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Right click for options. MMB to pop out tab");}
 
         if (config.showFriendsChat()) {
             tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Click with MMB to clear history");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Right click for options. MMB to pop out tab");}
     }
     public void reloadPlugin() {
         for (JFrame popoutTab : popoutTabs) {
@@ -231,7 +232,7 @@ public class ChatPanelSidebar extends PluginPanel {
                         Object[] options = {"OK", "Cancel",};
                         int choice = JOptionPane.showOptionDialog(
                                 popoutFrame,
-                                "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin on/off with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
+                                "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin off/on with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
                                 "Closing Pop Out with Sidebar Icon Hidden",
                                 JOptionPane.OK_CANCEL_OPTION,
                                 JOptionPane.INFORMATION_MESSAGE,

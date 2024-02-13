@@ -11,6 +11,7 @@ import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
 import net.runelite.client.events.ConfigChanged;
 import javax.inject.Inject;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -157,6 +158,20 @@ public class ChatPanelPlugin extends Plugin
                     chatPanelSidebar.setCactus(config.popoutOpacity());
                 }
             }
+            if (config.AutoPop() && config.DisablePopout()) {
+                String message;
+                if (config.hideSidebarIcon() && config.DisablePopout()) {
+                    message = "<html>Warning: Disable Pop Out and Hide Sidebar Icon are both enabled.<br>This leaves no way to access Chat Panel.</html>";
+                } else {
+                    message = "<html>Notice: Auto-pop out window and Disable Pop Out are both enabled.<br>Pop out window will be unable to open.</html>";
+                }
+                JOptionPane.showMessageDialog(null, message, "Configuration Issue", JOptionPane.WARNING_MESSAGE);
+            }
+            if (config.hideSidebarIcon() && !config.AutoPop()) {
+                String message = "<html>Warning: Hide Sidebar Icon is enabled but Auto-pop out window is not.<br>Enable Auto-pop out or disable Hide Sidebar Icon to access to Chat Panel.</html>";
+                JOptionPane.showMessageDialog(null, message, "Configuration Issue", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
+
 }

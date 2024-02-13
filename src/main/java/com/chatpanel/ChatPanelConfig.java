@@ -129,7 +129,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "hideSidebarIcon",
             name = "Hide Sidebar Icon",
-            description = "Only use with Auto-Pop out. Toggle plugin on/off to restore pop out window if closed. (Requires plugin restart)",
+            description = "ONLY use with Auto-Pop out and if you REALLY don't want a sidebar icon. Toggle plugin on/off to restore pop out window if closed. (Requires plugin restart)",
             section = generalSection,
             position = 7
     )
