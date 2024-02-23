@@ -124,10 +124,184 @@ public class ChatPanelPlugin extends Plugin
                 break;
             case UNKNOWN:
         }
-
         if (config.showAllChat()) {
-            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);}
+            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
+        }
+        if (config.showCustomChat()) {
+            onCustomChatMessage(event, cleanedName, cleanedMessage, timestamp);
+        }
     }
+
+    private void onCustomChatMessage(ChatMessage event, String cleanedName, String cleanedMessage, String timestamp) {
+        switch (event.getType()) {
+            case PUBLICCHAT:
+                if (config.CustomPublicChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case MODCHAT:
+                if (config.CustomModChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case PRIVATECHAT:
+                if (config.CustomPrivateChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case MODPRIVATECHAT:
+                if (config.CustomModPrivateChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_CHAT:
+                if (config.CustomClanChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_MESSAGE:
+                if (config.CustomClanMessageEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_GUEST_MESSAGE:
+                if (config.CustomClanGuestMessageEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_GIM_CHAT:
+                if (config.CustomClanGimChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_GIM_MESSAGE:
+                if (config.CustomClanGimMessageEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CLAN_GUEST_CHAT:
+                if (config.CustomClanGuestChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CHALREQ_CLANCHAT:
+                if (config.CustomChalreqClanChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case PRIVATECHATOUT:
+                if (config.CustomPrivateChatoutEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case FRIENDSCHAT:
+                if (config.CustomFriendsChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CHALREQ_FRIENDSCHAT:
+                if (config.CustomChalreqFriendsChatEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case FRIENDSCHATNOTIFICATION:
+                if (config.CustomFriendsChatNotificationEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case BROADCAST:
+                if (config.CustomBroadcastEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case GAMEMESSAGE:
+                if (config.CustomGameMessageEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case ENGINE:
+                if (config.CustomEngineEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case NPC_EXAMINE:
+                if (config.CustomNpcExamineEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case SPAM:
+                if (config.CustomSpamEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case DIALOG:
+                if (config.CustomDialogEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case ITEM_EXAMINE:
+                if (config.CustomItemExamineEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case OBJECT_EXAMINE:
+                if (config.CustomObjectExamineEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case WELCOME:
+                if (config.CustomWelcomeEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case TRADE:
+                if (config.CustomTradeEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case TRADE_SENT:
+                if (config.CustomTradeSentEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case TRADEREQ:
+                if (config.CustomTradeReqEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CONSOLE:
+                if (config.CustomConsoleEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case MODAUTOTYPER:
+                if (config.CustomModAutoTyperEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case CHALREQ_TRADE:
+                if (config.CustomChalreqTradeEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case IGNORENOTIFICATION:
+                if (config.CustomIgnoreNotificationEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case FRIENDNOTIFICATION:
+                if (config.CustomFriendNotificationEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+            case UNKNOWN:
+                if (config.CustomUnknownEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
+                }
+                break;
+        }
+    }
+
     private String getCurrentTimestamp() {
         String customFormat = config.TimestampFormat();
         if (!customFormat.isEmpty()) {

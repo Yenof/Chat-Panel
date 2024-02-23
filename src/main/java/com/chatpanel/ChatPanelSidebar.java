@@ -26,6 +26,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextArea clanChatArea;
     private final JTextArea friendsChatArea;
     private final JTextArea allChatArea;
+    private final JTextArea customChatArea;
     private static final int MAX_CHAT_LINES = 10000;
     private final JTextArea gameChatArea;
     private final JTabbedPane tabbedPane;
@@ -38,7 +39,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private JButton popinButton;
     private JButton popinButton2;
     private boolean overrideUndecorated;
-    private static final int AUTO_POP_DELAY_MS = 150; //This prevents the pop out window from messing up RL's icon.
+    private static final int AUTO_POP_DELAY_MS = 180; //This prevents the pop out window from messing up RL's icon.
     private Timer autoPopTimer;
     private final List<JFrame> popoutTabs = new ArrayList<>();
 
@@ -57,6 +58,7 @@ public class ChatPanelSidebar extends PluginPanel {
         friendsChatArea = createChatArea();
         gameChatArea = createChatArea();
         allChatArea = createChatArea();
+        customChatArea = createChatArea();
 
         tabbedPane = new JTabbedPane();
         createTabs();
@@ -136,6 +138,10 @@ public class ChatPanelSidebar extends PluginPanel {
         if (config.showFriendsChat()) {
             tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
             tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Right click for options. MMB to pop out tab");}
+
+        if (config.showCustomChat()) {
+            tabbedPane.addTab("Custom", createScrollPane(customChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Custom"), "Right click for options. MMB to pop out tab");}
     }
     public void reloadPlugin() {
         for (JFrame popoutTab : popoutTabs) {
@@ -386,6 +392,7 @@ public class ChatPanelSidebar extends PluginPanel {
         friendsChatArea.setFont(getFontFromConfig(config.friendsChatFontSize()));
         gameChatArea.setFont(getFontFromConfig(config.gameChatFontSize()));
         allChatArea.setFont(getFontFromConfig(config.allChatFontSize()));
+        customChatArea.setFont(getFontFromConfig(config.customChatFontSize()));
     }
 
     private Font getFontFromConfig(int fontSize) {
@@ -417,7 +424,9 @@ public class ChatPanelSidebar extends PluginPanel {
         gameChatArea.setBackground(config.gameChatBackgroundColor());
         gameChatArea.setForeground(config.gameChatColor());
         allChatArea.setBackground(config.allChatBackground());
-        allChatArea.setForeground(config.allChatColor());}
+        allChatArea.setForeground(config.allChatColor());
+        customChatArea.setBackground(config.customChatBackgroundColor());
+        customChatArea.setForeground(config.customChatColor());}
 
     private void setScrollPaneSizes() {
         if (tabbedPane.getTabCount() > 0) {
@@ -437,6 +446,9 @@ public class ChatPanelSidebar extends PluginPanel {
         }
         if (tabbedPane.getTabCount() > 5) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(5));
+        }
+        if (tabbedPane.getTabCount() > 6) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(6));
         }
     }
 
@@ -475,6 +487,16 @@ public class ChatPanelSidebar extends PluginPanel {
             addMessageToChatArea(allChatArea, formattedMessage);
         }
     }
+
+    public void addCustomChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+        cleanedMessage = filterAllChatMessage(cleanedMessage); //It's using filterAllChat, is that fine? lol
+        String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
+        String formattedMessage = !config.TimestampFormat().isEmpty()
+                ? "[" + timestamp + "] " + s + cleanedMessage
+                : s + cleanedMessage;
+        addMessageToChatArea(customChatArea, formattedMessage);
+    }
+
 
     public void addGameChatMessage(String timestamp, String cleanedMessage) {
         cleanedMessage = filterGameChatMessage(cleanedMessage);
