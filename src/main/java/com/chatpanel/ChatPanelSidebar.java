@@ -6,7 +6,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.BadLocationException;
+import javax.swing.text.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.IllegalComponentStateException;
@@ -21,14 +22,14 @@ import java.util.ArrayList;
 
 
 public class ChatPanelSidebar extends PluginPanel {
-    private final JTextArea publicChatArea;
-    private final JTextArea privateChatArea;
-    private final JTextArea clanChatArea;
-    private final JTextArea friendsChatArea;
-    private final JTextArea allChatArea;
-    private final JTextArea customChatArea;
-    private static final int MAX_CHAT_LINES = 10000;
-    private final JTextArea gameChatArea;
+    private final JTextPane publicChatArea;
+    private final JTextPane privateChatArea;
+    private final JTextPane clanChatArea;
+    private final JTextPane friendsChatArea;
+    private final JTextPane allChatArea;
+    private final JTextPane customChatArea;
+    private static final int MAX_CHAT_LINES = 100000;
+    private final JTextPane gameChatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
@@ -52,13 +53,13 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutButton.addActionListener(e -> togglePopout());
             add(popoutButton, BorderLayout.SOUTH);}
 
-        publicChatArea = createChatArea();
-        privateChatArea = createChatArea();
-        clanChatArea = createChatArea();
-        friendsChatArea = createChatArea();
-        gameChatArea = createChatArea();
-        allChatArea = createChatArea();
-        customChatArea = createChatArea();
+        publicChatArea = createTextPane();
+        privateChatArea = createTextPane();
+        clanChatArea = createTextPane();
+        friendsChatArea = createTextPane();
+        gameChatArea = createTextPane();
+        allChatArea = createTextPane();
+        customChatArea = createTextPane();
 
         tabbedPane = new JTabbedPane();
         createTabs();
@@ -79,7 +80,8 @@ public class ChatPanelSidebar extends PluginPanel {
                     int tabIndex = tabbedPane.indexAtLocation(e.getX(), e.getY());
                     if (tabIndex != -1) {
                         popOutTab(tabIndex);
-                    }}
+                    }
+                }
             }
         });
         if (config.AutoPop() && !isPopout() && popoutButton != null) {
@@ -112,37 +114,46 @@ public class ChatPanelSidebar extends PluginPanel {
 
         popupMenu.show(component, x, y);
     }
+
     private void createTabs() {
         tabbedPane.removeAll();
 
         if (config.showPublicChat()) {
             tabbedPane.addTab("Public", createScrollPane(publicChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Public"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showPrivateChat()) {
             tabbedPane.addTab("Private", createScrollPane(privateChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Private"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showClanChat()) {
             tabbedPane.addTab("Clan", createScrollPane(clanChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Clan"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showGameChat()) {
             tabbedPane.addTab("Game", createScrollPane(gameChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Game"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showAllChat()) {
             tabbedPane.addTab("All", createScrollPane(allChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("All"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showFriendsChat()) {
             tabbedPane.addTab("Friends", createScrollPane(friendsChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Friends"), "Right click for options. MMB to pop out tab");
+        }
 
         if (config.showCustomChat()) {
             tabbedPane.addTab("Custom", createScrollPane(customChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Custom"), "Right click for options. MMB to pop out tab");}
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Custom"), "Right click for options. MMB to pop out tab");
+        }
     }
+
     public void reloadPlugin() {
         for (JFrame popoutTab : popoutTabs) {
             popoutTab.dispose();
@@ -150,11 +161,13 @@ public class ChatPanelSidebar extends PluginPanel {
         popoutTabs.clear();
         createTabs();
     }
+
     private String lastDirectoryPath;
+
     private void exportChatLog(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
-            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
+            JTextPane chatArea = (JTextPane) ((JScrollPane) tabComponent).getViewport().getView();
             String chatLog = chatArea.getText();
             JFileChooser fileChooser = new JFileChooser();
 
@@ -201,17 +214,23 @@ public class ChatPanelSidebar extends PluginPanel {
     private void resetTabHistory(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
-            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
-            chatArea.setText("");}
+            JTextPane chatArea = (JTextPane) ((JScrollPane) tabComponent).getViewport().getView();
+            chatArea.setText("");
+        }
     }
+
     private void togglePopout() {
         if (isPopout) {
             // Restore to side panel
             isPopout = false;
+                if (popoutTab != null) {
+                popoutTab.dispose();
+                }
             popoutFrame.dispose();
             addComponentsForSidePanel();
             add(tabbedPane, BorderLayout.CENTER);
             updateChatStyles();
+            reloadPlugin();
         } else {
             isPopout = true;
             popoutFrame = new JFrame("Chat Panel") {
@@ -250,25 +269,36 @@ public class ChatPanelSidebar extends PluginPanel {
                         if (choice == JOptionPane.CANCEL_OPTION) {
                             e.getWindow().setVisible(true);
                         } else if (choice == JOptionPane.OK_OPTION) {
-                           // if (checkBox.isSelected()) Can't get working yet.
+                            // if (checkBox.isSelected()) Can't get working yet.
                             {
                                 config.PopoutWarning();
                             }
-                            togglePopout();
+                            isPopout = false;
+                            popoutFrame.dispose();
+                            addComponentsForSidePanel();
+                            add(tabbedPane, BorderLayout.CENTER);
+                            updateChatStyles();
                         }
                     } else {
-                        togglePopout();
+                        isPopout = false;
+                        if (popoutFrame != null) {
+                            popoutFrame.dispose();
+                        }
+                        addComponentsForSidePanel();
+                        add(tabbedPane, BorderLayout.CENTER);
+                        updateChatStyles();
                     }
                 }
             });
             popoutFrame.setVisible(true);
         }
     }
+
     private void popOutTab(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
         String tabTitle = tabbedPane.getTitleAt(tabIndex);
         if (tabComponent instanceof JScrollPane) {
-            JTextArea chatArea = (JTextArea) ((JScrollPane) tabComponent).getViewport().getView();
+            JTextPane chatArea = (JTextPane) ((JScrollPane) tabComponent).getViewport().getView();
             tabbedPane.remove(tabIndex);
 
             popoutTab = new JFrame(tabTitle) {
@@ -294,7 +324,8 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutTab.setVisible(true);
         }
     }
-    private void restorePoppedOutTab(int tabIndex, JTextArea chatArea, String tabTitle) {
+
+    private void restorePoppedOutTab(int tabIndex, JTextPane chatArea, String tabTitle) {
         JScrollPane scrollPane = new JScrollPane(chatArea);
         scrollPane.setPreferredSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -317,6 +348,7 @@ public class ChatPanelSidebar extends PluginPanel {
             overrideUndecorated = false;
         }
     }
+
     private void addComponentsForSidePanel() {
         if (popoutButton != null) {
             popoutButton.setVisible(true);
@@ -333,7 +365,33 @@ public class ChatPanelSidebar extends PluginPanel {
 
     private void addComponentsForPopout() {
         popinButton = new JButton("Pop In");
-        popinButton.addActionListener(e -> togglePopout());
+        popinButton.addActionListener(e -> {
+            if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
+                //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working yet
+                Object[] options = {"OK", "Cancel"};
+                int choice = JOptionPane.showOptionDialog(
+                        popoutFrame,
+                        "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin off/on with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
+                        "Closing Pop Out with Sidebar Icon Hidden",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        options,
+                        options[0]
+                );
+                if (choice == JOptionPane.CANCEL_OPTION) {
+                    setVisible(true);
+                } else if (choice == JOptionPane.OK_OPTION) {
+                    // if (checkBox.isSelected()) Can't get working yet.
+                    {
+                        config.PopoutWarning();
+                    }
+                    togglePopout();
+                }
+            } else {
+                togglePopout();
+            }
+        });
         popoutFrame.add(popinButton, BorderLayout.SOUTH);
         popinButton2 = new JButton("Pop in");
         popinButton2.addActionListener(e -> togglePopout());
@@ -344,9 +402,11 @@ public class ChatPanelSidebar extends PluginPanel {
             add(popinButton2, BorderLayout.SOUTH);
         }
     }
+
     public boolean isPopout() {
         return isPopout;
     }
+
     public void closePopout() {
         for (JFrame popoutTab : popoutTabs) {
             popoutTab.dispose();
@@ -358,16 +418,65 @@ public class ChatPanelSidebar extends PluginPanel {
         isPopout = false;
     }
 
-    private JTextArea createChatArea() {
-        JTextArea chatArea = new JTextArea();
-        chatArea.setLineWrap(true);
-        chatArea.setWrapStyleWord(true);
-        chatArea.setEditable(false);
-        chatArea.setBorder(new EmptyBorder(5, 2, 5, 2));
-        return chatArea;
+    //Wrap editor is to mimic wrapping that was in JTextArea, before switching to TextPane. smh, must be a better way.
+    public static class WrapEditorKit extends StyledEditorKit {
+        @Override
+        public ViewFactory getViewFactory() {
+            return new WrapColumnFactory();
+        }
+
+        static class WrapColumnFactory implements ViewFactory {
+            @Override
+            public View create(Element elem) {
+                String kind = elem.getName();
+                if (kind != null) {
+                    switch (kind) {
+                        case AbstractDocument.ContentElementName:
+                            return new WrapLabelView(elem);
+                        case AbstractDocument.ParagraphElementName:
+                            return new ParagraphView(elem);
+                        case AbstractDocument.SectionElementName:
+                            return new BoxView(elem, View.Y_AXIS);
+                        case StyleConstants.ComponentElementName:
+                            return new ComponentView(elem);
+                        case StyleConstants.IconElementName:
+                            return new IconView(elem);
+                    }
+                }
+                return new LabelView(elem);
+            }
+        }
+
+        static class WrapLabelView extends LabelView {
+            public WrapLabelView(Element elem) {
+                super(elem);
+            }
+
+            @Override
+            public float getMinimumSpan(int axis) {
+                switch (axis) {
+                    case View.X_AXIS:
+                        return 0;
+                    case View.Y_AXIS:
+                        return super.getMinimumSpan(axis);
+                    default:
+                        throw new IllegalArgumentException("Invalid axis: " + axis);
+                }
+            }
+        }
     }
 
-    private JScrollPane createScrollPane(JTextArea chatArea) {
+    private JTextPane createTextPane() {
+        JTextPane textPane = new JTextPane();
+        textPane.setEditable(false);
+        textPane.setBorder(new EmptyBorder(5, 2, 5, 2));
+        SimpleAttributeSet attributes = new SimpleAttributeSet();
+        textPane.getStyledDocument().setParagraphAttributes(0, textPane.getDocument().getLength(), attributes, false);
+        textPane.setEditorKit(new WrapEditorKit());
+        return textPane;
+    }
+
+    private JScrollPane createScrollPane(JTextPane chatArea) {
         JScrollPane scrollPane = new JScrollPane(chatArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setScrollPaneSize(scrollPane);
@@ -375,8 +484,8 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private void setScrollPaneSize(JScrollPane scrollPane) {
-        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
-        scrollPane.setPreferredSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
+       scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
+       scrollPane.setPreferredSize(new Dimension(Integer.MAX_VALUE, config.chatAreaHeight()));
     }
 
     public void updateChatStyles() {
@@ -426,8 +535,27 @@ public class ChatPanelSidebar extends PluginPanel {
         allChatArea.setBackground(config.allChatBackground());
         allChatArea.setForeground(config.allChatColor());
         customChatArea.setBackground(config.customChatBackgroundColor());
-        customChatArea.setForeground(config.customChatColor());}
+        customChatArea.setForeground(config.customChatColor());
+    }
 
+    private Color NameColor(JTextPane chatArea) {
+        if (chatArea == publicChatArea) {
+            return config.publicChatNameColor();
+        } else if (chatArea == privateChatArea) {
+            return config.privateChatNameColor();
+        } else if (chatArea == clanChatArea) {
+            return config.clanChatNameColor();
+        } else if (chatArea == friendsChatArea) {
+            return config.friendsChatNameColor();
+        } else if (chatArea == gameChatArea) {
+            return config.gameChatNameColor();
+        } else if (chatArea == allChatArea) {
+            return config.allChatNameColor();
+        } else if (chatArea == customChatArea) {
+            return config.customChatNameColor();
+        }
+        return Color.YELLOW;
+    }
     private void setScrollPaneSizes() {
         if (tabbedPane.getTabCount() > 0) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
@@ -451,99 +579,82 @@ public class ChatPanelSidebar extends PluginPanel {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(6));
         }
     }
-
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
-        String formattedMessage = !config.TimestampFormat().isEmpty()
-                ? "" + timestamp + " [" + cleanedName + "]: " + message
-                : "" + timestamp + "[" + cleanedName + "]: " + message;
-        addMessageToChatArea(publicChatArea, formattedMessage);
+        addMessageToChatArea(publicChatArea, timestamp, cleanedName, message);
     }
 
     public void addPrivateChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = !config.TimestampFormat().isEmpty()
-                ? "" + timestamp + " " + "[" + name + "]: " + message
-                : "[" + name + "]: " + message;
-        addMessageToChatArea(privateChatArea, formattedMessage);
+        addMessageToChatArea(privateChatArea, timestamp, name, message);
     }
+
     public void addClanChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = !config.TimestampFormat().isEmpty() && !name.isEmpty()
-                ? "" + timestamp + " " + "[" + name + "]: " + message
-                : (name.isEmpty() ? message : "[" + name + "]: " + message);
-        addMessageToChatArea(clanChatArea, formattedMessage);
+        addMessageToChatArea(clanChatArea, timestamp, name, message);
     }
+
     public void addFriendsChatMessage(String timestamp, String name, String message) {
-        String formattedMessage = !config.TimestampFormat().isEmpty() && !name.isEmpty()
-                ? "" + timestamp + " " + "[" + name + "]: " + message
-                : (name.isEmpty() ? message : "[" + name + "]: " + message);
-        addMessageToChatArea(friendsChatArea, formattedMessage);
+        addMessageToChatArea(friendsChatArea, timestamp, name, message);
     }
+
     public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
-        String formattedMessage = !config.TimestampFormat().isEmpty()
-                ? "[" + timestamp + "] " + s + cleanedMessage
-                : s + cleanedMessage;
-        if (!shouldHideAllChatMessage(formattedMessage)) {
-            addMessageToChatArea(allChatArea, formattedMessage);
-        }
+        addMessageToChatArea(allChatArea, timestamp, cleanedName, cleanedMessage);
     }
 
     public void addCustomChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
-        cleanedMessage = filterAllChatMessage(cleanedMessage); //It's using filterAllChat, is that fine? lol
-        String s = cleanedName.isEmpty() ? "" : cleanedName + ": ";
-        String formattedMessage = !config.TimestampFormat().isEmpty()
-                ? "[" + timestamp + "] " + s + cleanedMessage
-                : s + cleanedMessage;
-        addMessageToChatArea(customChatArea, formattedMessage);
+        cleanedMessage = filterAllChatMessage(cleanedMessage);
+        addMessageToChatArea(customChatArea, timestamp, cleanedName, cleanedMessage);
     }
 
+    public void addGameChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+        cleanedMessage = filterAllChatMessage(cleanedMessage);
+        addMessageToChatArea(gameChatArea, timestamp, cleanedName, cleanedMessage);
+    }
 
-    public void addGameChatMessage(String timestamp, String cleanedMessage) {
-        cleanedMessage = filterGameChatMessage(cleanedMessage);
-        if (shouldHideGameChatMessage(cleanedMessage)) {
-            return;
-        }
-        String formattedMessage = !config.TimestampFormat().isEmpty()
-                ? "[" + timestamp + "] " + cleanedMessage
-                : timestamp + cleanedMessage;
-        addMessageToChatArea(gameChatArea, formattedMessage);
-    }
-    private String filterGameChatMessage(String message) {
-        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("|", ": ").replace("<colHIGHLIGHT>", "");
-    }
-    private boolean shouldHideGameChatMessage(String message) {
-        return message.contains("<colNORMAL>");
-    }
     private String filterAllChatMessage(String message) {
-        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("|", ": ").replace("<colHIGHLIGHT>", "").replace("<colNORMAL>", "");
+        return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("<colHIGHLIGHT>", "").replace("<colNORMAL>", "");
     }
-    private boolean shouldHideAllChatMessage(String message) {
-        return message.contains("<colNORMALimpossible>");
-    }
-    private void addMessageToChatArea(JTextArea chatArea, String formattedMessage) {
+
+    private void addMessageToChatArea(JTextPane chatArea, String timestamp, String cleanedName, String message) {
         SwingUtilities.invokeLater(() -> {
+            StyledDocument doc = chatArea.getStyledDocument();
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();
             JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
             boolean shouldAutoScroll = (verticalScrollBar.getValue() + verticalScrollBar.getVisibleAmount() == verticalScrollBar.getMaximum());
             int extraLines = config.lineSpacing();
             for (int i = 0; i < extraLines; i++) {
-                chatArea.append("\n");
+                try {
+                    doc.insertString(doc.getLength(), "\n", null);
+                } catch (BadLocationException e) {
+                    logger.error("Error adding extra lines to chat", e);
+                }
             }
 
-            chatArea.append(formattedMessage + "\n");
+            SimpleAttributeSet nameAttrs = new SimpleAttributeSet();
+            Color nameColor = NameColor(chatArea);
+            StyleConstants.setForeground(nameAttrs, nameColor);
+
             try {
-                int excess = chatArea.getLineCount() - MAX_CHAT_LINES;
+                if (!config.TimestampFormat().isEmpty()) {
+                    doc.insertString(doc.getLength(), "[" + timestamp + "] ", null);
+                }
+                if (!cleanedName.isEmpty()) {
+                    doc.insertString(doc.getLength(), "[" + cleanedName + "]: ", nameAttrs);
+                }
+                doc.insertString(doc.getLength(), message + "\n", null);
+                int excess = doc.getDefaultRootElement().getElementCount() - MAX_CHAT_LINES;
                 if (excess > 0) {
-                    int end = chatArea.getLineEndOffset(excess - 1);
-                    chatArea.replaceRange("", 0, end);
+                    Element root = doc.getDefaultRootElement();
+                    Element line = root.getElement(0);
+                    int end = line.getEndOffset();
+                    doc.remove(0, end);
                 }
             } catch (BadLocationException e) {
                 logger.error("Error managing chat lines", e);
             }
 
             if (shouldAutoScroll) {
-                chatArea.setCaretPosition(chatArea.getDocument().getLength());
+                chatArea.setCaretPosition(doc.getLength());
             }
         });
     }

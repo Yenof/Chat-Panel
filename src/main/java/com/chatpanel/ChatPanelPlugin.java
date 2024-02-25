@@ -120,11 +120,13 @@ public class ChatPanelPlugin extends Plugin
             case IGNORENOTIFICATION:
             case FRIENDNOTIFICATION:
                 if (config.showGameChat()) {
-                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedMessage);}
+                    cleanedMessage = modifyDialogMessage(cleanedMessage);
+                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case UNKNOWN:
         }
         if (config.showAllChat()) {
+            cleanedMessage = modifyDialogMessage(cleanedMessage);
             chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
         }
         if (config.showCustomChat()) {
@@ -236,6 +238,7 @@ public class ChatPanelPlugin extends Plugin
                 break;
             case DIALOG:
                 if (config.CustomDialogEnabled()) {
+                    cleanedMessage = modifyDialogMessage(cleanedMessage);
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
@@ -319,6 +322,10 @@ public class ChatPanelPlugin extends Plugin
     private String cleanString(String message)
     {
         return message.replaceAll("<img=[0-9]+>", "").replace("<lt>", "<").replace("<gt>", ">");
+    }
+    private String modifyDialogMessage(String message)
+    {
+        return message.replace("|", ": ");
     }
 
     @Subscribe
