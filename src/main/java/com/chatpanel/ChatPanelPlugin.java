@@ -1,6 +1,7 @@
 package com.chatpanel;
 
 import com.google.inject.Provides;
+import net.runelite.api.ChatMessageType;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -68,7 +69,7 @@ public class ChatPanelPlugin extends Plugin
     @Subscribe
     public void onChatMessage(ChatMessage event) {
         String cleanedName = cleanString(event.getName());
-        String cleanedMessage = cleanString(event.getMessage());
+        String cleanedMessage = event.getType() == ChatMessageType.DIALOG ? cleanDialogMessage(event.getMessage()) : cleanString(event.getMessage());
         String timestamp = getCurrentTimestamp();
 
         switch (event.getType()) {
@@ -120,13 +121,11 @@ public class ChatPanelPlugin extends Plugin
             case IGNORENOTIFICATION:
             case FRIENDNOTIFICATION:
                 if (config.showGameChat()) {
-                    cleanedMessage = modifyDialogMessage(cleanedMessage);
                     chatPanelSidebar.addGameChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case UNKNOWN:
         }
         if (config.showAllChat()) {
-            cleanedMessage = modifyDialogMessage(cleanedMessage);
             chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
         }
         if (config.showCustomChat()) {
@@ -238,7 +237,6 @@ public class ChatPanelPlugin extends Plugin
                 break;
             case DIALOG:
                 if (config.CustomDialogEnabled()) {
-                    cleanedMessage = modifyDialogMessage(cleanedMessage);
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
@@ -319,11 +317,13 @@ public class ChatPanelPlugin extends Plugin
          return dateFormat.format(new Date());}
          return customFormat;
     }
+
     private String cleanString(String message)
     {
         return message.replaceAll("<img=[0-9]+>", "").replace("<lt>", "<").replace("<gt>", ">");
     }
-    private String modifyDialogMessage(String message)
+
+    private String cleanDialogMessage(String message)
     {
         return message.replace("|", ": ");
     }
