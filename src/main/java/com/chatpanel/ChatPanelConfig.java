@@ -598,7 +598,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Public Chat",
             description = "Show/hide the Public Chat tab",
             section = tabSection,
-            position = 0
+            position = 5
     )
     default boolean showPublicChat()
     {
@@ -610,7 +610,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Private Chat",
             description = "Show/hide the Private Chat tab",
             section = tabSection,
-            position = 1
+            position = 4
     )
     default boolean showPrivateChat()
     {
@@ -622,7 +622,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Clan Chat",
             description = "Show/hide the Clan Chat tab",
             section = tabSection,
-            position = 2
+            position = 1
     )
     default boolean showClanChat()
     {
@@ -634,7 +634,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Game Chat",
             description = "Show/hide the Game tab",
             section = tabSection,
-            position = 4
+            position = 3
     )
     default boolean showGameChat()
     {
@@ -646,7 +646,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show All Chat",
             description = "Show/hide the All Chat tab",
             section = tabSection,
-            position = 5
+            position = 0
     )
     default boolean showAllChat()
     {
@@ -658,7 +658,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Friends Chat Channel",
             description = "Show/hide the Friends Chat tab",
             section = tabSection,
-            position = 3
+            position = 2
     )
     default boolean showFriendsChat()
     {

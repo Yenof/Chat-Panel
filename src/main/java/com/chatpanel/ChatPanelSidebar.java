@@ -28,7 +28,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextPane friendsChatArea;
     private final JTextPane allChatArea;
     private final JTextPane customChatArea;
-    private static final int MAX_CHAT_LINES = 20000;
+    private static final int MAX_CHAT_LINES = 10000;
     private final JTextPane gameChatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
