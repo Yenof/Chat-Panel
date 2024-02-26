@@ -28,7 +28,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextPane friendsChatArea;
     private final JTextPane allChatArea;
     private final JTextPane customChatArea;
-    private static final int MAX_CHAT_LINES = 100000;
+    private static final int MAX_CHAT_LINES = 10000;
     private final JTextPane gameChatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
@@ -180,7 +180,6 @@ public class ChatPanelSidebar extends PluginPanel {
             String currentTime = dateFormat.format(new Date());
             String defaultFileName = tabName + "_" + currentTime + ".txt";
             fileChooser.setSelectedFile(new File(defaultFileName));
-
             fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
 
             while (true) {
@@ -418,7 +417,7 @@ public class ChatPanelSidebar extends PluginPanel {
         isPopout = false;
     }
 
-    //Wrap editor is to mimic wrapping that was in JTextArea, before switching to TextPane. smh, must be a better way.
+    //Wrap editor is to mimic wrapping that was in JTextArea, before switching to JTextPane. smh, must be a better way.
     public static class WrapEditorKit extends StyledEditorKit {
         @Override
         public ViewFactory getViewFactory() {

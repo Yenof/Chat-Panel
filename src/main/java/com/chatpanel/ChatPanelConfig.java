@@ -386,7 +386,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "gameChatNameColor",
             name = "Game Chat Name Color",
-            description = "Configures the player name color for game chat.",
+            description = "Configures the name color for game chat.",
             section = gameChatSection,
             position = 2
     )
@@ -435,7 +435,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "allChatNameColor",
             name = "All Chat Name Color",
-            description = "Configures the player name color for all chat.",
+            description = "Configures the name color for all chat.",
             section = allChatSection,
             position = 2
     )
@@ -460,7 +460,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "customChatColor",
             name = "Text Color",
-            description = "Configures the font color of the custom chat messages.",
+            description = "Configures the font color.",
             section = customChatSection,
             position = 1
     )
@@ -472,7 +472,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "customChatBackgroundColor",
             name = "Background Color",
-            description = "Configures the background color of the custom chat.",
+            description = "Configures the background color.",
             section = customChatSection,
             position = 0
     )
@@ -484,7 +484,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "customChatNameColor",
             name = "Name Color",
-            description = "Configures the player name color.",
+            description = "Configures the name color.",
             section = customChatSection,
             position = 2
     )
@@ -497,7 +497,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "customChatFontSize",
             name = "Font Size",
-            description = "Configures the font size of the custom chat messages. (Max 50)",
+            description = "Configures the font size. (Max 50)",
             section = customChatSection,
             position = 3
     )
@@ -598,7 +598,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Public Chat",
             description = "Show/hide the Public Chat tab",
             section = tabSection,
-            position = 0
+            position = 5
     )
     default boolean showPublicChat()
     {
@@ -610,7 +610,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Private Chat",
             description = "Show/hide the Private Chat tab",
             section = tabSection,
-            position = 1
+            position = 4
     )
     default boolean showPrivateChat()
     {
@@ -622,7 +622,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Clan Chat",
             description = "Show/hide the Clan Chat tab",
             section = tabSection,
-            position = 2
+            position = 1
     )
     default boolean showClanChat()
     {
@@ -634,7 +634,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Game Chat",
             description = "Show/hide the Game tab",
             section = tabSection,
-            position = 4
+            position = 3
     )
     default boolean showGameChat()
     {
@@ -646,7 +646,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show All Chat",
             description = "Show/hide the All Chat tab",
             section = tabSection,
-            position = 5
+            position = 0
     )
     default boolean showAllChat()
     {
@@ -658,7 +658,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Friends Chat Channel",
             description = "Show/hide the Friends Chat tab",
             section = tabSection,
-            position = 3
+            position = 2
     )
     default boolean showFriendsChat()
     {
@@ -742,7 +742,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "ClanGimChat",
             name = "Clan GIM Chat",
-            description = "Display Clan GIM chat messages",
+            description = "Display clan GIM chat messages",
             section = customChatSection,
             position = 10
     )
@@ -754,7 +754,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "ClanGimMessage",
             name = "Clan GIM Message",
-            description = "Display Clan GIM messages",
+            description = "Display clan GIM messages",
             section = customChatSection,
             position = 11
     )
@@ -766,7 +766,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "ClanGuestChat",
             name = "Clan Guest Chat",
-            description = "Display Clan Guest chat messages",
+            description = "Display clan guest chat messages",
             section = customChatSection,
             position = 12
     )
