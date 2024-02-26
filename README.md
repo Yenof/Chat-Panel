@@ -2,16 +2,12 @@
 
 A plugin that adds in-game chat to the side panel or seperate popout windows. 
 
-By default has tabs for Public, Private, Clan, Game (including examine text).
-
-
-![image](https://github.com/Yenof/chat-panel/assets/122739279/1d60a059-4b70-409b-b171-e8bc84036bc8)![image](https://github.com/Yenof/chat-panel/assets/122739279/18919a6b-128a-4699-ae2a-436bcc29289b)![image](https://github.com/Yenof/chat-panel/assets/122739279/cfa6f204-3f40-4732-b94f-b30db4c072c1)
+By default has tabs for Public, Private, Clan, Game (including dialog messages).
 
 
 
 
-
-
+![image](https://github.com/Yenof/chat-panel/assets/122739279/190bf4c0-2f23-4d15-ad65-51a6a5a8fb38)![image](https://github.com/Yenof/chat-panel/assets/122739279/cfa6f204-3f40-4732-b94f-b30db4c072c1)
 
 
 
@@ -27,13 +23,13 @@ By default has tabs for Public, Private, Clan, Game (including examine text).
 
 ## Configuration
 
-Configurable text and background colors per tab. 
+Configurable text, background, and name colors per tab.
 
 Adjustable Font sizes per tab. (Min size 5, max 50)
 
 Options for Bold, Italic, and Plain font styles. 
 
-Can choose between 6 tabs: Public, Private, Clan, Friends Chat, Game, and All. Recommended default 4 to fit nicely on sidepanel. 
+Can choose between 7 tabs: Public, Private, Clan, Friends Chat, Game, All, and Custom. Recommended default 4 to fit nicely on sidepanel. 
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
@@ -46,7 +42,8 @@ Sidebar icon position can be adjusted.
 Can hide Sidebar icon and Pop out button (Disable Pop Out) to save screen space on small screen devices. 
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/25e923be-17a6-4556-b108-cacae4a79be7) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/a3d592fb-2608-461e-a56b-1bf1c69744a1)![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
 
 
 
@@ -61,6 +58,8 @@ Clicking a tab with middle mouse button can also pop the tab out into it's own w
 Scroll and click to lock position while reading, return to the bottom to resume snapping to most recent message.
 
 Text can be copied with Ctrl+C.
+
+Custom tab starts empty, and you must add desired chat channels through the Custom Chat configuration. 
 
 If you have "Hide Sidebar Icon" enabled and close the pop out window, you will need to toggle the plugin on/off with Auto-Pop enabled to have it auto-pop back out.
 
