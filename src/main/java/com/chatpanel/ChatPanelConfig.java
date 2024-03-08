@@ -87,6 +87,22 @@ public interface ChatPanelConfig extends Config {
     String customChatSection = "customChat";
 
     @ConfigSection(
+            name = "Custom Chat 2",
+            description = "Settings for the second Custom Chat tab, select all desired chat channels to be displayed. Long list.",
+            closedByDefault = true,
+            position = 9
+    )
+    String custom2ChatSection = "custom2Chat";
+
+    @ConfigSection(
+            name = "Custom Chat 3",
+            description = "Settings for the third Custom Chat tab, select all desired chat channels to be displayed. Long list.",
+            closedByDefault = true,
+            position = 10
+    )
+    String custom3ChatSection = "custom3Chat";
+
+    @ConfigSection(
             name = "Pop out Window",
             description = "Settings for the pop out window",
             position = 1
@@ -96,9 +112,17 @@ public interface ChatPanelConfig extends Config {
     @ConfigSection(
             name = "Tabs",
             description = "Tab selection. (Recommended 4)",
-            position = 9
+            position = 11
     )
     String tabSection = "tabselection";
+
+    @ConfigSection(
+            name = "Extras",
+            description = "Additional settings and tweaks",
+            closedByDefault = true,
+            position = 13
+    )
+    String extrasSection = "extras";
 
     @ConfigItem(
             keyName = "fontStyle",
@@ -142,8 +166,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "iconPosition",
             name = "Icon Position",
             description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
-            position = 3,
-            section = generalSection
+            position = 1,
+            section = extrasSection
     )
     default int iconPosition()
     {
@@ -154,8 +178,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "hideSidebarIcon",
             name = "Hide Sidebar Icon",
             description = "ONLY use with Auto-Pop out and if you REALLY don't want a sidebar icon. Toggle plugin on/off to restore pop out window if closed. (Requires plugin restart)",
-            section = generalSection,
-            position = 7
+            section = extrasSection,
+            position = 3
     )
     default boolean hideSidebarIcon()
     {
@@ -458,11 +482,23 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Customtab1",
+            name = "Name of tab",
+            description = "Configures the display name of the tab. (Requires plugin restart)",
+            section = customChatSection,
+            position = 0
+    )
+    default String custom1Tabname()
+    {
+        return "Custom";
+    }
+
+    @ConfigItem(
             keyName = "customChatColor",
             name = "Text Color",
             description = "Configures the font color.",
             section = customChatSection,
-            position = 1
+            position = 2
     )
     default Color customChatColor()
     {
@@ -474,7 +510,7 @@ public interface ChatPanelConfig extends Config {
             name = "Background Color",
             description = "Configures the background color.",
             section = customChatSection,
-            position = 0
+            position = 1
     )
     default Color customChatBackgroundColor()
     {
@@ -486,7 +522,7 @@ public interface ChatPanelConfig extends Config {
             name = "Name Color",
             description = "Configures the name color.",
             section = customChatSection,
-            position = 2
+            position = 3
     )
     default Color customChatNameColor()
     {
@@ -499,9 +535,131 @@ public interface ChatPanelConfig extends Config {
             name = "Font Size",
             description = "Configures the font size. (Max 50)",
             section = customChatSection,
-            position = 3
+            position = 4
     )
     default int customChatFontSize()
+    {
+        return 12;
+    }
+
+    @ConfigItem(
+            keyName = "Custom2tab",
+            name = "Name of tab",
+            description = "Configures the display name of the tab. (Requires plugin restart)",
+            section = custom2ChatSection,
+            position = 0
+    )
+    default String custom2Tabname()
+    {
+        return "Custom 2";
+    }
+
+    @ConfigItem(
+            keyName = "custom2ChatColor",
+            name = "Text Color",
+            description = "Configures the font color.",
+            section = custom2ChatSection,
+            position = 2
+    )
+    default Color custom2ChatColor()
+    {
+        return new Color(0xFFFFFF);
+    }
+
+    @ConfigItem(
+            keyName = "custom2ChatBackgroundColor",
+            name = "Background Color",
+            description = "Configures the background color.",
+            section = custom2ChatSection,
+            position = 1
+    )
+    default Color custom2ChatBackgroundColor()
+    {
+        return new Color(0x282828);
+    }
+
+    @ConfigItem(
+            keyName = "custom2ChatNameColor",
+            name = "Name Color",
+            description = "Configures the name color.",
+            section = custom2ChatSection,
+            position = 3
+    )
+    default Color custom2ChatNameColor()
+    {
+        return custom2ChatColor();
+    }
+
+    @Range(min = 5, max = 50)
+    @ConfigItem(
+            keyName = "custom2ChatFontSize",
+            name = "Font Size",
+            description = "Configures the font size. (Max 50)",
+            section = custom2ChatSection,
+            position = 4
+    )
+    default int custom2ChatFontSize()
+    {
+        return 12;
+    }
+
+    @ConfigItem(
+            keyName = "Custom3tab",
+            name = "Name of tab",
+            description = "Configures the display name of the tab. (Requires plugin restart)",
+            section = custom3ChatSection,
+            position = 0
+    )
+    default String custom3Tabname()
+    {
+        return "Custom 3";
+    }
+
+    @ConfigItem(
+            keyName = "custom3ChatColor",
+            name = "Text Color",
+            description = "Configures the font color.",
+            section = custom3ChatSection,
+            position = 2
+    )
+    default Color custom3ChatColor()
+    {
+        return new Color(0xFFFFFF);
+    }
+
+    @ConfigItem(
+            keyName = "custom3ChatBackgroundColor",
+            name = "Background Color",
+            description = "Configures the background color.",
+            section = custom3ChatSection,
+            position = 1
+    )
+    default Color custom3ChatBackgroundColor()
+    {
+        return new Color(0x282828);
+    }
+
+    @ConfigItem(
+            keyName = "custom3ChatNameColor",
+            name = "Name Color",
+            description = "Configures the name color.",
+            section = custom3ChatSection,
+            position = 3
+    )
+    default Color custom3ChatNameColor()
+    {
+        return custom3ChatColor();
+    }
+
+    @Range(min = 5, max = 50)
+    @ConfigItem(
+            keyName = "custom3ChatFontSize",
+            name = "Font Size",
+            description = "Configures the font size. (Max 50)",
+            section = custom3ChatSection,
+            position = 4
+    )
+    default int custom3ChatFontSize()
     {
         return 12;
     }
@@ -561,7 +719,7 @@ public interface ChatPanelConfig extends Config {
             keyName = "PopoutWarning",
             name = "Show Pop Out Closure Warning",
             description = "Show the warning on closing the pop out window with Hide Sidebar Icon on",
-            section = popoutSection,
+            section = extrasSection,
             position = 3
     )
     default boolean PopoutWarning()
@@ -586,7 +744,7 @@ public interface ChatPanelConfig extends Config {
             name = "Disable Pop Out",
             description = "Hides the side panel pop out button, does NOT work with Auto-pop out. (Requires plugin restart)",
             position = 6,
-            section = popoutSection
+            section = extrasSection
     )
     default boolean DisablePopout()
     {
@@ -677,8 +835,33 @@ public interface ChatPanelConfig extends Config {
         return false;
     }
 
+    @ConfigItem(
+            keyName = "showCustom2Chat",
+            name = "Show Custom Chat 2",
+            description = "Show/hide the second Custom Chat tab, have more fun!",
+            section = tabSection,
+            position = 10
+    )
+    default boolean showCustom2Chat()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "showCustom3Chat",
+            name = "Show Custom Chat 3",
+            description = "Show/hide the third Custom Chat tab, have all the fun!",
+            section = tabSection,
+            position = 11
+    )
+    default boolean showCustom3Chat()
+    {
+        return false;
+    }
+
 
     // Start of Custom Chat channels...
+
     @ConfigItem(
             keyName = "Broadcast",
             name = "Broadcast",
@@ -1072,6 +1255,765 @@ public interface ChatPanelConfig extends Config {
     )
     default boolean CustomWelcomeEnabled()
     {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Broadcast2",
+            name = "Broadcast",
+            description = "Display broadcast messages",
+            section = custom2ChatSection,
+            position = 5
+    )
+    default boolean Custom2BroadcastEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqClanChat2",
+            name = "Chalreq Clan Chat",
+            description = "Display chalreq clan chat messages",
+            section = custom2ChatSection,
+            position = 6
+    )
+    default boolean Custom2ChalreqClanChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqFriendsChat2",
+            name = "Chalreq Friends Chat",
+            description = "Display chalreq friends chat messages",
+            section = custom2ChatSection,
+            position = 7
+    )
+    default boolean Custom2ChalreqFriendsChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqTrade2",
+            name = "Chalreq Trade",
+            description = "Display chalreq trade messages",
+            section = custom2ChatSection,
+            position = 8
+    )
+    default boolean Custom2ChalreqTradeEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanChat2",
+            name = "Clan Chat",
+            description = "Display clan chat messages",
+            section = custom2ChatSection,
+            position = 9
+    )
+    default boolean Custom2ClanChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGimChat2",
+            name = "Clan GIM Chat",
+            description = "Display clan GIM chat messages",
+            section = custom2ChatSection,
+            position = 10
+    )
+    default boolean Custom2ClanGimChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGimMessage2",
+            name = "Clan GIM Message",
+            description = "Display clan GIM messages",
+            section = custom2ChatSection,
+            position = 11
+    )
+    default boolean Custom2ClanGimMessageEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGuestChat2",
+            name = "Clan Guest Chat",
+            description = "Display clan guest chat messages",
+            section = custom2ChatSection,
+            position = 12
+    )
+    default boolean Custom2ClanGuestChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGuestMessage2",
+            name = "Clan Guest Message",
+            description = "Display clan guest messages",
+            section = custom2ChatSection,
+            position = 13
+    )
+    default boolean Custom2ClanGuestMessageEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanMessage2",
+            name = "Clan Message",
+            description = "Display clan messages",
+            section = custom2ChatSection,
+            position = 14
+    )
+    default boolean Custom2ClanMessageEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Console2",
+            name = "Console",
+            description = "Display console messages",
+            section = custom2ChatSection,
+            position = 15
+    )
+    default boolean Custom2ConsoleEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Dialog2",
+            name = "Dialog",
+            description = "Display dialog messages",
+            section = custom2ChatSection,
+            position = 16
+    )
+    default boolean Custom2DialogEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Engine2",
+            name = "Engine",
+            description = "Display engine messages",
+            section = custom2ChatSection,
+            position = 17
+    )
+    default boolean Custom2EngineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendNotification2",
+            name = "Friend Notification",
+            description = "Display friend notifications",
+            section = custom2ChatSection,
+            position = 18
+    )
+    default boolean Custom2FriendNotificationEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendsChat2",
+            name = "Friends Chat",
+            description = "Display friends chat messages",
+            section = custom2ChatSection,
+            position = 19
+    )
+    default boolean Custom2FriendsChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendsChatNotification2",
+            name = "Friends Chat Notification",
+            description = "Display friends chat notifications",
+            section = custom2ChatSection,
+            position = 20
+    )
+    default boolean Custom2FriendsChatNotificationEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "GameMessage2",
+            name = "Game Message",
+            description = "Display game messages",
+            section = custom2ChatSection,
+            position = 21
+    )
+    default boolean Custom2GameMessageEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "IgnoreNotification2",
+            name = "Ignore Notification",
+            description = "Display ignore notifications",
+            section = custom2ChatSection,
+            position = 22
+    )
+    default boolean Custom2IgnoreNotificationEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ItemExamine2",
+            name = "Item Examine",
+            description = "Display item examine messages",
+            section = custom2ChatSection,
+            position = 23
+    )
+    default boolean Custom2ItemExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModAutoTyper2",
+            name = "Mod Auto Typer",
+            description = "Display mod auto-typer messages",
+            section = custom2ChatSection,
+            position = 24
+    )
+    default boolean Custom2ModAutoTyperEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModChat2",
+            name = "Mod Chat",
+            description = "Display mod chat messages",
+            section = custom2ChatSection,
+            position = 25
+    )
+    default boolean Custom2ModChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModPrivateChat2",
+            name = "Mod Private Chat",
+            description = "Display mod private chat messages",
+            section = custom2ChatSection,
+            position = 26
+    )
+    default boolean Custom2ModPrivateChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "NpcExamine2",
+            name = "NPC Examine",
+            description = "Display NPC examine messages",
+            section = custom2ChatSection,
+            position = 27
+    )
+    default boolean Custom2NpcExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ObjectExamine2",
+            name = "Object Examine",
+            description = "Display object examine messages",
+            section = custom2ChatSection,
+            position = 28
+    )
+    default boolean Custom2ObjectExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PrivateChat2",
+            name = "Private Chat",
+            description = "Display private chat messages",
+            section = custom2ChatSection,
+            position = 29
+    )
+    default boolean Custom2PrivateChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PrivateChatout2",
+            name = "Private Chat Out",
+            description = "Display private chat out messages",
+            section = custom2ChatSection,
+            position = 30
+    )
+    default boolean Custom2PrivateChatoutEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PublicChat2",
+            name = "Public Chat",
+            description = "Display public chat messages",
+            section = custom2ChatSection,
+            position = 31
+    )
+    default boolean Custom2PublicChatEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Spam2",
+            name = "Spam",
+            description = "Display spam messages",
+            section = custom2ChatSection,
+            position = 32
+    )
+    default boolean Custom2SpamEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Trade2",
+            name = "Trade",
+            description = "Display trade messages",
+            section = custom2ChatSection,
+            position = 33
+    )
+    default boolean Custom2TradeEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "TradeReq2",
+            name = "Trade Req",
+            description = "Display trade request messages",
+            section = custom2ChatSection,
+            position = 34
+    )
+    default boolean Custom2TradeReqEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "TradeSent2",
+            name = "Trade Sent",
+            description = "Display trade sent messages",
+            section = custom2ChatSection,
+            position = 35
+    )
+    default boolean Custom2TradeSentEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Unknown2",
+            name = "Unknown",
+            description = "Display 'unknown' chat channel",
+            section = custom2ChatSection,
+            position = 36
+    )
+    default boolean Custom2UnknownEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Welcome2",
+            name = "Welcome",
+            description = "Display welcome messages",
+            section = custom2ChatSection,
+            position = 37
+    )
+    default boolean Custom2WelcomeEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Broadcast3",
+            name = "Broadcast",
+            description = "Display broadcast messages",
+            section = custom3ChatSection,
+            position = 5
+    )
+    default boolean Custom3BroadcastEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqClanChat3",
+            name = "Chalreq Clan Chat",
+            description = "Display chalreq clan chat messages",
+            section = custom3ChatSection,
+            position = 6
+    )
+    default boolean Custom3ChalreqClanChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqFriendsChat3",
+            name = "Chalreq Friends Chat",
+            description = "Display chalreq friends chat messages",
+            section = custom3ChatSection,
+            position = 7
+    )
+    default boolean Custom3ChalreqFriendsChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ChalreqTrade3",
+            name = "Chalreq Trade",
+            description = "Display chalreq trade messages",
+            section = custom3ChatSection,
+            position = 8
+    )
+    default boolean Custom3ChalreqTradeEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanChat3",
+            name = "Clan Chat",
+            description = "Display clan chat messages",
+            section = custom3ChatSection,
+            position = 9
+    )
+    default boolean Custom3ClanChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGimChat3",
+            name = "Clan GIM Chat",
+            description = "Display clan GIM chat messages",
+            section = custom3ChatSection,
+            position = 10
+    )
+    default boolean Custom3ClanGimChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGimMessage3",
+            name = "Clan GIM Message",
+            description = "Display clan GIM messages",
+            section = custom3ChatSection,
+            position = 11
+    )
+    default boolean Custom3ClanGimMessageEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGuestChat3",
+            name = "Clan Guest Chat",
+            description = "Display clan guest chat messages",
+            section = custom3ChatSection,
+            position = 12
+    )
+    default boolean Custom3ClanGuestChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanGuestMessage3",
+            name = "Clan Guest Message",
+            description = "Display clan guest messages",
+            section = custom3ChatSection,
+            position = 13
+    )
+    default boolean Custom3ClanGuestMessageEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ClanMessage3",
+            name = "Clan Message",
+            description = "Display clan messages",
+            section = custom3ChatSection,
+            position = 14
+    )
+    default boolean Custom3ClanMessageEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Console3",
+            name = "Console",
+            description = "Display console messages",
+            section = custom3ChatSection,
+            position = 15
+    )
+    default boolean Custom3ConsoleEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Dialog3",
+            name = "Dialog",
+            description = "Display dialog messages",
+            section = custom3ChatSection,
+            position = 16
+    )
+    default boolean Custom3DialogEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Engine3",
+            name = "Engine",
+            description = "Display engine messages",
+            section = custom3ChatSection,
+            position = 17
+    )
+    default boolean Custom3EngineEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendNotification3",
+            name = "Friend Notification",
+            description = "Display friend notifications",
+            section = custom3ChatSection,
+            position = 18
+    )
+    default boolean Custom3FriendNotificationEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendsChat3",
+            name = "Friends Chat",
+            description = "Display friends chat messages",
+            section = custom3ChatSection,
+            position = 19
+    )
+    default boolean Custom3FriendsChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "FriendsChatNotification3",
+            name = "Friends Chat Notification",
+            description = "Display friends chat notifications",
+            section = custom3ChatSection,
+            position = 20
+    )
+    default boolean Custom3FriendsChatNotificationEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "GameMessage3",
+            name = "Game Message",
+            description = "Display game messages",
+            section = custom3ChatSection,
+            position = 21
+    )
+    default boolean Custom3GameMessageEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "IgnoreNotification3",
+            name = "Ignore Notification",
+            description = "Display ignore notifications",
+            section = custom3ChatSection,
+            position = 22
+    )
+    default boolean Custom3IgnoreNotificationEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ItemExamine3",
+            name = "Item Examine",
+            description = "Display item examine messages",
+            section = custom3ChatSection,
+            position = 23
+    )
+    default boolean Custom3ItemExamineEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModAutoTyper3",
+            name = "Mod Auto Typer",
+            description = "Display mod auto-typer messages",
+            section = custom3ChatSection,
+            position = 24
+    )
+    default boolean Custom3ModAutoTyperEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModChat3",
+            name = "Mod Chat",
+            description = "Display mod chat messages",
+            section = custom3ChatSection,
+            position = 25
+    )
+    default boolean Custom3ModChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ModPrivateChat3",
+            name = "Mod Private Chat",
+            description = "Display mod private chat messages",
+            section = custom3ChatSection,
+            position = 26
+    )
+    default boolean Custom3ModPrivateChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "NpcExamine3",
+            name = "NPC Examine",
+            description = "Display NPC examine messages",
+            section = custom3ChatSection,
+            position = 27
+    )
+    default boolean Custom3NpcExamineEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "ObjectExamine3",
+            name = "Object Examine",
+            description = "Display object examine messages",
+            section = custom3ChatSection,
+            position = 28
+    )
+    default boolean Custom3ObjectExamineEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PrivateChat3",
+            name = "Private Chat",
+            description = "Display private chat messages",
+            section = custom3ChatSection,
+            position = 29
+    )
+    default boolean Custom3PrivateChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PrivateChatout3",
+            name = "Private Chat Out",
+            description = "Display private chat out messages",
+            section = custom3ChatSection,
+            position = 30
+    )
+    default boolean Custom3PrivateChatoutEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "PublicChat3",
+            name = "Public Chat",
+            description = "Display public chat messages",
+            section = custom3ChatSection,
+            position = 31
+    )
+    default boolean Custom3PublicChatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Spam3",
+            name = "Spam",
+            description = "Display spam messages",
+            section = custom3ChatSection,
+            position = 32
+    )
+    default boolean Custom3SpamEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Trade3",
+            name = "Trade",
+            description = "Display trade messages",
+            section = custom3ChatSection,
+            position = 33
+    )
+    default boolean Custom3TradeEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "TradeReq3",
+            name = "Trade Req",
+            description = "Display trade request messages",
+            section = custom3ChatSection,
+            position = 34
+    )
+    default boolean Custom3TradeReqEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "TradeSent3",
+            name = "Trade Sent",
+            description = "Display trade sent messages",
+            section = custom3ChatSection,
+            position = 35
+    )
+    default boolean Custom3TradeSentEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Unknown3",
+            name = "Unknown",
+            description = "Display 'unknown' chat channel",
+            section = custom3ChatSection,
+            position = 36
+    )
+    default boolean Custom3UnknownEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Welcome3",
+            name = "Welcome",
+            description = "Display welcome messages",
+            section = custom3ChatSection,
+            position = 37
+    )
+    default boolean Custom3WelcomeEnabled() {
         return false;
     }
 }
