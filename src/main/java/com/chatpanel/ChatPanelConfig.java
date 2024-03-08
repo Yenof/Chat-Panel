@@ -859,6 +859,17 @@ public interface ChatPanelConfig extends Config {
         return false;
     }
 
+    @ConfigItem(
+            keyName = "maxchatlines",
+            name = "Max Lines",
+            description = "Max lines to display in each tab, starts getting laggy above 15,000 but feel free. (Default 10,000)",
+            section = extrasSection,
+            position = 0
+    )
+    default int maxLines()
+    {
+        return 10000;
+    }
 
     // Start of Custom Chat channels...
 

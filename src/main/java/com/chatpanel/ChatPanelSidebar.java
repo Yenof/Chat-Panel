@@ -30,7 +30,6 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextPane customChatArea;
     private final JTextPane customChatArea2;
     private final JTextPane customChatArea3;
-    private static final int MAX_CHAT_LINES = 10000;
     private final JTextPane gameChatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
@@ -684,12 +683,21 @@ public class ChatPanelSidebar extends PluginPanel {
                     doc.insertString(doc.getLength(), "[" + cleanedName + "]: ", nameAttrs);
                 }
                 doc.insertString(doc.getLength(), message + "\n", null);
-                int excess = doc.getDefaultRootElement().getElementCount() - MAX_CHAT_LINES;
+
+                int excess = doc.getDefaultRootElement().getElementCount() - config.maxLines();
                 if (excess > 0) {
-                    Element root = doc.getDefaultRootElement();
-                    Element line = root.getElement(0);
-                    int end = line.getEndOffset();
-                    doc.remove(0, end);
+                    try {
+                        Element root = doc.getDefaultRootElement();
+                        int linesToRemove = Math.min(excess, config.maxLines());
+                        int endOffset = 0;
+                        for (int i = 0; i < linesToRemove; i++) {
+                            Element line = root.getElement(i);
+                            endOffset = line.getEndOffset();
+                        }
+                        doc.remove(0, endOffset);
+                    } catch (BadLocationException e) {
+                        logger.error("Error removing excess lines from chat", e);
+                    }
                 }
             } catch (BadLocationException e) {
                 logger.error("Error managing chat lines", e);
