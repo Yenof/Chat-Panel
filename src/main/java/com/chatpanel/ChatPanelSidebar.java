@@ -28,6 +28,8 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextPane friendsChatArea;
     private final JTextPane allChatArea;
     private final JTextPane customChatArea;
+    private final JTextPane customChatArea2;
+    private final JTextPane customChatArea3;
     private static final int MAX_CHAT_LINES = 10000;
     private final JTextPane gameChatArea;
     private final JTabbedPane tabbedPane;
@@ -60,6 +62,8 @@ public class ChatPanelSidebar extends PluginPanel {
         gameChatArea = createTextPane();
         allChatArea = createTextPane();
         customChatArea = createTextPane();
+        customChatArea2 = createTextPane();
+        customChatArea3 = createTextPane();
 
         tabbedPane = new JTabbedPane();
         createTabs();
@@ -149,8 +153,21 @@ public class ChatPanelSidebar extends PluginPanel {
         }
 
         if (config.showCustomChat()) {
-            tabbedPane.addTab("Custom", createScrollPane(customChatArea));
-            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab("Custom"), "Right click for options. MMB to pop out tab");
+            String tabTitle = config.custom1Tabname();
+            tabbedPane.addTab(tabTitle, createScrollPane(customChatArea));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab(tabTitle), "Right click for options. MMB to pop out tab");
+        }
+
+        if (config.showCustom2Chat()) {
+            String tabTitle = config.custom2Tabname();
+            tabbedPane.addTab(tabTitle, createScrollPane(customChatArea2));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab(tabTitle), "Right click for options. MMB to pop out tab");
+        }
+
+        if (config.showCustom3Chat()) {
+            String tabTitle = config.custom3Tabname();
+            tabbedPane.addTab(tabTitle, createScrollPane(customChatArea3));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab(tabTitle), "Right click for options. MMB to pop out tab");
         }
     }
 
@@ -501,6 +518,8 @@ public class ChatPanelSidebar extends PluginPanel {
         gameChatArea.setFont(getFontFromConfig(config.gameChatFontSize()));
         allChatArea.setFont(getFontFromConfig(config.allChatFontSize()));
         customChatArea.setFont(getFontFromConfig(config.customChatFontSize()));
+        customChatArea2.setFont(getFontFromConfig(config.custom2ChatFontSize()));
+        customChatArea3.setFont(getFontFromConfig(config.custom3ChatFontSize()));
     }
 
     private Font getFontFromConfig(int fontSize) {
@@ -535,6 +554,10 @@ public class ChatPanelSidebar extends PluginPanel {
         allChatArea.setForeground(config.allChatColor());
         customChatArea.setBackground(config.customChatBackgroundColor());
         customChatArea.setForeground(config.customChatColor());
+        customChatArea2.setBackground(config.custom2ChatBackgroundColor());
+        customChatArea2.setForeground(config.custom2ChatColor());
+        customChatArea3.setBackground(config.custom3ChatBackgroundColor());
+        customChatArea3.setForeground(config.custom3ChatColor());
     }
 
     private Color NameColor(JTextPane chatArea) {
@@ -552,6 +575,10 @@ public class ChatPanelSidebar extends PluginPanel {
             return config.allChatNameColor();
         } else if (chatArea == customChatArea) {
             return config.customChatNameColor();
+        } else if (chatArea == customChatArea2) {
+            return config.custom2ChatNameColor();
+        } else if (chatArea == customChatArea3) {
+            return config.custom3ChatNameColor();
         }
         return Color.YELLOW;
     }
@@ -576,6 +603,12 @@ public class ChatPanelSidebar extends PluginPanel {
         }
         if (tabbedPane.getTabCount() > 6) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(6));
+        }
+        if (tabbedPane.getTabCount() > 7) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(7));
+        }
+        if (tabbedPane.getTabCount() > 8) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(8));
         }
     }
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
@@ -602,6 +635,16 @@ public class ChatPanelSidebar extends PluginPanel {
     public void addCustomChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
         addMessageToChatArea(customChatArea, timestamp, cleanedName, cleanedMessage);
+    }
+
+    public void addCustom2ChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+        cleanedMessage = filterAllChatMessage(cleanedMessage);
+        addMessageToChatArea(customChatArea2, timestamp, cleanedName, cleanedMessage);
+    }
+
+    public void addCustom3ChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+        cleanedMessage = filterAllChatMessage(cleanedMessage);
+        addMessageToChatArea(customChatArea3, timestamp, cleanedName, cleanedMessage);
     }
 
     public void addGameChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
