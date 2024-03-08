@@ -29,7 +29,7 @@ Adjustable Font sizes per tab. (Min size 5, max 50)
 
 Options for Bold, Italic, and Plain font styles. 
 
-Can choose between 7 tabs: Public, Private, Clan, Friends Chat, Game, All, and Custom. Recommended default 4 to fit nicely on sidepanel. 
+Can choose between many tabs: Public, Private, Clan, Friends Chat, Game, All, and Custom (1, 2, 3). Recommended default 4 to fit nicely on sidepanel. 
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
@@ -37,13 +37,13 @@ Timestamps and spaces between lines can be added.
 
 Always on top, preset size, Auto-pop, and opacity options for pop out window.
 
-Sidebar icon position can be adjusted.
+Sidebar icon position can be adjusted or icon hidden.
 
-Can hide Sidebar icon and Pop out button (Disable Pop Out) to save screen space on small screen devices. 
+Can hide Pop out button (Disable Pop Out) to save screen space on small screen devices. 
 
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/a3d592fb-2608-461e-a56b-1bf1c69744a1)![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
+![image](https://github.com/Yenof/chat-panel/assets/122739279/525134c0-626c-40b0-9acb-4b11f5d64588)![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
 
 
 
@@ -59,7 +59,7 @@ Scroll and click to lock position while reading, return to the bottom to resume 
 
 Text can be copied with Ctrl+C.
 
-Custom tab starts empty, and you must add desired chat channels through the Custom Chat configuration. 
+Custom tabs start empty, and you must add desired chat channels through the Custom Chat configuration. 
 
 If you have "Hide Sidebar Icon" enabled and close the pop out window, you will need to toggle the plugin on/off with Auto-Pop enabled to have it auto-pop back out.
 
@@ -69,7 +69,7 @@ Timestamp Format can be set using SimpleDateFormat patterns.
 
 ## Notes:
 
-Max lines of chat is 10,000.
+Max lines of chat is 10,000 by default.
 
 When toggling plugin on/off it does not remember messages. 
 
