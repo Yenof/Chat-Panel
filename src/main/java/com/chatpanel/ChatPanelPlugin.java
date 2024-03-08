@@ -523,7 +523,7 @@ public class ChatPanelPlugin extends Plugin
 
     private String cleanDialogMessage(String message)
     {
-        return message.replace("|", ":h ");
+        return message.replace("|", ": ");
     }
 
     @Subscribe
