@@ -63,7 +63,6 @@ public class ChatPanelPlugin extends Plugin
         if (navButton != null){
         clientToolbar.removeNavigation(navButton);}
         chatPanelSidebar.closePopout();
-       // chatPanelSidebar.closePopoutTab();
     }
 
     @Subscribe

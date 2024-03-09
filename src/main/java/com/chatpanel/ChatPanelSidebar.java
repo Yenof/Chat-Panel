@@ -337,6 +337,7 @@ public class ChatPanelSidebar extends PluginPanel {
             setCactus(config.popoutOpacity() / 100.0f);
             popoutTab.setSize(config.popoutSize());
             popoutTab.setVisible(true);
+            popoutTab.setMinimumSize(new Dimension(40, 10));
         }
     }
 
