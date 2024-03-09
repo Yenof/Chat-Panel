@@ -68,9 +68,10 @@ public class ChatPanelPlugin extends Plugin
 
     @Subscribe
     public void onChatMessage(ChatMessage event) {
-        String cleanedName = cleanString(event.getName());
+        String cleanedName = event.getType() == ChatMessageType.PRIVATECHATOUT ? "To " + cleanString(event.getName()) : event.getType() == ChatMessageType.PRIVATECHAT || event.getType() == ChatMessageType.MODPRIVATECHAT? "From " + cleanString(event.getName()) : cleanString(event.getName());
         String cleanedMessage = event.getType() == ChatMessageType.DIALOG ? cleanDialogMessage(event.getMessage()) : cleanString(event.getMessage());
         String timestamp = getCurrentTimestamp();
+
 
         switch (event.getType()) {
             case PUBLICCHAT:
@@ -81,7 +82,7 @@ public class ChatPanelPlugin extends Plugin
             case PRIVATECHAT:
             case MODPRIVATECHAT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, event.getName(), cleanedMessage);}
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
@@ -95,7 +96,7 @@ public class ChatPanelPlugin extends Plugin
                 break;
             case PRIVATECHATOUT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, "You", cleanedMessage);}
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case FRIENDSCHAT:
             case CHALREQ_FRIENDSCHAT:

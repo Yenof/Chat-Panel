@@ -484,7 +484,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "Customtab1",
             name = "Name of Tab",
-            description = "Configures the display name of the tab. (Requires plugin restart)",
+            description = "Configures the display name of the tab. (Requires plugin restart, or hide & show tab)",
             section = customChatSection,
             position = 0
     )
@@ -545,7 +545,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "Custom2tab",
             name = "Name of Tab",
-            description = "Configures the display name of the tab. (Requires plugin restart)",
+            description = "Configures the display name of the tab. (Requires plugin restart, or hide & show tab)",
             section = custom2ChatSection,
             position = 0
     )
@@ -606,7 +606,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "Custom3tab",
             name = "Name of Tab",
-            description = "Configures the display name of the tab. (Requires plugin restart)",
+            description = "Configures the display name of the tab. (Requires plugin restart, or hide & show tab)",
             section = custom3ChatSection,
             position = 0
     )
