@@ -128,7 +128,7 @@ public class ChatPanelPlugin extends Plugin
         if (config.showAllChat()) {
             chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
         }
-        if (config.showCustomChat()) {
+        if (config.showCustomChat() || config.showCustom2Chat() || config.showCustom3Chat()) {
             onCustomChatMessage(event, cleanedName, cleanedMessage, timestamp);
         }
     }
@@ -136,365 +136,365 @@ public class ChatPanelPlugin extends Plugin
     private void onCustomChatMessage(ChatMessage event, String cleanedName, String cleanedMessage, String timestamp) {
         switch (event.getType()) {
             case PUBLICCHAT:
-                if (config.CustomPublicChatEnabled()) {
+                if (config.showCustomChat() && config.CustomPublicChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2PublicChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2PublicChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3PublicChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3PublicChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case MODCHAT:
-                if (config.CustomModChatEnabled()) {
+                if (config.showCustomChat() && config.CustomModChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ModChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ModChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ModChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ModChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case PRIVATECHAT:
-                if (config.CustomPrivateChatEnabled()) {
+                if (config.showCustomChat() && config.CustomPrivateChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2PrivateChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2PrivateChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3PrivateChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3PrivateChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case MODPRIVATECHAT:
-                if (config.CustomModPrivateChatEnabled()) {
+                if (config.showCustomChat() && config.CustomModPrivateChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ModPrivateChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ModPrivateChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ModPrivateChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ModPrivateChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_CHAT:
-                if (config.CustomClanChatEnabled()) {
+                if (config.showCustomChat() && config.CustomClanChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_MESSAGE:
-                if (config.CustomClanMessageEnabled()) {
+                if (config.showCustomChat() && config.CustomClanMessageEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanMessageEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanMessageEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanMessageEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanMessageEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_GUEST_MESSAGE:
-                if (config.CustomClanGuestMessageEnabled()) {
+                if (config.showCustomChat() && config.CustomClanGuestMessageEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanGuestMessageEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanGuestMessageEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanGuestMessageEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanGuestMessageEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_GIM_CHAT:
-                if (config.CustomClanGimChatEnabled()) {
+                if (config.showCustomChat() && config.CustomClanGimChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanGimChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanGimChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanGimChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanGimChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_GIM_MESSAGE:
-                if (config.CustomClanGimMessageEnabled()) {
+                if (config.showCustomChat() && config.CustomClanGimMessageEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanGimMessageEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanGimMessageEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanGimMessageEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanGimMessageEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CLAN_GUEST_CHAT:
-                if (config.CustomClanGuestChatEnabled()) {
+                if (config.showCustomChat() && config.CustomClanGuestChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ClanGuestChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ClanGuestChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ClanGuestChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ClanGuestChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CHALREQ_CLANCHAT:
-                if (config.CustomChalreqClanChatEnabled()) {
+                if (config.showCustomChat() && config.CustomChalreqClanChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ChalreqClanChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ChalreqClanChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ChalreqClanChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ChalreqClanChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case PRIVATECHATOUT:
-                if (config.CustomPrivateChatoutEnabled()) {
+                if (config.showCustomChat() && config.CustomPrivateChatoutEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2PrivateChatoutEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2PrivateChatoutEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3PrivateChatoutEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3PrivateChatoutEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case FRIENDSCHAT:
-                if (config.CustomFriendsChatEnabled()) {
+                if (config.showCustomChat() && config.CustomFriendsChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2FriendsChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2FriendsChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3FriendsChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3FriendsChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CHALREQ_FRIENDSCHAT:
-                if (config.CustomChalreqFriendsChatEnabled()) {
+                if (config.showCustomChat() && config.CustomChalreqFriendsChatEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ChalreqFriendsChatEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ChalreqFriendsChatEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ChalreqFriendsChatEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ChalreqFriendsChatEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case FRIENDSCHATNOTIFICATION:
-                if (config.CustomFriendsChatNotificationEnabled()) {
+                if (config.showCustomChat() && config.CustomFriendsChatNotificationEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2FriendsChatNotificationEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2FriendsChatNotificationEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3FriendsChatNotificationEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3FriendsChatNotificationEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case BROADCAST:
-                if (config.CustomBroadcastEnabled()) {
+                if (config.showCustomChat() && config.CustomBroadcastEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2BroadcastEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2BroadcastEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3BroadcastEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3BroadcastEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case GAMEMESSAGE:
-                if (config.CustomGameMessageEnabled()) {
+                if (config.showCustomChat() && config.CustomGameMessageEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2GameMessageEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2GameMessageEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3GameMessageEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3GameMessageEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case ENGINE:
-                if (config.CustomEngineEnabled()) {
+                if (config.showCustomChat() && config.CustomEngineEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2EngineEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2EngineEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3EngineEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3EngineEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case NPC_EXAMINE:
-                if (config.CustomNpcExamineEnabled()) {
+                if (config.showCustomChat() && config.CustomNpcExamineEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2NpcExamineEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2NpcExamineEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3NpcExamineEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3NpcExamineEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case SPAM:
-                if (config.CustomSpamEnabled()) {
+                if (config.showCustomChat() && config.CustomSpamEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2SpamEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2SpamEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3SpamEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3SpamEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case DIALOG:
-                if (config.CustomDialogEnabled()) {
+                if (config.showCustomChat() && config.CustomDialogEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2DialogEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2DialogEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3DialogEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3DialogEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case ITEM_EXAMINE:
-                if (config.CustomItemExamineEnabled()) {
+                if (config.showCustomChat() && config.CustomItemExamineEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ItemExamineEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ItemExamineEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ItemExamineEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ItemExamineEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case OBJECT_EXAMINE:
-                if (config.CustomObjectExamineEnabled()) {
+                if (config.showCustomChat() && config.CustomObjectExamineEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ObjectExamineEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ObjectExamineEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ObjectExamineEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ObjectExamineEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case WELCOME:
-                if (config.CustomWelcomeEnabled()) {
+                if (config.showCustomChat() && config.CustomWelcomeEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2WelcomeEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2WelcomeEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3WelcomeEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3WelcomeEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case TRADE:
-                if (config.CustomTradeEnabled()) {
+                if (config.showCustomChat() && config.CustomTradeEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2TradeEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2TradeEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3TradeEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3TradeEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case TRADE_SENT:
-                if (config.CustomTradeSentEnabled()) {
+                if (config.showCustomChat() && config.CustomTradeSentEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2TradeSentEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2TradeSentEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3TradeSentEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3TradeSentEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case TRADEREQ:
-                if (config.CustomTradeReqEnabled()) {
+                if (config.showCustomChat() && config.CustomTradeReqEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2TradeReqEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2TradeReqEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3TradeReqEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3TradeReqEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CONSOLE:
-                if (config.CustomConsoleEnabled()) {
+                if (config.showCustomChat() && config.CustomConsoleEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ConsoleEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ConsoleEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ConsoleEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ConsoleEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case MODAUTOTYPER:
-                if (config.CustomModAutoTyperEnabled()) {
+                if (config.showCustomChat() && config.CustomModAutoTyperEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ModAutoTyperEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ModAutoTyperEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ModAutoTyperEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ModAutoTyperEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case CHALREQ_TRADE:
-                if (config.CustomChalreqTradeEnabled()) {
+                if (config.showCustomChat() && config.CustomChalreqTradeEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2ChalreqTradeEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2ChalreqTradeEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3ChalreqTradeEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3ChalreqTradeEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case IGNORENOTIFICATION:
-                if (config.CustomIgnoreNotificationEnabled()) {
+                if (config.showCustomChat() && config.CustomIgnoreNotificationEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2IgnoreNotificationEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2IgnoreNotificationEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3IgnoreNotificationEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3IgnoreNotificationEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case FRIENDNOTIFICATION:
-                if (config.CustomFriendNotificationEnabled()) {
+                if (config.showCustomChat() && config.CustomFriendNotificationEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2FriendNotificationEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2FriendNotificationEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3FriendNotificationEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3FriendNotificationEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
             case UNKNOWN:
-                if (config.CustomUnknownEnabled()) {
+                if (config.showCustomChat() && config.CustomUnknownEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom2UnknownEnabled()) {
+                if (config.showCustom2Chat() && config.Custom2UnknownEnabled()) {
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
-                if (config.Custom3UnknownEnabled()) {
+                if (config.showCustom3Chat() && config.Custom3UnknownEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, cleanedName, cleanedMessage);
                 }
                 break;
