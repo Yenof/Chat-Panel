@@ -483,7 +483,7 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "Customtab1",
-            name = "Name Of Tab",
+            name = "Name of Tab",
             description = "Configures the display name of the tab. (Requires plugin restart)",
             section = customChatSection,
             position = 0
@@ -544,7 +544,7 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "Custom2tab",
-            name = "Name Of Tab",
+            name = "Name of Tab",
             description = "Configures the display name of the tab. (Requires plugin restart)",
             section = custom2ChatSection,
             position = 0
@@ -605,7 +605,7 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "Custom3tab",
-            name = "Name Of Tab",
+            name = "Name of Tab",
             description = "Configures the display name of the tab. (Requires plugin restart)",
             section = custom3ChatSection,
             position = 0
@@ -859,11 +859,11 @@ public interface ChatPanelConfig extends Config {
         return false;
     }
 
-    @Range(max = 1000000)
+    @Range(max = 200000)
     @ConfigItem(
             keyName = "maxchatlines",
             name = "Max Lines",
-            description = "Max lines to display in each tab, starts getting laggy above 15,000 but feel free. (Default 10,000, Max 1m)",
+            description = "Max lines to display in each tab, starts getting laggy above 15,000 but feel free. (Default 10,000, Max 200,000)",
             section = extrasSection,
             position = 0
     )
