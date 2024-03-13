@@ -1,8 +1,9 @@
 package com.chatpanel;
 
 import com.google.inject.Provides;
-import net.runelite.api.ChatMessageType;
+import net.runelite.api.*;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
@@ -29,6 +30,8 @@ public class ChatPanelPlugin extends Plugin
 
     @Inject
     private ChatPanelConfig config;
+    @Inject
+    private Client client;
 
     private ChatPanelSidebar chatPanelSidebar;
     private NavigationButton navButton;
@@ -499,6 +502,25 @@ public class ChatPanelPlugin extends Plugin
                 }
                 break;
         }
+    }
+    @Subscribe
+    public void onHitsplatApplied(HitsplatApplied hitsplatApplied) {
+        if (hitsplatApplied.getHitsplat().isMine() || !config.onlyshowMyHitsplats()) {
+            Actor attacker = hitsplatApplied.getActor();
+            Actor defender = attacker.getInteracting();
+            Hitsplat hitsplat = hitsplatApplied.getHitsplat();
+            int damageAmount = hitsplat.getAmount();
+            String timestamp = getCurrentTimestamp();
+            String combatMessage = formatCombatMessage(attacker, defender, damageAmount, timestamp);
+            if (config.showCombatTab()) {
+            chatPanelSidebar.addCombatMessage(timestamp, "", combatMessage);}
+        }
+    }
+    private String formatCombatMessage(Actor attacker, Actor defender, int damageAmount, String timestamp) {
+        String defenderName = attacker.getName();
+        String attackerName = (defender != null) ? defender.getName() : attacker.getName();
+        return (defender == null) ? defenderName + " was hit for: " + damageAmount
+                : attackerName + " hit " + defenderName + " for: " + damageAmount;
     }
 
     private String getCurrentTimestamp() {

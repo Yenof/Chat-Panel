@@ -103,6 +103,14 @@ public interface ChatPanelConfig extends Config {
     String custom3ChatSection = "custom3Chat";
 
     @ConfigSection(
+            name = "Combat",
+            description = "Experimental Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1). Relies on what you are targeting.",
+            closedByDefault = true,
+            position = 11
+    )
+    String combatSection = "combat";
+
+    @ConfigSection(
             name = "Pop out Window",
             description = "Settings for the pop out window",
             position = 1
@@ -112,7 +120,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigSection(
             name = "Tabs",
             description = "Tab selection. (Recommended 4)",
-            position = 11
+            position = 12
     )
     String tabSection = "tabselection";
 
@@ -664,6 +672,56 @@ public interface ChatPanelConfig extends Config {
         return 12;
     }
 
+    @ConfigItem(
+            keyName = "combatTextColor",
+            name = "Text Color",
+            description = "Configures the font color.",
+            section = combatSection,
+            position = 2
+    )
+    default Color combatTextColor()
+    {
+        return new Color(0xFFFFFF);
+    }
+
+    @ConfigItem(
+            keyName = "combatBackgroundColor",
+            name = "Background Color",
+            description = "Configures the background color.",
+            section = combatSection,
+            position = 1
+    )
+    default Color combatBackgroundColor()
+    {
+        return new Color(0x282828);
+    }
+
+    @ConfigItem(
+            keyName = "onlyshowMyHitsplats",
+            name = "Show my hitsplats only",
+            description = "Show only hitsplats related to you",
+            section = combatSection,
+            position = 5
+    )
+    default boolean onlyshowMyHitsplats()
+    {
+        return false;
+    }
+
+
+    @Range(min = 5, max = 50)
+    @ConfigItem(
+            keyName = "combatFontSize",
+            name = "Font Size",
+            description = "Configures the font size. (Max 50)",
+            section = combatSection,
+            position = 4
+    )
+    default int combatFontSize()
+    {
+        return 12;
+    }
+
     @Range(max = 10)
     @ConfigItem(
             keyName = "lineSpacing",
@@ -855,6 +913,18 @@ public interface ChatPanelConfig extends Config {
             position = 11
     )
     default boolean showCustom3Chat()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "showCombatTab",
+            name = "Show Experimental Combat Tab",
+            description = "Show/hide experimental Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1) <br> Provides very basic combat logging, there are other plugins for more advanced logging",
+            section = tabSection,
+            position = 12
+    )
+    default boolean showCombatTab()
     {
         return false;
     }

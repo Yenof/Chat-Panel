@@ -31,6 +31,7 @@ public class ChatPanelSidebar extends PluginPanel {
     private final JTextPane customChatArea2;
     private final JTextPane customChatArea3;
     private final JTextPane gameChatArea;
+    private final JTextPane combatArea;
     private final JTabbedPane tabbedPane;
     private final ChatPanelConfig config;
     private static final Logger logger = LoggerFactory.getLogger(ChatPanelSidebar.class);
@@ -63,6 +64,7 @@ public class ChatPanelSidebar extends PluginPanel {
         customChatArea = createTextPane();
         customChatArea2 = createTextPane();
         customChatArea3 = createTextPane();
+        combatArea = createTextPane();
 
         tabbedPane = new JTabbedPane();
         createTabs();
@@ -166,6 +168,12 @@ public class ChatPanelSidebar extends PluginPanel {
         if (config.showCustom3Chat()) {
             String tabTitle = config.custom3Tabname();
             tabbedPane.addTab(tabTitle, createScrollPane(customChatArea3));
+            tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab(tabTitle), "Right click for options. MMB to pop out tab");
+        }
+
+        if (config.showCombatTab()) {
+            String tabTitle = "Combat";
+            tabbedPane.addTab(tabTitle, createScrollPane(combatArea));
             tabbedPane.setToolTipTextAt(tabbedPane.indexOfTab(tabTitle), "Right click for options. MMB to pop out tab");
         }
     }
@@ -520,6 +528,7 @@ public class ChatPanelSidebar extends PluginPanel {
         customChatArea.setFont(getFontFromConfig(config.customChatFontSize()));
         customChatArea2.setFont(getFontFromConfig(config.custom2ChatFontSize()));
         customChatArea3.setFont(getFontFromConfig(config.custom3ChatFontSize()));
+        combatArea.setFont(getFontFromConfig(config.combatFontSize()));
     }
 
     private Font getFontFromConfig(int fontSize) {
@@ -558,6 +567,8 @@ public class ChatPanelSidebar extends PluginPanel {
         customChatArea2.setForeground(config.custom2ChatColor());
         customChatArea3.setBackground(config.custom3ChatBackgroundColor());
         customChatArea3.setForeground(config.custom3ChatColor());
+        combatArea.setBackground(config.combatBackgroundColor());
+        combatArea.setForeground(config.combatTextColor());
     }
 
     private Color NameColor(JTextPane chatArea) {
@@ -610,6 +621,9 @@ public class ChatPanelSidebar extends PluginPanel {
         if (tabbedPane.getTabCount() > 8) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(8));
         }
+        if (tabbedPane.getTabCount() > 9) {
+            setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(9));
+        }
     }
     public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
         addMessageToChatArea(publicChatArea, timestamp, cleanedName, message);
@@ -650,6 +664,9 @@ public class ChatPanelSidebar extends PluginPanel {
     public void addGameChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
         addMessageToChatArea(gameChatArea, timestamp, cleanedName, cleanedMessage);
+    }
+    public void addCombatMessage(String timestamp, String cleanedName, String combatMessage) {
+        addMessageToChatArea(combatArea, timestamp, cleanedName, combatMessage);
     }
 
     private String filterAllChatMessage(String message) {
