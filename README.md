@@ -29,7 +29,7 @@ Adjustable Font sizes per tab. (Min size 5, max 50)
 
 Options for Bold, Italic, and Plain font styles. 
 
-Can choose between many tabs: Public, Private, Clan, Friends Chat, Game, All, and Custom (1, 2, 3). Recommended default 4 to fit nicely on sidepanel. 
+Can choose between many tabs: Public, Private, Clan, Friends Chat, Game, All, Combat, and Custom (1, 2, 3). Recommended default 4 to fit nicely on sidepanel. 
 
 Chat Area Height can be adjusted, recommended to be less than the height of your client. 
 
@@ -72,6 +72,10 @@ Timestamp Format can be set using SimpleDateFormat patterns.
 Max lines of chat is 10,000 by default.
 
 When toggling plugin on/off it does not remember messages. 
+
+Combat tab provides very basic logging, there are other plugins for more advanced logging.
+
+Combat tab uses what the player is targetting, so if there is no target it will just say "PlayerName was hit for: 1".
 
 "Hide pop out button" and "Auto-pop out window" do not work together.
 
