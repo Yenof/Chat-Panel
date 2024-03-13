@@ -698,8 +698,8 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "onlyshowMyHitsplats",
-            name = "Only show my hitsplats",
-            description = "Show only hitsplats related to you",
+            name = "Only Show My Combat Events",
+            description = "Show only damage events related to you, or shows all nearby player's events.",
             section = combatSection,
             position = 5
     )
@@ -708,6 +708,17 @@ public interface ChatPanelConfig extends Config {
         return true;
     }
 
+    @ConfigItem(
+            keyName = "hidezerodamageHitsplats",
+            name = "Hide Zero Damage Events",
+            description = "Hide when things hit 0's",
+            section = combatSection,
+            position = 7
+    )
+    default boolean hidezerodamageHitsplats()
+    {
+        return false;
+    }
 
     @Range(min = 5, max = 50)
     @ConfigItem(
