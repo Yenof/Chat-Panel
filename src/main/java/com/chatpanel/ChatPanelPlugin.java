@@ -513,7 +513,17 @@ public class ChatPanelPlugin extends Plugin
             String timestamp = getCurrentTimestamp();
             String combatMessage = formatCombatMessage(attacker, defender, damageAmount, timestamp);
             if (config.showCombatTab()) {
-            chatPanelSidebar.addCombatMessage(timestamp, "", combatMessage);}
+            chatPanelSidebar.addCombatMessage(timestamp, "", combatMessage);
+            }
+            if (config.showCustomChat() && config.CustomCombatEnabled()) {
+                chatPanelSidebar.addCustomChatMessage(timestamp, "", combatMessage);
+            }
+            if (config.showCustom2Chat() && config.Custom2CombatEnabled()) {
+                chatPanelSidebar.addCustom2ChatMessage(timestamp, "", combatMessage);
+            }
+            if (config.showCustom3Chat() && config.Custom3CombatEnabled()) {
+                chatPanelSidebar.addCustom3ChatMessage(timestamp, "", combatMessage);
+            }
         }
     }
     private String formatCombatMessage(Actor attacker, Actor defender, int damageAmount, String timestamp) {
