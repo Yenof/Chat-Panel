@@ -698,14 +698,14 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "onlyshowMyHitsplats",
-            name = "Show my hitsplats only",
+            name = "Only show my hitsplats",
             description = "Show only hitsplats related to you",
             section = combatSection,
             position = 5
     )
     default boolean onlyshowMyHitsplats()
     {
-        return false;
+        return true;
     }
 
 
@@ -1341,6 +1341,17 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Combat",
+            name = "Combat",
+            description = "Display combat messages",
+            section = customChatSection,
+            position = 38
+    )
+    default boolean CustomCombatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
             keyName = "Broadcast2",
             name = "Broadcast",
             description = "Display broadcast messages",
@@ -1737,6 +1748,17 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Combat2",
+            name = "Combat",
+            description = "Display combat messages",
+            section = custom2ChatSection,
+            position = 38
+    )
+    default boolean Custom2CombatEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
             keyName = "Broadcast3",
             name = "Broadcast",
             description = "Display broadcast messages",
@@ -2096,6 +2118,17 @@ public interface ChatPanelConfig extends Config {
             position = 37
     )
     default boolean Custom3WelcomeEnabled() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "Combat3",
+            name = "Combat",
+            description = "Display combat messages",
+            section = custom3ChatSection,
+            position = 38
+    )
+    default boolean Custom3CombatEnabled() {
         return false;
     }
 }
