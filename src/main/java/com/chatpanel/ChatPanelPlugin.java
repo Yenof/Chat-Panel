@@ -509,6 +509,9 @@ public class ChatPanelPlugin extends Plugin
             Actor attacker = hitsplatApplied.getActor();
             Actor defender = attacker.getInteracting();
             Hitsplat hitsplat = hitsplatApplied.getHitsplat();
+            if (hitsplat.getAmount() == 0 && config.hidezerodamageHitsplats()) {
+                return;
+            }
             int damageAmount = hitsplat.getAmount();
             String timestamp = getCurrentTimestamp();
             String combatMessage = formatCombatMessage(attacker, defender, damageAmount, timestamp);
