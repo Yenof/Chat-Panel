@@ -789,7 +789,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Pop Out Closure Warning",
             description = "Show the warning on closing the pop out window with Hide Sidebar Icon on",
             section = extrasSection,
-            position = 3
+            position = 6
     )
     default boolean PopoutWarning()
     {
@@ -810,12 +810,12 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "DisablePopOut",
-            name = "Disable Pop Out",
-            description = "Hides the side panel pop out button, does NOT work with Auto-pop out. (Requires plugin restart)",
-            position = 6,
+            name = "Hide Pop Out/Pop In Buttons",
+            description = "Hides pop out button and pop in button, except in empty side panel. (Requires plugin restart)",
+            position = 4,
             section = extrasSection
     )
-    default boolean DisablePopout()
+    default boolean hidepopoutButtons()
     {
         return false;
     }
