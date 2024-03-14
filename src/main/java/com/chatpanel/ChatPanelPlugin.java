@@ -572,11 +572,12 @@ public class ChatPanelPlugin extends Plugin
                     chatPanelSidebar.setCactus(config.popoutOpacity());
                 }
             }
-            if (config.AutoPop() && config.hidepopoutButtons()) {
-                String message;
+            if (event.getKey().startsWith("hideSidebar")) {
                 if (config.hideSidebarIcon()) {
-                message = "<html>Hide Sidebar Icon enabled.<br> Turn plugin off/on with Auto-pop out window enabled to spawn a Chat Panel.</html>";
-                JOptionPane.showMessageDialog(null, message, "Notice", JOptionPane.WARNING_MESSAGE);}
+                    String message = "<html>Hide Sidebar Icon enabled.<br> Turn plugin off/on with Auto-pop out window enabled to spawn a Chat Panel.</html>";
+                    JOptionPane.showMessageDialog(null, message, "Notice", JOptionPane.WARNING_MESSAGE);
+                }
+            }
             }
             if (config.hideSidebarIcon() && !config.AutoPop()) {
                 String message = "<html>Warning: Hide Sidebar Icon is enabled but Auto-pop out window is not.<br>Enable Auto-pop out or disable Hide Sidebar Icon to access to Chat Panel.</html>";
@@ -584,5 +585,3 @@ public class ChatPanelPlugin extends Plugin
             }
         }
     }
-
-}
