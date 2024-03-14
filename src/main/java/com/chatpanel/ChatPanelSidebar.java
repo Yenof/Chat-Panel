@@ -276,7 +276,7 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
+                    if (config.hideSidebarIcon() && popoutFrame != null && !config.hidePopoutWarning()) {
                         //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working :C
                         Object[] options = {"OK", "Cancel",};
                         int choice = JOptionPane.showOptionDialog(
@@ -293,9 +293,9 @@ public class ChatPanelSidebar extends PluginPanel {
                             e.getWindow().setVisible(true);
                         } else if (choice == JOptionPane.OK_OPTION) {
                             // if (checkBox.isSelected()) Can't get working yet.
-                            {
-                                config.PopoutWarning();
-                            }
+                           // {
+                           //     config.hidePopoutWarning();
+                           // }
                             isPopout = false;
                             popoutFrame.dispose();
                             addComponentsForSidePanel();
@@ -393,7 +393,7 @@ public class ChatPanelSidebar extends PluginPanel {
         if (!config.hidepopoutButtons()) {
             popinButton = new JButton("Pop In");
             popinButton.addActionListener(e -> {
-                if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
+                if (config.hideSidebarIcon() && popoutFrame != null && !config.hidePopoutWarning()) {
                     //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working yet
                     Object[] options = {"OK", "Cancel"};
                     int choice = JOptionPane.showOptionDialog(
@@ -410,9 +410,9 @@ public class ChatPanelSidebar extends PluginPanel {
                         setVisible(true);
                     } else if (choice == JOptionPane.OK_OPTION) {
                         // if (checkBox.isSelected()) Can't get working yet.
-                        {
-                            config.PopoutWarning();
-                        }
+                        //{
+                       //     config.hidePopoutWarning();
+                        //}
                         togglePopout();
                     }
                 } else {

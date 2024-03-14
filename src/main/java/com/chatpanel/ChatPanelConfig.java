@@ -786,14 +786,14 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "PopoutWarning",
-            name = "Show Pop Out Closure Warning",
+            name = "Hide Pop Out Closure Warning",
             description = "Show the warning on closing the pop out window with Hide Sidebar Icon on",
             section = extrasSection,
             position = 6
     )
-    default boolean PopoutWarning()
+    default boolean hidePopoutWarning()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
