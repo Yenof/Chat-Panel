@@ -49,7 +49,7 @@ public class ChatPanelSidebar extends PluginPanel {
     public ChatPanelSidebar(ChatPanelConfig config) {
         this.config = config;
         setLayout(new BorderLayout());
-        if (!config.DisablePopout()) {
+        if (!config.hidepopoutButtons()) {
             popoutButton = new JButton("Pop out");
             popoutButton.setVisible(true);
             popoutButton.addActionListener(e -> togglePopout());
@@ -89,7 +89,7 @@ public class ChatPanelSidebar extends PluginPanel {
                 }
             }
         });
-        if (config.AutoPop() && !isPopout() && popoutButton != null) {
+        if (config.AutoPop() && !isPopout()) {
             autoPopTimer = new Timer(AUTO_POP_DELAY_MS, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -379,7 +379,9 @@ public class ChatPanelSidebar extends PluginPanel {
         }
         if (popinButton != null) {
             popinButton.setVisible(false);
-            add(popoutButton, BorderLayout.SOUTH);
+            if (!config.hidepopoutButtons()) {
+                add(popoutButton, BorderLayout.SOUTH);
+            }
             remove(popinButton);
         }
         if (popinButton2 != null) {
@@ -388,39 +390,43 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private void addComponentsForPopout() {
-        popinButton = new JButton("Pop In");
-        popinButton.addActionListener(e -> {
-            if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
-                //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working yet
-                Object[] options = {"OK", "Cancel"};
-                int choice = JOptionPane.showOptionDialog(
-                        popoutFrame,
-                        "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin off/on with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
-                        "Closing Pop Out with Sidebar Icon Hidden",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        options,
-                        options[0]
-                );
-                if (choice == JOptionPane.CANCEL_OPTION) {
-                    setVisible(true);
-                } else if (choice == JOptionPane.OK_OPTION) {
-                    // if (checkBox.isSelected()) Can't get working yet.
-                    {
-                        config.PopoutWarning();
+        if (!config.hidepopoutButtons()) {
+            popinButton = new JButton("Pop In");
+            popinButton.addActionListener(e -> {
+                if (config.hideSidebarIcon() && popoutFrame != null && config.PopoutWarning()) {
+                    //JCheckBox checkBox = new JCheckBox("Do not show this message again. I have read and understand how to retrieve the pop out window"); Can't get working yet
+                    Object[] options = {"OK", "Cancel"};
+                    int choice = JOptionPane.showOptionDialog(
+                            popoutFrame,
+                            "<html><body style='width: 500px;'>The sidebar icon is currently set to hidden (Pop out button hidden too). <br> To relaunch the pop out window, toggle the plugin off/on with Auto-Pop option on. <br> This warning can be turned off in config.</body></html>",
+                            "Closing Pop Out with Sidebar Icon Hidden",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null,
+                            options,
+                            options[0]
+                    );
+                    if (choice == JOptionPane.CANCEL_OPTION) {
+                        setVisible(true);
+                    } else if (choice == JOptionPane.OK_OPTION) {
+                        // if (checkBox.isSelected()) Can't get working yet.
+                        {
+                            config.PopoutWarning();
+                        }
+                        togglePopout();
                     }
+                } else {
                     togglePopout();
                 }
-            } else {
-                togglePopout();
-            }
-        });
-        popoutFrame.add(popinButton, BorderLayout.SOUTH);
+            });
+            popoutFrame.add(popinButton, BorderLayout.SOUTH);
+        }
         popinButton2 = new JButton("Pop in");
         popinButton2.addActionListener(e -> togglePopout());
         add(popinButton2, BorderLayout.SOUTH);
-        remove(popoutButton);
+        if (popoutButton != null){
+            remove(popoutButton);
+        }
         if (popinButton2 != null) {
             popinButton2.setVisible(true);
             add(popinButton2, BorderLayout.SOUTH);

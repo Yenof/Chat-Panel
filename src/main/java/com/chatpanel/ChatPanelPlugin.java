@@ -572,14 +572,11 @@ public class ChatPanelPlugin extends Plugin
                     chatPanelSidebar.setCactus(config.popoutOpacity());
                 }
             }
-            if (config.AutoPop() && config.DisablePopout()) {
+            if (config.AutoPop() && config.hidepopoutButtons()) {
                 String message;
-                if (config.hideSidebarIcon() && config.DisablePopout()) {
-                    message = "<html>Warning: Disable Pop Out and Hide Sidebar Icon are both enabled.<br>This leaves no way to access Chat Panel.</html>";
-                } else {
-                    message = "<html>Notice: Auto-pop out window and Disable Pop Out are both enabled.<br>Pop out window will be unable to open.</html>";
-                }
-                JOptionPane.showMessageDialog(null, message, "Configuration Issue", JOptionPane.WARNING_MESSAGE);
+                if (config.hideSidebarIcon()) {
+                message = "<html>Hide Sidebar Icon enabled.<br> Turn plugin off/on with Auto-pop out window enabled to spawn a Chat Panel.</html>";
+                JOptionPane.showMessageDialog(null, message, "Notice", JOptionPane.WARNING_MESSAGE);}
             }
             if (config.hideSidebarIcon() && !config.AutoPop()) {
                 String message = "<html>Warning: Hide Sidebar Icon is enabled but Auto-pop out window is not.<br>Enable Auto-pop out or disable Hide Sidebar Icon to access to Chat Panel.</html>";
