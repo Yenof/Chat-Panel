@@ -30,8 +30,6 @@ public class ChatPanelPlugin extends Plugin
 
     @Inject
     private ChatPanelConfig config;
-    @Inject
-    private Client client;
 
     private ChatPanelSidebar chatPanelSidebar;
     private NavigationButton navButton;
