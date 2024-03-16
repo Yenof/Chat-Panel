@@ -6,8 +6,7 @@ By default has tabs for Public, Private, Clan, Game (including dialog messages).
 
 
 
-
-![image](https://github.com/Yenof/chat-panel/assets/122739279/190bf4c0-2f23-4d15-ad65-51a6a5a8fb38)![image](https://github.com/Yenof/chat-panel/assets/122739279/cfa6f204-3f40-4732-b94f-b30db4c072c1)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/42cde773-753f-4916-8594-82edb7291725)![image](https://github.com/Yenof/chat-panel/assets/122739279/cfa6f204-3f40-4732-b94f-b30db4c072c1)
 
 
 
@@ -43,7 +42,7 @@ Can hide Pop out button (Disable Pop Out) to save screen space on small screen d
 
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/525134c0-626c-40b0-9acb-4b11f5d64588)![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
+![image](https://github.com/Yenof/chat-panel/assets/122739279/56137dc9-4a5e-4ba5-abde-ba2299ae8580) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
 
 
 
@@ -65,7 +64,9 @@ If you have "Hide Sidebar Icon" enabled and close the pop out window, you will n
 
 Timestamp Format can be set using SimpleDateFormat patterns.
 
-![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96)
+![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96)    ![image](https://github.com/Yenof/chat-panel/assets/122739279/ce8f4598-089c-4806-b208-aceab1bab3c2)
+
+
 
 ## Notes:
 
