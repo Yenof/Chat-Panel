@@ -596,6 +596,8 @@ public class ChatPanelSidebar extends PluginPanel {
             return config.custom2ChatNameColor();
         } else if (chatArea == customChatArea3) {
             return config.custom3ChatNameColor();
+        } else if (chatArea == combatArea) {
+            return config.combatLabelColor();
         }
         return Color.YELLOW;
     }

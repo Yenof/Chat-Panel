@@ -733,6 +733,18 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "combatLabelColor",
+            name = "Label Color",
+            description = "Configures the color of the labels in this tab (e.g. Combat, Death).",
+            section = combatSection,
+            position = 3
+    )
+    default Color combatLabelColor()
+    {
+        return combatTextColor();
+    }
+
+    @ConfigItem(
             keyName = "onlyshowMyHitsplats",
             name = "Only Show My Combat Events",
             description = "Show only damage events related to you, or shows all nearby player's events.",
@@ -770,9 +782,21 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "displayDeaths",
+            name = "Show Deaths",
+            description = "Displays a message when things die",
+            section = combatSection,
+            position = 6
+    )
+    default boolean displayDeaths()
+    {
+        return true;
+    }
+
+    @ConfigItem(
             keyName = "identifierC",
-            name = "Add Combat Label",
-            description = "Add label (Combat) before combat messages",
+            name = "Add Combat Labels",
+            description = "Add labels (Combat, Death) before messages",
             section = combatSection,
             position = 12
     )

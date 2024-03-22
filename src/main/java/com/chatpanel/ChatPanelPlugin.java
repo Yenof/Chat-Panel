@@ -2,6 +2,7 @@ package com.chatpanel;
 
 import com.google.inject.Provides;
 import net.runelite.api.*;
+import net.runelite.api.events.ActorDeath;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.config.ConfigManager;
@@ -535,6 +536,28 @@ public class ChatPanelPlugin extends Plugin
                 chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", combatMessage);
             }
         }}
+    }
+    @Subscribe
+    public void onActorDeath(ActorDeath actorDeath) {
+        Actor actor = actorDeath.getActor();
+        String actorName = actor.getName();
+
+        String identifier = "Death";
+        String timestamp = getCurrentTimestamp();
+        String deathMessage = actorName + " died.";
+
+        if (config.showCombatTab() && config.displayDeaths()) {
+            chatPanelSidebar.addCombatMessage(timestamp, (config.identifierC()) ? "Death" : "", deathMessage);
+        }
+        if (config.showCustomChat() && config.CustomCombatEnabled() && config.displayDeaths()) {
+            chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : "", deathMessage);
+        }
+        if (config.showCustom2Chat() && config.Custom2CombatEnabled() && config.displayDeaths()) {
+            chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : "", deathMessage);
+        }
+        if (config.showCustom3Chat() && config.Custom3CombatEnabled() && config.displayDeaths()) {
+            chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", deathMessage);
+        }
     }
 
     private String getIdentifier(String cleanedName, ChatMessage event) {
