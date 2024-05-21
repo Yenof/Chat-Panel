@@ -601,6 +601,12 @@ public class ChatPanelSidebar extends PluginPanel {
         }
         return Color.YELLOW;
     }
+
+	private Color TimestampColor(JTextPane chatArea) {
+		config.CustomTimestamp();
+		return config.TimestampColorOverride();
+	}
+
     private void setScrollPaneSizes() {
         if (tabbedPane.getTabCount() > 0) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
@@ -701,9 +707,19 @@ public class ChatPanelSidebar extends PluginPanel {
             Color nameColor = NameColor(chatArea);
             StyleConstants.setForeground(nameAttrs, nameColor);
 
+			SimpleAttributeSet timestampAttrs = new SimpleAttributeSet();
+			Color timestampColor = TimestampColor(chatArea);
+			StyleConstants.setForeground(timestampAttrs, timestampColor);
+
             try {
-                if (!config.TimestampFormat().isEmpty()) {
-                    doc.insertString(doc.getLength(), "[" + timestamp + "] ", null);
+				if (config.CustomTimestamp()) {
+					if (!config.TimestampFormat().isEmpty()) {
+                        doc.insertString(doc.getLength(), "[" + timestamp + "] ", timestampAttrs);
+                    }
+                } else {
+                    if (!config.TimestampFormat().isEmpty()) {
+                     doc.insertString(doc.getLength(), "[" + timestamp + "] ", null);
+					}
                 }
                 if (!cleanedName.isEmpty()) {
                     doc.insertString(doc.getLength(), "[" + cleanedName + "]: ", nameAttrs);
