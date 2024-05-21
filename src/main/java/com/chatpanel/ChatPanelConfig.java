@@ -1025,6 +1025,29 @@ public interface ChatPanelConfig extends Config {
         return 10000;
     }
 
+	@ConfigItem(
+		keyName = "CustomTimestamp",
+		name = "Enable Custom Timestamp Color",
+		description = "Configures the color of the timestamps for all tabs, overriding chat colors. Select color below.",
+		section = extrasSection,
+		position = 8
+	)
+	default boolean CustomTimestamp()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "TimestampColorOverride",
+		name = "Timestamp Color",
+		description = "Configures the color of the Custom Timestamp override. Requires Enable Custom Timestamp Color to be checked.",
+		section = extrasSection,
+		position = 9
+	)
+	default Color TimestampColorOverride()
+	{
+		return new Color(0xFFFFFF);
+	}
 
     // Start of Custom Chat channels...
 
