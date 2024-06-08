@@ -555,57 +555,81 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     private void setColors() {
+		if (config.chatColorOffset()!= 0) {
+
+			int offset = config.chatColorOffset();}
+		else {
+			int offset = 0;
+		}
+		int offset = 0;
+
         publicChatArea.setBackground(config.publicChatBackground());
-        publicChatArea.setForeground(config.publicChatColor());
+        publicChatArea.setForeground(adjustColor(config.publicChatColor(), offset));
         privateChatArea.setBackground(config.privateChatBackground());
-        privateChatArea.setForeground(config.privateChatColor());
+        privateChatArea.setForeground(adjustColor(config.privateChatColor(), offset));
         clanChatArea.setBackground(config.clanChatBackgroundColor());
-        clanChatArea.setForeground(config.clanChatColor());
+        clanChatArea.setForeground(adjustColor(config.clanChatColor(), offset));
         friendsChatArea.setBackground(config.friendsChatBackground());
-        friendsChatArea.setForeground(config.friendsChatColor());
+        friendsChatArea.setForeground(adjustColor(config.friendsChatColor(), offset));
         gameChatArea.setBackground(config.gameChatBackgroundColor());
-        gameChatArea.setForeground(config.gameChatColor());
+        gameChatArea.setForeground(adjustColor(config.gameChatColor(), offset));
         allChatArea.setBackground(config.allChatBackground());
-        allChatArea.setForeground(config.allChatColor());
+        allChatArea.setForeground(adjustColor(config.allChatColor(), offset));
         customChatArea.setBackground(config.customChatBackgroundColor());
-        customChatArea.setForeground(config.customChatColor());
+        customChatArea.setForeground(adjustColor(config.customChatColor(), offset));
         customChatArea2.setBackground(config.custom2ChatBackgroundColor());
-        customChatArea2.setForeground(config.custom2ChatColor());
+        customChatArea2.setForeground(adjustColor(config.custom2ChatColor(), offset));
         customChatArea3.setBackground(config.custom3ChatBackgroundColor());
-        customChatArea3.setForeground(config.custom3ChatColor());
+        customChatArea3.setForeground(adjustColor(config.custom3ChatColor(), offset));
         combatArea.setBackground(config.combatBackgroundColor());
-        combatArea.setForeground(config.combatTextColor());
+        combatArea.setForeground(adjustColor(config.combatTextColor(), offset));
     }
 
     private Color NameColor(JTextPane chatArea) {
-        if (chatArea == publicChatArea) {
-            return config.publicChatNameColor();
-        } else if (chatArea == privateChatArea) {
-            return config.privateChatNameColor();
-        } else if (chatArea == clanChatArea) {
-            return config.clanChatNameColor();
-        } else if (chatArea == friendsChatArea) {
-            return config.friendsChatNameColor();
-        } else if (chatArea == gameChatArea) {
-            return config.gameChatNameColor();
-        } else if (chatArea == allChatArea) {
-            return config.allChatNameColor();
-        } else if (chatArea == customChatArea) {
-            return config.customChatNameColor();
-        } else if (chatArea == customChatArea2) {
-            return config.custom2ChatNameColor();
-        } else if (chatArea == customChatArea3) {
-            return config.custom3ChatNameColor();
-        } else if (chatArea == combatArea) {
-            return config.combatLabelColor();
+        if (config.chatColorOffset()!= 0) {
+
+            int offset = config.chatColorOffset();}
+        else {
+            int offset = 0;
         }
-        return Color.YELLOW;
+        int offset = 0;
+
+        if (chatArea == publicChatArea) {
+            return adjustColor(config.publicChatNameColor(), offset);
+        } else if (chatArea == privateChatArea) {
+            return adjustColor(config.privateChatNameColor(), offset);
+        } else if (chatArea == clanChatArea) {
+            return adjustColor(config.clanChatNameColor(), offset);
+        } else if (chatArea == friendsChatArea) {
+            return adjustColor(config.friendsChatNameColor(), offset);
+        } else if (chatArea == gameChatArea) {
+            return adjustColor(config.gameChatNameColor(), offset);
+        } else if (chatArea == allChatArea) {
+            return adjustColor(config.allChatNameColor(), offset);
+        } else if (chatArea == customChatArea) {
+            return adjustColor(config.customChatNameColor(), offset);
+        } else if (chatArea == customChatArea2) {
+            return adjustColor(config.custom2ChatNameColor(), offset);
+        } else if (chatArea == customChatArea3) {
+            return adjustColor(config.custom3ChatNameColor(), offset);
+        } else if (chatArea == combatArea) {
+            return adjustColor(config.combatLabelColor(), offset);
+        }
+        return adjustColor(Color.YELLOW, offset);
     }
 
 	private Color TimestampColor(JTextPane chatArea) {
 		config.CustomTimestamp();
 		return config.TimestampColorOverride();
 	}
+
+
+    private Color adjustColor(Color color, int offset) {
+        int red = Math.max(0, Math.min(255, color.getRed() + (offset * 255 / 100)));
+        int green = Math.max(0, Math.min(255, color.getGreen() + (offset * 255 / 100)));
+        int blue = Math.max(0, Math.min(255, color.getBlue() + (offset * 255 / 100)));
+        return new Color(red, green, blue);
+    }
 
     private void setScrollPaneSizes() {
         if (tabbedPane.getTabCount() > 0) {
@@ -694,43 +718,50 @@ public class ChatPanelSidebar extends PluginPanel {
             JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
             boolean shouldAutoScroll = (verticalScrollBar.getValue() + verticalScrollBar.getVisibleAmount() == verticalScrollBar.getMaximum());
+
             int extraLines = config.lineSpacing();
-            for (int i = 0; i < extraLines; i++) {
-                try {
-                    doc.insertString(doc.getLength(), "\n", null);
-                } catch (BadLocationException e) {
-                    logger.error("Error adding extra lines to chat", e);
-                }
+            int offset = extraLines;
+
+            Color baseColor = chatArea.getForeground();
+            int lineCount = doc.getDefaultRootElement().getElementCount();
+            int effectiveLineCount = (lineCount + extraLines - 1) / (extraLines + 1);
+            boolean isOddLine = (effectiveLineCount - 1) % 2!= 0;
+
+            SimpleAttributeSet timestampAttrs = new SimpleAttributeSet();
+            Color timestampColor;
+            if (config.CustomTimestamp()) {
+                timestampColor = isOddLine ? adjustColor(TimestampColor(chatArea), config.chatColorOffset()) : TimestampColor(chatArea);
+            } else {
+                timestampColor = isOddLine ? adjustColor(baseColor, config.chatColorOffset()) : baseColor;
             }
+            StyleConstants.setForeground(timestampAttrs, timestampColor);
 
             SimpleAttributeSet nameAttrs = new SimpleAttributeSet();
-            Color nameColor = NameColor(chatArea);
+            Color nameColor = isOddLine? adjustColor(NameColor(chatArea), config.chatColorOffset()) : NameColor(chatArea);
             StyleConstants.setForeground(nameAttrs, nameColor);
 
-			SimpleAttributeSet timestampAttrs = new SimpleAttributeSet();
-			Color timestampColor = TimestampColor(chatArea);
-			StyleConstants.setForeground(timestampAttrs, timestampColor);
+            SimpleAttributeSet messageAttrs = new SimpleAttributeSet();
+            Color messageColor = isOddLine? adjustColor(baseColor, config.chatColorOffset()) : baseColor;
+            StyleConstants.setForeground(messageAttrs, messageColor);
 
             try {
-				if (config.CustomTimestamp()) {
-					if (!config.TimestampFormat().isEmpty()) {
-                        doc.insertString(doc.getLength(), "[" + timestamp + "] ", timestampAttrs);
-                    }
-                } else {
-                    if (!config.TimestampFormat().isEmpty()) {
-                     doc.insertString(doc.getLength(), "[" + timestamp + "] ", null);
-					}
-                }
-                if (!cleanedName.isEmpty()) {
+				if (!config.TimestampFormat().isEmpty()) {
+					doc.insertString(doc.getLength(), "[" + timestamp + "] ", timestampAttrs);
+				}
+				if (!cleanedName.isEmpty()) {
                     doc.insertString(doc.getLength(), "[" + cleanedName + "]: ", nameAttrs);
                 }
-                doc.insertString(doc.getLength(), message + "\n", null);
+                doc.insertString(doc.getLength(), message + "\n", messageAttrs);
+
+                for (int i = 0; i < extraLines; i++) {
+                    doc.insertString(doc.getLength(), "\n", null);
+                }
 
                 int excess = doc.getDefaultRootElement().getElementCount() - config.maxLines();
-                if (excess > 0) {
+                if (excess > 1) {
                     try {
                         Element root = doc.getDefaultRootElement();
-                        int linesToRemove = Math.min(excess, config.maxLines());
+                        int linesToRemove = Math.min(excess + extraLines, config.maxLines());
                         int endOffset = 0;
                         for (int i = 0; i < linesToRemove; i++) {
                             Element line = root.getElement(i);

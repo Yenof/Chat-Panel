@@ -132,6 +132,18 @@ public interface ChatPanelConfig extends Config {
     )
     String extrasSection = "extras";
 
+    @Range(min = -100, max = 100)
+    @ConfigItem(
+            keyName = "chatColorOffset",
+            name = "Odd Row Shading",
+            description = "Tints the colors of odd rows. Negative numbers darken, positive brighten. (Min -100, max 100).",
+            section = generalSection,
+            position = 1
+    )
+    default int chatColorOffset() {
+        return 0;
+    }
+
     @ConfigItem(
             keyName = "fontStyle",
             name = "Font Style",
@@ -161,8 +173,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "chatAreaHeight",
             name = "Chat Area Height",
             description = "Configures the height of the chat area of the side panel. Recommended below window height",
-            section = generalSection,
-            position = 1
+            section = extrasSection,
+            position = 3
     )
     default int chatAreaHeight()
     {
@@ -174,7 +186,7 @@ public interface ChatPanelConfig extends Config {
             keyName = "iconPosition",
             name = "Icon Position",
             description = "Set the priority for the sidebar icon's position. (Requires plugin restart)",
-            position = 1,
+            position = 2,
             section = extrasSection
     )
     default int iconPosition()
