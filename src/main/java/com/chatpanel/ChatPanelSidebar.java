@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -751,7 +753,30 @@ public class ChatPanelSidebar extends PluginPanel {
 				if (!cleanedName.isEmpty()) {
                     doc.insertString(doc.getLength(), "[" + cleanedName + "]: ", nameAttrs);
                 }
-                doc.insertString(doc.getLength(), message + "\n", messageAttrs);
+
+                doc.insertString(doc.getLength(), message, messageAttrs);
+                if (!config.highlightWords().trim().isEmpty()) {
+                    String[] highlightWordsArray = config.highlightWords().split("\\s*,\\s*");
+                    List<String> highlightWordsList = new ArrayList<>();
+                    for (String word : highlightWordsArray) {
+                        if (!word.trim().isEmpty()) {
+                            String escapedWord = Pattern.quote(word);
+                            highlightWordsList.add(escapedWord);
+                        }
+                    }
+                    Pattern pattern = Pattern.compile("(" + String.join("|", highlightWordsList) + ")", Pattern.CASE_INSENSITIVE);
+                    Matcher matcher = pattern.matcher(message);
+                    int start = 0;
+                    while (matcher.find()) {
+                        String matchedWord = matcher.group();
+                        int startIndex = doc.getLength() - message.length() + matcher.start();
+                        int endIndex = startIndex + matchedWord.length();
+                        SimpleAttributeSet highlightAttrs = new SimpleAttributeSet();
+                        StyleConstants.setForeground(highlightAttrs, config.highlightColor());
+                        doc.setCharacterAttributes(startIndex, matchedWord.length(), highlightAttrs, false);
+                    }
+                }
+                doc.insertString(doc.getLength(), "\n", null);
 
                 for (int i = 0; i < extraLines; i++) {
                     doc.insertString(doc.getLength(), "\n", null);
