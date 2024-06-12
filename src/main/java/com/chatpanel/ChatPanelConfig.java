@@ -1061,6 +1061,31 @@ public interface ChatPanelConfig extends Config {
 		return new Color(0xFFFFFF);
 	}
 
+	@ConfigItem(
+		keyName = "highlightWords",
+		name = "Highlight Words",
+		description = "List of words to highlight, separated by commas.",
+		section = extrasSection,
+		position = 15
+	)
+	default String highlightWords()
+	{
+		return "";
+	}
+
+    @ConfigItem(
+            keyName = "highlightColor",
+            name = "Highlight Color",
+            description = "Configures the color of highlighted words.",
+            section = extrasSection,
+            position = 14
+    )
+    default Color highlightColor()
+    {
+        return new Color(0x00FF0A);
+    }
+
+
     // Start of Custom Chat channels...
 
 
