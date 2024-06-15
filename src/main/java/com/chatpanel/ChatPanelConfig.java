@@ -1024,11 +1024,11 @@ public interface ChatPanelConfig extends Config {
         return false;
     }
 
-    @Range(max = 200000)
+    @Range(min = 20, max = 200000)
     @ConfigItem(
             keyName = "maxchatlines",
             name = "Max Lines",
-            description = "Max lines to display in each tab, starts getting laggy above 15,000 but feel free. (Default 10,000, Max 200,000)",
+            description = "Max lines to display in each tab, starts getting laggy above 15,000 but feel free. (Min 20, Max 200,000)",
             section = extrasSection,
             position = 0
     )
