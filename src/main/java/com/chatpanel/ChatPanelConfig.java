@@ -34,7 +34,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigSection(
             name = "Public Chat",
             description = "Settings for public chat",
-            position = 2
+            position = 8
     )
     String publicChatSection = "publicChat";
 
@@ -42,7 +42,7 @@ public interface ChatPanelConfig extends Config {
             name = "Private Chat",
             description = "Settings for private chat",
             closedByDefault = true,
-            position = 3
+            position = 7
     )
     String privateChatSection = "privateChat";
 
@@ -50,7 +50,7 @@ public interface ChatPanelConfig extends Config {
             name = "Clan Chat",
             description = "Settings for clan chat",
             closedByDefault = true,
-            position = 4
+            position = 3
     )
     String clanChatSection = "clanChat";
 
@@ -58,7 +58,7 @@ public interface ChatPanelConfig extends Config {
             name = "Friends Chat",
             description = "Settings for friends chat",
             closedByDefault = true,
-            position = 4
+            position = 5
     )
     String friendsChatSection = "friendsChat";
 
@@ -74,7 +74,7 @@ public interface ChatPanelConfig extends Config {
             name = "All Chat",
             description = "Settings for the All Chat tab, not all of the chat.",
             closedByDefault = true,
-            position = 7
+            position = 2
     )
     String allChatSection = "allChat";
 
@@ -82,7 +82,7 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat",
             description = "Settings for the Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 8
+            position = 9
     )
     String customChatSection = "customChat";
 
@@ -90,7 +90,7 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat 2",
             description = "Settings for the second Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 9
+            position = 10
     )
     String custom2ChatSection = "custom2Chat";
 
@@ -98,15 +98,15 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat 3",
             description = "Settings for the third Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 10
+            position = 11
     )
     String custom3ChatSection = "custom3Chat";
 
     @ConfigSection(
             name = "Combat",
-            description = "Experimental Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1). Relies on what you are targeting.",
+            description = "Settings for the Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1). Relies on what you are targeting.",
             closedByDefault = true,
-            position = 11
+            position = 4
     )
     String combatSection = "combat";
 
@@ -909,7 +909,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Public Chat",
             description = "Show/hide the Public Chat tab",
             section = tabSection,
-            position = 5
+            position = 6
     )
     default boolean showPublicChat()
     {
@@ -921,7 +921,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Private Chat",
             description = "Show/hide the Private Chat tab",
             section = tabSection,
-            position = 4
+            position = 5
     )
     default boolean showPrivateChat()
     {
@@ -945,7 +945,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Game Chat",
             description = "Show/hide the Game tab",
             section = tabSection,
-            position = 3
+            position = 4
     )
     default boolean showGameChat()
     {
@@ -969,7 +969,7 @@ public interface ChatPanelConfig extends Config {
             name = "Show Friends Chat Channel",
             description = "Show/hide the Friends Chat tab",
             section = tabSection,
-            position = 2
+            position = 3
     )
     default boolean showFriendsChat()
     {
@@ -1014,10 +1014,10 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigItem(
             keyName = "showCombatTab",
-            name = "Show Experimental Combat Tab",
-            description = "Show/hide experimental Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1) <br> Provides very basic combat logging, there are other plugins for more advanced logging",
+            name = "Show Combat Tab",
+            description = "Show/hide Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1) <br> Provides very basic combat logging, there are other plugins for more advanced logging",
             section = tabSection,
-            position = 12
+            position = 2
     )
     default boolean showCombatTab()
     {
