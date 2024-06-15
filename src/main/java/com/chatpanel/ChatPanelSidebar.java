@@ -786,7 +786,7 @@ public class ChatPanelSidebar extends PluginPanel {
                 if (excess > 1) {
                     try {
                         Element root = doc.getDefaultRootElement();
-                        int linesToRemove = Math.min(excess + extraLines, config.maxLines());
+                        int linesToRemove = (excess + extraLines);
                         int endOffset = 0;
                         for (int i = 0; i < linesToRemove; i++) {
                             Element line = root.getElement(i);
