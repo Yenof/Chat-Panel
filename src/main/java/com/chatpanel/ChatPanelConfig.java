@@ -1040,7 +1040,7 @@ public interface ChatPanelConfig extends Config {
 	@ConfigItem(
 		keyName = "CustomTimestamp",
 		name = "Enable Custom Timestamp Color",
-		description = "Configures the color of the timestamps for all tabs, overriding chat colors. Select color below.",
+		description = "Enables recoloring the timestamp, overriding chat colors. Select color below.",
 		section = extrasSection,
 		position = 8
 	)
@@ -1052,7 +1052,7 @@ public interface ChatPanelConfig extends Config {
 	@ConfigItem(
 		keyName = "TimestampColorOverride",
 		name = "Timestamp Color",
-		description = "Configures the color of the Custom Timestamp override. Requires Enable Custom Timestamp Color to be checked.",
+		description = "Configures the color of the Custom Timestamp override for all tabs. Requires Enable Custom Timestamp Color to be checked.",
 		section = extrasSection,
 		position = 9
 	)
