@@ -1085,6 +1085,19 @@ public interface ChatPanelConfig extends Config {
         return new Color(0x00FF0A);
     }
 
+    @ConfigItem(
+            keyName = "partialMatching",
+            name = "Partial Word Highlighting",
+            description = "Allows partial matches of highlight words. Sell would highlight like: <span style='color:yellow'>Sell</span>ing",
+            section = extrasSection,
+            position = 15
+    )
+    default boolean PartialMatching()
+    {
+        return true;
+    }
+
+
 
     // Start of Custom Chat channels...
 

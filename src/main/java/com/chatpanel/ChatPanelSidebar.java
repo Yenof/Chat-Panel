@@ -764,7 +764,7 @@ public class ChatPanelSidebar extends PluginPanel {
                             highlightWordsList.add(escapedWord);
                         }
                     }
-                    Pattern pattern = Pattern.compile("(" + String.join("|", highlightWordsList) + ")", Pattern.CASE_INSENSITIVE);
+                    Pattern pattern = Pattern.compile((config.PartialMatching()? "" : "\\b") + "(" + String.join("|", highlightWordsList) + ")" + (config.PartialMatching()? "" : "\\b"), Pattern.CASE_INSENSITIVE);
                     Matcher matcher = pattern.matcher(message);
                     int start = 0;
                     while (matcher.find()) {
