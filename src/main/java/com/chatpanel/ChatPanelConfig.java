@@ -26,47 +26,49 @@ public interface ChatPanelConfig extends Config {
 
     @ConfigSection(
             name = "General",
-            description = "General settings",
+            description = "General settings that affect all tabs",
+            closedByDefault = true,
             position = 0
     )
     String generalSection = "general";
 
     @ConfigSection(
             name = "Public Chat",
-            description = "Settings for public chat",
-            position = 8
+            description = "Settings for the Public Chat tab",
+            closedByDefault = true,
+            position = 11
     )
     String publicChatSection = "publicChat";
 
     @ConfigSection(
             name = "Private Chat",
-            description = "Settings for private chat",
+            description = "Settings for the Private Chat tab",
             closedByDefault = true,
-            position = 7
+            position = 10
     )
     String privateChatSection = "privateChat";
 
     @ConfigSection(
             name = "Clan Chat",
-            description = "Settings for clan chat",
+            description = "Settings for the Clan Chat tab",
             closedByDefault = true,
-            position = 3
+            position = 6
     )
     String clanChatSection = "clanChat";
 
     @ConfigSection(
             name = "Friends Chat",
-            description = "Settings for friends chat",
+            description = "Settings for the Friends Chat tab",
             closedByDefault = true,
-            position = 5
+            position = 8
     )
     String friendsChatSection = "friendsChat";
 
     @ConfigSection(
             name = "Game Chat",
-            description = "Settings for game chat",
+            description = "Settings for the Game Chat tab",
             closedByDefault = true,
-            position = 6
+            position = 9
     )
     String gameChatSection = "gameChat";
 
@@ -74,7 +76,7 @@ public interface ChatPanelConfig extends Config {
             name = "All Chat",
             description = "Settings for the All Chat tab, not all of the chat.",
             closedByDefault = true,
-            position = 2
+            position = 5
     )
     String allChatSection = "allChat";
 
@@ -82,7 +84,7 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat",
             description = "Settings for the Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 9
+            position = 12
     )
     String customChatSection = "customChat";
 
@@ -90,7 +92,7 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat 2",
             description = "Settings for the second Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 10
+            position = 13
     )
     String custom2ChatSection = "custom2Chat";
 
@@ -98,7 +100,7 @@ public interface ChatPanelConfig extends Config {
             name = "Custom Chat 3",
             description = "Settings for the third Custom Chat tab, select all desired chat channels to be displayed. Long list.",
             closedByDefault = true,
-            position = 11
+            position = 14
     )
     String custom3ChatSection = "custom3Chat";
 
@@ -106,21 +108,31 @@ public interface ChatPanelConfig extends Config {
             name = "Combat",
             description = "Settings for the Combat tab. (Goblin hits Player for: 2), If target unknown: (Player was hit for: 1). Relies on what you are targeting.",
             closedByDefault = true,
-            position = 4
+            position = 7
     )
     String combatSection = "combat";
 
     @ConfigSection(
-            name = "Pop out Window",
+            name = "Pop Out Window",
             description = "Settings for the pop out window",
+            closedByDefault = true,
             position = 1
     )
     String popoutSection = "popoutwindow";
 
     @ConfigSection(
+            name = "Highlighting",
+            description = "Word highlighting settings",
+            closedByDefault = true,
+            position = 3
+    )
+    String highlightingSection = "highlightingSection";
+
+    @ConfigSection(
             name = "Tabs",
             description = "Tab selection. (Recommended 4)",
-            position = 12
+            closedByDefault = true,
+            position = 4
     )
     String tabSection = "tabselection";
 
@@ -128,7 +140,7 @@ public interface ChatPanelConfig extends Config {
             name = "Extras",
             description = "Additional settings and tweaks",
             closedByDefault = true,
-            position = 13
+            position = 16
     )
     String extrasSection = "extras";
 
@@ -1065,8 +1077,8 @@ public interface ChatPanelConfig extends Config {
 		keyName = "highlightWords",
 		name = "Highlight Words",
 		description = "List of words to highlight, separated by commas.",
-		section = extrasSection,
-		position = 15
+		section = highlightingSection,
+		position = 1
 	)
 	default String highlightWords()
 	{
@@ -1077,8 +1089,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "highlightColor",
             name = "Highlight Color",
             description = "Configures the color of highlighted words.",
-            section = extrasSection,
-            position = 14
+            section = highlightingSection,
+            position = 4
     )
     default Color highlightColor()
     {
@@ -1089,8 +1101,8 @@ public interface ChatPanelConfig extends Config {
             keyName = "partialMatching",
             name = "Partial Word Highlighting",
             description = "Allows partial matches of highlight words. Sell would highlight like: <span style='color:yellow'>Sell</span>ing",
-            section = extrasSection,
-            position = 15
+            section = highlightingSection,
+            position = 8
     )
     default boolean PartialMatching()
     {
