@@ -55,7 +55,7 @@ The pop out window can be set to "Always on Top", keeping it on top of other win
 "Auto-Pop Out Window" allows the pop out window to spawn when RuneLite is started with the plugin on, or when the plugin is turned on.
 
 
-![Screenshot from 2024-06-18 19-56-35](https://github.com/Yenof/chat-panel/assets/122739279/33481bc3-13ca-4e67-9ff7-bc11a4cc0f84) ![Screenshot from 2024-06-18 20-00-05](https://github.com/Yenof/chat-panel/assets/122739279/b8f441e8-6378-446f-84cd-08ee0991a74b)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/da8a596f-0d14-420e-b677-1ea28b52f9f6) ![Screenshot from 2024-06-18 20-00-05](https://github.com/Yenof/chat-panel/assets/122739279/b8f441e8-6378-446f-84cd-08ee0991a74b)
 
 
 
