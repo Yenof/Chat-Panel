@@ -633,6 +633,27 @@ public class ChatPanelSidebar extends PluginPanel {
         return new Color(red, green, blue);
     }
 
+    private void highlightWords(String message, String[] highlightWords, Color highlightColor, boolean partialMatching, StyledDocument doc) {
+        List<String> highlightWordsList = new ArrayList<>();
+        for (String word : highlightWords) {
+            if (!word.trim().isEmpty()) {
+                String escapedWord = Pattern.quote(word);
+                highlightWordsList.add(escapedWord);
+            }
+        }
+        Pattern pattern = Pattern.compile((partialMatching? "" : "\\b") + "(" + String.join("|", highlightWordsList) + ")" + (partialMatching? "" : "\\b"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(message);
+        int start = 0;
+        while (matcher.find()) {
+            String matchedWord = matcher.group();
+            int startIndex = doc.getLength() - message.length() + matcher.start();
+            int endIndex = startIndex + matchedWord.length();
+            SimpleAttributeSet highlightAttrs = new SimpleAttributeSet();
+            StyleConstants.setForeground(highlightAttrs, highlightColor);
+            doc.setCharacterAttributes(startIndex, matchedWord.length(), highlightAttrs, false);
+        }
+    }
+
     private void setScrollPaneSizes() {
         if (tabbedPane.getTabCount() > 0) {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(0));
@@ -755,27 +776,20 @@ public class ChatPanelSidebar extends PluginPanel {
                 }
 
                 doc.insertString(doc.getLength(), message, messageAttrs);
+
+                if (!config.highlightWords3().trim().isEmpty()) {
+                    String[] highlightWords3Array = config.highlightWords3().split("\\s*,\\s*");
+                    highlightWords(message, highlightWords3Array, config.highlightColor3(), config.PartialMatching(), doc);
+                }
+                if (!config.highlightWords2().trim().isEmpty()) {
+                    String[] highlightWords2Array = config.highlightWords2().split("\\s*,\\s*");
+                    highlightWords(message, highlightWords2Array, config.highlightColor2(), config.PartialMatching(), doc);
+                }
                 if (!config.highlightWords().trim().isEmpty()) {
                     String[] highlightWordsArray = config.highlightWords().split("\\s*,\\s*");
-                    List<String> highlightWordsList = new ArrayList<>();
-                    for (String word : highlightWordsArray) {
-                        if (!word.trim().isEmpty()) {
-                            String escapedWord = Pattern.quote(word);
-                            highlightWordsList.add(escapedWord);
-                        }
-                    }
-                    Pattern pattern = Pattern.compile((config.PartialMatching()? "" : "\\b") + "(" + String.join("|", highlightWordsList) + ")" + (config.PartialMatching()? "" : "\\b"), Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = pattern.matcher(message);
-                    int start = 0;
-                    while (matcher.find()) {
-                        String matchedWord = matcher.group();
-                        int startIndex = doc.getLength() - message.length() + matcher.start();
-                        int endIndex = startIndex + matchedWord.length();
-                        SimpleAttributeSet highlightAttrs = new SimpleAttributeSet();
-                        StyleConstants.setForeground(highlightAttrs, config.highlightColor());
-                        doc.setCharacterAttributes(startIndex, matchedWord.length(), highlightAttrs, false);
-                    }
+                    highlightWords(message, highlightWordsArray, config.highlightColor(), config.PartialMatching(), doc);
                 }
+
                 doc.insertString(doc.getLength(), "\n", null);
 
                 for (int i = 0; i < extraLines; i++) {

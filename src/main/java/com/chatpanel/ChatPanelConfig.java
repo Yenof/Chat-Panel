@@ -1098,11 +1098,60 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "highlightWords2",
+            name = "Highlight Words 2",
+            description = "Second list of words to highlight, separated by commas.",
+            section = highlightingSection,
+            position = 6
+    )
+    default String highlightWords2()
+    {
+        return "";
+    }
+
+    @ConfigItem(
+            keyName = "highlightColor2",
+            name = "Highlight Color 2",
+            description = "Configures the color of Highlight Words 2.",
+            section = highlightingSection,
+            position = 7
+    )
+    default Color highlightColor2()
+    {
+        return new Color(0xFFA07A);
+    }
+
+
+    @ConfigItem(
+            keyName = "highlightWords3",
+            name = "Highlight Words 3",
+            description = "Third list of words to highlight, separated by commas.",
+            section = highlightingSection,
+            position = 9
+    )
+    default String highlightWords3()
+    {
+        return "";
+    }
+
+    @ConfigItem(
+            keyName = "highlightColor3",
+            name = "Highlight Color 3",
+            description = "Configures the color of Highlight Words 3.",
+            section = highlightingSection,
+            position = 10
+    )
+    default Color highlightColor3()
+    {
+        return new Color(0xA0FF7A);
+    }
+
+    @ConfigItem(
             keyName = "partialMatching",
             name = "Partial Word Highlighting",
             description = "Allows partial matches of highlight words. Sell would highlight like: <span style='color:yellow'>Sell</span>ing",
             section = highlightingSection,
-            position = 8
+            position = 12
     )
     default boolean PartialMatching()
     {
