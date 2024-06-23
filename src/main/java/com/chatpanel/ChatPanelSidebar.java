@@ -113,7 +113,7 @@ public class ChatPanelSidebar extends PluginPanel {
         resetHistoryItem.addActionListener(e -> resetTabHistory(tabIndex));
         popupMenu.add(resetHistoryItem);
 
-        JMenuItem exportItem = new JMenuItem("Export log");
+        JMenuItem exportItem = new JMenuItem("Export Log");
         exportItem.addActionListener(e -> exportChatLog(tabIndex));
         popupMenu.add(exportItem);
 
@@ -202,6 +202,7 @@ public class ChatPanelSidebar extends PluginPanel {
             }
 
             String tabName = tabbedPane.getTitleAt(tabIndex);
+            tabName = tabName.replaceAll("[^a-zA-Z0-9]", "_");
             SimpleDateFormat dateFormat = new SimpleDateFormat("d_M");
             String currentTime = dateFormat.format(new Date());
             String defaultFileName = tabName + "_" + currentTime + ".txt";
