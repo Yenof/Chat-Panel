@@ -6,13 +6,35 @@ import java.awt.*;
 
 @ConfigGroup("chatpanel")
 public interface ChatPanelConfig extends Config {
+
+    enum FontFamily {
+        NORMAL("-Default-"),
+        FONT7("Avara"),
+        FONT6("December Show"),
+        FONT4("Fonarto"),
+        FONT8("Funtype"),
+        FONT5("Home Video"),
+        FONT2("Mr. Pixel"),
+        FONT3("Qaz"),
+        SUPERFUNKY("Super Funky"),
+        CUSTOM_FONT("-Custom Font-");
+        private final String name;
+        FontFamily(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+    }
     enum FontStyle {
         PLAIN("Plain"),
         BOLD("Bold"),
-        ITALIC("Italic");
-
+        ITALIC("Italic"),
+        ITALIC_BOLD("Italic Bold");
         private final String name;
-
         FontStyle(String name) {
             this.name = name;
         }
@@ -157,11 +179,23 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "fontFamily",
+            name = "Font",
+            description = "Choose the font for the Chat Panel. <br>You can replace customfont.ttf in /.runelite/chat-panel/ with your own font. <br>See README for more info.",
+            section = generalSection,
+            position = 4
+    )
+    default FontFamily fontFamily()
+    {
+        return FontFamily.NORMAL;
+    }
+
+    @ConfigItem(
             keyName = "fontStyle",
             name = "Font Style",
             description = "Choose the font style for the chat panel",
             section = generalSection,
-            position = 4
+            position = 5
     )
     default FontStyle fontStyle()
     {

@@ -1,5 +1,6 @@
 package com.chatpanel;
 
+import net.runelite.client.RuneLite;
 import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.awt.IllegalComponentStateException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,7 +58,12 @@ public class ChatPanelSidebar extends PluginPanel {
             popoutButton = new JButton("Pop out");
             popoutButton.setVisible(true);
             popoutButton.addActionListener(e -> togglePopout());
-            add(popoutButton, BorderLayout.SOUTH);}
+            add(popoutButton, BorderLayout.SOUTH);
+        }
+
+        if (!CHAT_PANEL_DIR.exists()) {
+               createDirectory();
+        }
 
         publicChatArea = createTextPane();
         privateChatArea = createTextPane();
@@ -73,6 +81,7 @@ public class ChatPanelSidebar extends PluginPanel {
 
         add(tabbedPane, BorderLayout.CENTER);
         updateChatStyles();
+        updateFonts();
         tabbedPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -522,9 +531,12 @@ public class ChatPanelSidebar extends PluginPanel {
     }
 
     public void updateChatStyles() {
-        setFontSize();
         setColors();
         setScrollPaneSizes();
+    }
+
+    public void updateFonts(){
+        setFontSize();
     }
 
     private void setFontSize() {
@@ -540,21 +552,132 @@ public class ChatPanelSidebar extends PluginPanel {
         combatArea.setFont(getFontFromConfig(config.combatFontSize()));
     }
 
+    public static final File CHAT_PANEL_DIR = new File(RuneLite.RUNELITE_DIR.getPath() + File.separator + "chat-panel");
+    private static final File CUSTOM_FONT_FILE = new File(CHAT_PANEL_DIR, "customfont.ttf");
+    boolean fontLoadErrorShown = true;
     private Font getFontFromConfig(int fontSize) {
-        Font selectedFont;
-
+        Font baseFont;
         switch (config.fontStyle()) {
             case BOLD:
-                selectedFont = new Font("Bold", Font.BOLD, fontSize);
+                baseFont = new Font("Bold", Font.BOLD, fontSize);
                 break;
             case ITALIC:
-                selectedFont = new Font("Italic", Font.ITALIC, fontSize);
+                baseFont = new Font("Italic", Font.ITALIC, fontSize);
+                break;
+            case ITALIC_BOLD:
+                baseFont = new Font("Italic Bold", Font.ITALIC + Font.BOLD, fontSize);
                 break;
             default:
-                selectedFont = new Font("Plain", Font.PLAIN, fontSize);
+                baseFont = new Font("Plain", Font.PLAIN, fontSize);
+                break;
+        }
+        Font selectedFont;
+
+        switch (config.fontFamily()) {
+            case CUSTOM_FONT:
+                selectedFont = customFontLoader(fontSize, baseFont.getStyle());
+                break;
+            case SUPERFUNKY:
+                selectedFont = fontLoader("/SuperFunky.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT2:
+                selectedFont = fontLoader("/MisterPixel.otf", fontSize, baseFont.getStyle());
+                break;
+            case FONT3:
+                selectedFont = fontLoader("/Qaz.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT4:
+                selectedFont = fontLoader("/Fonarto.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT5:
+                selectedFont = fontLoader("/HomeVideo.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT6:
+                selectedFont = fontLoader("/DecemberShow.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT7:
+                selectedFont = fontLoader("/Avara.ttf", fontSize, baseFont.getStyle());
+                break;
+            case FONT8:
+                selectedFont = fontLoader("/Funtype.ttf", fontSize, baseFont.getStyle());
+                break;
+            case NORMAL:
+            default:
+                selectedFont = baseFont;
                 break;
         }
         return selectedFont;
+    }
+
+    private Font fontLoader(String fontFileName, int fontSize, int fontStyle) {
+        try (InputStream fontStream = getClass().getResourceAsStream(fontFileName)) {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+            ge.registerFont(customFont);
+            return customFont.deriveFont(fontStyle, (float) fontSize);
+        } catch (FontFormatException | IOException ignored) {
+            return new Font("Default", fontStyle, fontSize);
+        }
+    }
+
+    private Font customFontLoader(int fontSize, int fontStyle) {
+        if (!CUSTOM_FONT_FILE.exists()) {
+            if (!fontLoadErrorShown) {
+                String message = "The Custom Font file is empty. \nTo use a Custom Font place a .ttf or .otf file named customfont.ttf into:\n /.runelite/chat-panel/\nFor more info, right click 'Chat Panel', then click 'Support'.";
+                String[] options = {"Open Location", "OK"};
+                fontLoadErrorShown = true;
+                int choice = JOptionPane.showOptionDialog(null, message, "Empty Font File", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                if (choice == 0) {
+                    openDIR();
+                }
+            }
+            return new Font("Default", fontStyle, fontSize);
+        } else {
+            try (InputStream fontStream = new FileInputStream(CUSTOM_FONT_FILE)) {
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+                ge.registerFont(customFont);
+                return customFont.deriveFont(fontStyle, (float) fontSize);
+            } catch (FontFormatException | IOException e) {
+                if (!fontLoadErrorShown) {
+                    String message = "Error loading custom font, some fonts don't work.  :( \nHere is the error message that was created:\n" + e.getMessage();
+                    String[] options = {"Open Location", "OK"};
+                    int choice = JOptionPane.showOptionDialog(null, message, "Font Loading Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+                    fontLoadErrorShown = true;
+                    if (choice == 0) {
+                        openDIR();
+                    }
+                }
+                return new Font("Default", fontStyle, fontSize);
+            }
+        }
+    }
+
+    private void createDirectory() {
+        if (!CHAT_PANEL_DIR.exists()) {
+            try {
+                boolean dirCreated = CHAT_PANEL_DIR.mkdirs();
+                if (!dirCreated) {
+                    logger.warn("Failed to create directories. Maybe permission issue?");
+                }
+            } catch (Exception e) {
+                logger.error("Error creating directory: {}", e.getMessage());
+            }
+        }
+    }
+
+    private void openDIR() {
+        if (CHAT_PANEL_DIR.exists()) {
+            try {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(CUSTOM_FONT_FILE.getParentFile());
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error opening file browser \nHere is the error message that was created:\n" + e.getMessage(), "Unknown Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "The Chat Panel directory can't be found in /.runelite/\nThis might be caused by a permission issue.\nYou can try creating the /.runelite/chat-panel/ directory manually.", "Directory Not Found", JOptionPane.ERROR_MESSAGE);
+            fontLoadErrorShown = true;
+        }
     }
 
     private void setColors() {

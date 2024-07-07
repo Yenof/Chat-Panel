@@ -22,7 +22,7 @@ import java.util.Date;
 @PluginDescriptor(
         name = "Chat Panel",
         description = "Displays chat messages in a pop out window or the side panel",
-        tags = {"chat", "panel", "window", "messages", "font style", "private", "accessibility", "copy", "pop out"}
+        tags = {"chat", "panel", "window", "messages", "font", "private", "accessibility", "copy", "pop out", "custom"}
 )
 public class ChatPanelPlugin extends Plugin
 {
@@ -663,6 +663,14 @@ public class ChatPanelPlugin extends Plugin
         if ("chatpanel".equals(event.getGroup())) {
             if (event.getKey().startsWith("show")) {
                 chatPanelSidebar.reloadPlugin();
+            }
+            if (event.getKey().startsWith("font") || event.getKey().endsWith("FontSize")) {
+                chatPanelSidebar.updateFonts();
+            }
+            if (event.getKey().equals("fontFamily") && (config.fontFamily().equals(ChatPanelConfig.FontFamily.CUSTOM_FONT))) {
+                chatPanelSidebar.fontLoadErrorShown = false;
+                chatPanelSidebar.updateFonts();
+                chatPanelSidebar.fontLoadErrorShown = true;
             } else {
                 chatPanelSidebar.updateChatStyles();
                 if (chatPanelSidebar.isPopout()) {
