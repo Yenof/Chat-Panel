@@ -289,11 +289,11 @@ public interface ChatPanelConfig extends Config {
         return publicChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "publicChatFontSize",
             name = "Public Chat Font Size",
-            description = "Configures the font size of the public chat messages. (Max 50)",
+            description = "Configures the font size of the public chat messages.",
             section = publicChatSection,
             position = 3
     )
@@ -338,11 +338,11 @@ public interface ChatPanelConfig extends Config {
         return privateChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "privateChatFontSize",
             name = "Private Chat Font Size",
-            description = "Configures the font size of the private chat messages. (Max 50)",
+            description = "Configures the font size of the private chat messages.",
             section = privateChatSection,
             position = 3
     )
@@ -387,11 +387,11 @@ public interface ChatPanelConfig extends Config {
         return clanChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "clanChatFontSize",
             name = "Clan Chat Font Size",
-            description = "Configures the font size of the clan chat messages. (Max 50)",
+            description = "Configures the font size of the clan chat messages.",
             section = clanChatSection,
             position = 3
     )
@@ -436,11 +436,11 @@ public interface ChatPanelConfig extends Config {
         return friendsChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "friendsChatFontSize",
             name = "Friends Chat Font Size",
-            description = "Configures the font size of the Friends Chat messages. (Max 50)",
+            description = "Configures the font size of the Friends Chat messages.",
             section = friendsChatSection,
             position = 3
     )
@@ -485,11 +485,11 @@ public interface ChatPanelConfig extends Config {
         return gameChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "gameChatFontSize",
             name = "Game Chat Font Size",
-            description = "Configures the font size of the game chat messages. (Max 50)",
+            description = "Configures the font size of the game chat messages.",
             section = gameChatSection,
             position = 3
     )
@@ -534,11 +534,11 @@ public interface ChatPanelConfig extends Config {
         return allChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "allChatFontSize",
             name = "All Chat Font Size",
-            description = "Configures the font size of the All Chat messages. (Max 50)",
+            description = "Configures the font size of the All Chat messages.",
             section = allChatSection,
             position = 3
     )
@@ -595,11 +595,11 @@ public interface ChatPanelConfig extends Config {
         return customChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "customChatFontSize",
             name = "Font Size",
-            description = "Configures the font size. (Max 50)",
+            description = "Configures the font size.",
             section = customChatSection,
             position = 4
     )
@@ -668,11 +668,11 @@ public interface ChatPanelConfig extends Config {
         return custom2ChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "custom2ChatFontSize",
             name = "Font Size",
-            description = "Configures the font size. (Max 50)",
+            description = "Configures the font size.",
             section = custom2ChatSection,
             position = 4
     )
@@ -741,11 +741,11 @@ public interface ChatPanelConfig extends Config {
         return custom3ChatColor();
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "custom3ChatFontSize",
             name = "Font Size",
-            description = "Configures the font size. (Max 50)",
+            description = "Configures the font size.",
             section = custom3ChatSection,
             position = 4
     )
@@ -826,11 +826,11 @@ public interface ChatPanelConfig extends Config {
         return false;
     }
 
-    @Range(min = 5, max = 50)
+    @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "combatFontSize",
             name = "Font Size",
-            description = "Configures the font size. (Max 50)",
+            description = "Configures the font size.",
             section = combatSection,
             position = 4
     )
