@@ -398,8 +398,8 @@ public class ChatPanelSidebar extends PluginPanel {
             if (popoutFrame != null) {
                 popoutFrame.setOpacity(config.popoutOpacity() / 100.0f);
             }
-        } catch (IllegalComponentStateException | UnsupportedOperationException | IllegalArgumentException ex) {
-            logger.warn("unable to set opacity {}", opacity, ex);
+        } catch (IllegalComponentStateException | UnsupportedOperationException | IllegalArgumentException ignored) {
+            //I don't want to spam the log, this seems to only happen on systems where opacity also can't be applied to RL. Maybe a GPU driver thing?
         } finally {
             overrideUndecorated = false;
         }
