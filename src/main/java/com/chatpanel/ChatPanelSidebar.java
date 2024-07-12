@@ -9,9 +9,11 @@ import java.awt.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.*;
 
+import net.runelite.client.util.ImageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.IllegalComponentStateException;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -274,6 +276,15 @@ public class ChatPanelSidebar extends PluginPanel {
                     return overrideUndecorated || super.isUndecorated();
                 }
             };
+            if (popoutFrame.isUndecorated()){
+                popoutFrame.setIconImage(null);
+            } else {
+                if (!config.hidePopoutIcon()){
+                    popoutFrame.setIconImage(ImageUtil.loadImageResource(getClass(), "/ChatPanelimg.png"));
+                } else {
+                popoutFrame.setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+                }
+            }
             addComponentsForPopout();
             popoutFrame.add(tabbedPane);
             popoutFrame.setSize(config.popoutSize());
@@ -342,6 +353,15 @@ public class ChatPanelSidebar extends PluginPanel {
                     return overrideUndecorated || super.isUndecorated();
                 }
             };
+            if (popoutTab.isUndecorated()){
+                popoutTab.setIconImage(null);
+            } else {
+                if (!config.hidePopoutIcon()){
+                    popoutTab.setIconImage(ImageUtil.loadImageResource(getClass(), "/ChatPanelimg.png"));
+                } else {
+                    popoutTab.setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+                }
+            }
             popoutTab.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             popoutTab.setAlwaysOnTop(config.popoutAlwaysOnTop());
             popoutTab.addWindowListener(new WindowAdapter() {

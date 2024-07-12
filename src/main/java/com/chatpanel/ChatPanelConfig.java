@@ -942,7 +942,7 @@ public interface ChatPanelConfig extends Config {
             keyName = "DisablePopOut",
             name = "Hide Pop Out/Pop In Buttons",
             description = "Hides pop out button and pop in button, except in empty side panel. (Requires plugin restart)",
-            position = 4,
+            position = 5,
             section = extrasSection
     )
     default boolean hidepopoutButtons()
@@ -1106,6 +1106,18 @@ public interface ChatPanelConfig extends Config {
 	{
 		return new Color(0xFFFFFF);
 	}
+
+    @ConfigItem(
+            keyName = "hidePopoutIcon",
+            name = "Hide Title Bar Icon",
+            description = "Removes the icon from the title bar of the pop out windows, if they have one. Pop in and out to apply.",
+            section = extrasSection,
+            position = 4
+    )
+    default boolean hidePopoutIcon()
+    {
+        return false;
+    }
 
 	@ConfigItem(
 		keyName = "highlightWords",
