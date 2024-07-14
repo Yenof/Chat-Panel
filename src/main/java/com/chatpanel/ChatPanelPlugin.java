@@ -56,6 +56,7 @@ public class ChatPanelPlugin extends Plugin
                     .build();
 
             clientToolbar.addNavigation(navButton);
+            displayUpdateMessage();
         }
     }
 
@@ -65,6 +66,51 @@ public class ChatPanelPlugin extends Plugin
         if (navButton != null){
         clientToolbar.removeNavigation(navButton);}
         chatPanelSidebar.closePopout();
+    }
+
+    private static final double CURRENT_VERSION = 2.0;
+    private void displayUpdateMessage()
+    {
+        double lastVersionShown = config.getVersion();
+        String name = "Update";
+        String updateMessage = "Welcome to Chat Panel v2.0!\nNew features include: Fonts, extra highlights, update messages, and more!  :)";
+        String timestamp = getCurrentTimestamp();
+
+        //The == 0 part will be changed to enable a first time welcome message after initial config settings placed with v2.0.
+        if (lastVersionShown == 0){
+            config.setVersion(CURRENT_VERSION);
+            if (config.showPublicChat()) {
+                chatPanelSidebar.addPublicChatMessage("", "", "Welcome to Chat Panel!   :)\nThere are many config options waiting for you in Configuration > Chat Panel.");
+            }
+        } else {
+            if (lastVersionShown < CURRENT_VERSION)
+            {
+                config.setVersion(CURRENT_VERSION);
+                if (config.showAllChat()) {
+                    chatPanelSidebar.addAllChatMessage(timestamp, name, updateMessage);
+                }
+                if (config.showGameChat()) {
+                    chatPanelSidebar.addGameChatMessage(timestamp, name, updateMessage);
+                }
+                if (config.showPublicChat()) {
+                    chatPanelSidebar.addPublicChatMessage(timestamp, name, updateMessage);
+                }
+                if (config.showCustomChat()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, name, updateMessage);
+                }
+                if (config.showCustom2Chat()) {
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, name, updateMessage);
+                }
+                if (config.showCustom3Chat()) {
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, name, updateMessage);
+                }
+            }
+            //I think I only need this for testing and mistakes.
+            if (lastVersionShown > CURRENT_VERSION)
+            {
+                config.setVersion(CURRENT_VERSION);
+            }
+        }
     }
 
     @Subscribe

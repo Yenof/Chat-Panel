@@ -1206,7 +1206,33 @@ public interface ChatPanelConfig extends Config {
 
 
 
+    // Start of hidden entries
+
+
+
+    @ConfigItem(
+            keyName = "versionNumber",
+            name = "Get Version",
+            description = "",
+            hidden = true
+    )
+    default double getVersion()
+    {
+        return 1.9;
+    }
+
+    @ConfigItem(
+            keyName = "versionNumber",
+            name = "Set Version",
+            description = "The version when the update message was last shown.",
+            hidden = true
+    )
+    void setVersion(double version);
+
+
+
     // Start of Custom Chat channels...
+
 
 
     @ConfigItem(
