@@ -1229,6 +1229,25 @@ public interface ChatPanelConfig extends Config {
     )
     void setVersion(double version);
 
+    @ConfigItem(
+            keyName = "lastDir",
+            name = "Get Last Directory",
+            description = "",
+            hidden = true
+    )
+    default String getLastDIR()
+    {
+        return"";
+    }
+
+    @ConfigItem(
+            keyName = "lastDir",
+            name = "Set Last Directory",
+            description = "Sets the last directory used to export log.",
+            hidden = true
+    )
+    void setLastDIR(String String);
+
 
 
     // Start of Custom Chat channels...

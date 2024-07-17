@@ -199,7 +199,6 @@ public class ChatPanelSidebar extends PluginPanel {
         createTabs();
     }
 
-    private String lastDirectoryPath;
 
     private void exportChatLog(int tabIndex) {
         Component tabComponent = tabbedPane.getComponentAt(tabIndex);
@@ -208,8 +207,8 @@ public class ChatPanelSidebar extends PluginPanel {
             String chatLog = chatArea.getText();
             JFileChooser fileChooser = new JFileChooser();
 
-            if (lastDirectoryPath != null) {
-                fileChooser.setCurrentDirectory(new File(lastDirectoryPath));
+            if (config.getLastDIR() != null) {
+                fileChooser.setCurrentDirectory(new File(config.getLastDIR()));
             }
 
             String tabName = tabbedPane.getTitleAt(tabIndex);
@@ -236,7 +235,7 @@ public class ChatPanelSidebar extends PluginPanel {
                     try (PrintWriter writer = new PrintWriter(selectedFile)) {
                         writer.println(chatLog);
                         JOptionPane.showMessageDialog(this, "Chat log exported successfully!", "", JOptionPane.INFORMATION_MESSAGE);
-                        lastDirectoryPath = selectedFile.getParent();
+                        config.setLastDIR(selectedFile.getParent());
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(this, "Error exporting chat log: " + ex.getMessage(), "Unknown Error", JOptionPane.ERROR_MESSAGE);
                     }
