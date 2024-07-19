@@ -213,7 +213,22 @@ public class ChatPanelSidebar extends PluginPanel {
 
             String tabName = tabbedPane.getTitleAt(tabIndex);
             tabName = tabName.replaceAll("[^a-zA-Z0-9]", "_");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d_M");
+            SimpleDateFormat dateFormat;
+            switch (config.exportLogDate()) {
+                case MM_dd_yy:
+                    dateFormat = new SimpleDateFormat("MM_dd_yy");
+                    break;
+                case dd_MM:
+                    dateFormat = new SimpleDateFormat("dd_MM");
+                    break;
+                case MM_dd:
+                    dateFormat = new SimpleDateFormat("MM_dd");
+                    break;
+                case dd_MM_yy:
+                default:
+                    dateFormat = new SimpleDateFormat("dd_MM_yy");
+                    break;
+            }
             String currentTime = dateFormat.format(new Date());
             String defaultFileName = tabName + "_" + currentTime + ".txt";
             fileChooser.setSelectedFile(new File(defaultFileName));

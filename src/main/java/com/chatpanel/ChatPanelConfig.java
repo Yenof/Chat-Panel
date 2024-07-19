@@ -46,6 +46,23 @@ public interface ChatPanelConfig extends Config {
 
     }
 
+    enum ExportLogDate {
+        dd_MM_yy(" dd_MM_yy"),
+        MM_dd_yy(" MM_dd_yy"),
+        dd_MM(" dd_MM"),
+        MM_dd(" MM_dd");
+        private final String name;
+        ExportLogDate(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+    }
+
     @ConfigSection(
             name = "General",
             description = "General settings that affect all tabs",
@@ -1117,6 +1134,18 @@ public interface ChatPanelConfig extends Config {
     default boolean hidePopoutIcon()
     {
         return false;
+    }
+
+    @ConfigItem(
+            keyName = "exportLogDate",
+            name = "Export Log Date",
+            description = "Choose the date format for Export Log.",
+            section = extrasSection,
+            position = 7
+    )
+    default ExportLogDate exportLogDate()
+    {
+        return ExportLogDate.dd_MM_yy;
     }
 
 	@ConfigItem(
