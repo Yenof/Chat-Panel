@@ -91,6 +91,7 @@ public class ChatPanelSidebar extends PluginPanel {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     int tabIndex = tabbedPane.indexAtLocation(e.getX(), e.getY());
                     if (tabIndex != -1) {
+                        tabbedPane.setSelectedIndex(tabIndex);
                         showPopupMenu(e.getComponent(), e.getX(), e.getY(), tabIndex);
                     }
                 }
@@ -116,6 +117,7 @@ public class ChatPanelSidebar extends PluginPanel {
 
     private void showPopupMenu(Component component, int x, int y, int tabIndex) {
         JPopupMenu popupMenu = new JPopupMenu();
+
         JMenuItem popoutItem = new JMenuItem("Pop Out");
         popoutItem.addActionListener(e -> popOutTab(tabIndex));
         popupMenu.add(popoutItem);
@@ -128,7 +130,12 @@ public class ChatPanelSidebar extends PluginPanel {
         exportItem.addActionListener(e -> exportChatLog(tabIndex));
         popupMenu.add(exportItem);
 
-        popupMenu.show(component, x, y);
+        JMenuItem searchItem = new JMenuItem("Search");
+        popupMenu.add(searchItem);
+        searchItem.addActionListener(e -> {
+            ChatPanelSearch.SearchWindow searchWindow = new ChatPanelSearch.SearchWindow(popoutFrame, tabbedPane, tabIndex, getParent());
+            searchWindow.setVisible(true);
+        });
 
         popupMenu.show(component, x, y);
     }
