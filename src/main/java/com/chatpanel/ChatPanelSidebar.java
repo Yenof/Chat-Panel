@@ -306,11 +306,23 @@ public class ChatPanelSidebar extends PluginPanel {
                 popoutFrame.setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
                 }
             }
+
+            boolean appliedSize = false;
+            if (config.rememberPopoutPosition()) {
+                appliedSize = restorePopoutBounds();
+                if (config.isPopoutMaximized()) {
+                    popoutFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                }
+            }
+
+            if (!appliedSize) {
+                popoutFrame.setSize(config.popoutSize());
+                popoutFrame.setLocationRelativeTo(getParent());
+            }
+
             addComponentsForPopout();
             popoutFrame.add(tabbedPane);
-            popoutFrame.setSize(config.popoutSize());
             popoutFrame.setMinimumSize(new Dimension(40, 10));
-            popoutFrame.setLocationRelativeTo(null);
             popoutFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             if (config.popoutAlwaysOnTop()) {
                 popoutFrame.setAlwaysOnTop(true);
@@ -357,6 +369,21 @@ public class ChatPanelSidebar extends PluginPanel {
                     }
                 }
             });
+            //On moved instead of on closed because if RL closes first it doesn't always save position.
+            popoutFrame.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentMoved(ComponentEvent e) {
+                    if (config.rememberPopoutPosition()) {
+                        savePopoutBounds();
+                    }
+                }
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    if (config.rememberPopoutPosition()) {
+                        savePopoutBounds();
+                    }
+                }
+            });
             popoutFrame.setVisible(true);
         }
     }
@@ -396,6 +423,12 @@ public class ChatPanelSidebar extends PluginPanel {
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             popoutTab.add(scrollPane);
             setCactus(config.popoutOpacity() / 100.0f);
+            if (isPopout){
+                popoutTab.setLocationRelativeTo(popoutFrame);
+            } else {
+                popoutTab.setLocation(this.getLocationOnScreen());
+            }
+
             popoutTab.setSize(config.popoutSize());
             popoutTab.setVisible(true);
             popoutTab.setMinimumSize(new Dimension(40, 10));
@@ -408,6 +441,24 @@ public class ChatPanelSidebar extends PluginPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         tabbedPane.insertTab(tabTitle, null, scrollPane, null, tabbedPane.getTabCount());
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+    }
+
+    private boolean restorePopoutBounds() {
+        Rectangle bounds = config.getPopoutBounds();
+        if (bounds != null) {
+            popoutFrame.setBounds(bounds);
+            return true;
+        }
+        return false;
+    }
+
+    private void savePopoutBounds() {
+        if (popoutFrame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+            config.setPopoutMaximized(true);
+        } else {
+            config.setPopoutMaximized(false);
+            config.setPopoutBounds(popoutFrame.getBounds());
+        }
     }
 
     void setCactus(float opacity) {

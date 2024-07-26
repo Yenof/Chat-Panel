@@ -956,6 +956,17 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "rememberPopoutPosition",
+            name = "Remember Pop Out Position",
+            description = "Remember the position and size of the pop out window between launches.<br>If you lose track of your pop out window, turn this setting off and pop in and out.",
+            section = popoutSection,
+            position = 7
+    )
+    default boolean rememberPopoutPosition() {
+        return false;
+    }
+
+    @ConfigItem(
             keyName = "DisablePopOut",
             name = "Hide Pop Out/Pop In Buttons",
             description = "Hides pop out button and pop in button, except in empty side panel. (Requires plugin restart)",
@@ -1276,6 +1287,42 @@ public interface ChatPanelConfig extends Config {
             hidden = true
     )
     void setLastDIR(String String);
+
+    @ConfigItem(
+            keyName = "popoutMaximized",
+            name = "Get Maximized",
+            description = "Get if the pop out window was maximized",
+            hidden = true
+    )
+    default boolean isPopoutMaximized() {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "popoutMaximized",
+            name = "Set Maximized",
+            description = "Set if the pop out window was maximized",
+            hidden = true
+    )
+    void setPopoutMaximized(boolean maximized);
+
+    @ConfigItem(
+            keyName = "popoutBounds",
+            name = "Get Bounds",
+            description = "Get bounds of pop out window",
+            hidden = true
+    )
+    default Rectangle getPopoutBounds() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "popoutBounds",
+            name = "Set Bounds",
+            description = "Set bounds of pop out window",
+            hidden = true
+    )
+    void setPopoutBounds(Rectangle bounds);
 
 
 
