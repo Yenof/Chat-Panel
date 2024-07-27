@@ -1571,6 +1571,18 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Mesbox",
+            name = "Mesbox",
+            description = "Display Mesbox messages",
+            section = customChatSection,
+            position = 27
+    )
+    default boolean CustomMesboxEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
             keyName = "ModAutoTyper",
             name = "Mod Auto Typer",
             description = "Display mod auto-typer messages",
@@ -1614,6 +1626,18 @@ public interface ChatPanelConfig extends Config {
             position = 30
     )
     default boolean CustomNpcExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "NpcSay",
+            name = "NPC Say",
+            description = "Display NPC Say messages",
+            section = customChatSection,
+            position = 30
+    )
+    default boolean CustomNpcSayEnabled()
     {
         return false;
     }
@@ -1979,6 +2003,18 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Mesbox2",
+            name = "Mesbox",
+            description = "Display Mesbox messages",
+            section = custom2ChatSection,
+            position = 27
+    )
+    default boolean Custom2MesboxEnabled()
+    {
+        return false;
+    }
+    
+    @ConfigItem(
             keyName = "ModAutoTyper2",
             name = "Mod Auto Typer",
             description = "Display mod auto-typer messages",
@@ -2022,6 +2058,18 @@ public interface ChatPanelConfig extends Config {
             position = 30
     )
     default boolean Custom2NpcExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "NpcSay2",
+            name = "NPC Say",
+            description = "Display NPC Say messages",
+            section = custom2ChatSection,
+            position = 30
+    )
+    default boolean Custom2NpcSayEnabled()
     {
         return false;
     }
@@ -2387,6 +2435,18 @@ public interface ChatPanelConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "Mesbox3",
+            name = "Mesbox",
+            description = "Display Mesbox messages",
+            section = custom3ChatSection,
+            position = 27
+    )
+    default boolean Custom3MesboxEnabled()
+    {
+        return false;
+    }
+    
+    @ConfigItem(
             keyName = "ModAutoTyper3",
             name = "Mod Auto Typer",
             description = "Display mod auto-typer messages",
@@ -2430,6 +2490,18 @@ public interface ChatPanelConfig extends Config {
             position = 30
     )
     default boolean Custom3NpcExamineEnabled()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+            keyName = "NpcSay3",
+            name = "NPC Say",
+            description = "Display NPC Say messages",
+            section = custom3ChatSection,
+            position = 30
+    )
+    default boolean Custom3NpcSayEnabled()
     {
         return false;
     }

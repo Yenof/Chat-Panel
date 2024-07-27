@@ -153,10 +153,12 @@ public class ChatPanelPlugin extends Plugin
                 break;
             case BROADCAST:
             case GAMEMESSAGE:
+            case MESBOX:
             case ENGINE:
             case NPC_EXAMINE:
             case SPAM:
             case DIALOG:
+            case NPC_SAY:
             case ITEM_EXAMINE:
             case OBJECT_EXAMINE:
             case WELCOME:
@@ -382,6 +384,17 @@ public class ChatPanelPlugin extends Plugin
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
                 }
                 break;
+            case MESBOX:
+                if (config.showCustomChat() && config.CustomMesboxEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                }
+                if (config.showCustom2Chat() && config.Custom2MesboxEnabled()) {
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                }
+                if (config.showCustom3Chat() && config.Custom3MesboxEnabled()) {
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                }
+                break;
             case NPC_EXAMINE:
                 if (config.showCustomChat() && config.CustomNpcExamineEnabled()) {
                     chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
@@ -390,6 +403,17 @@ public class ChatPanelPlugin extends Plugin
                     chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
                 }
                 if (config.showCustom3Chat() && config.Custom3NpcExamineEnabled()) {
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                }
+                break;
+            case NPC_SAY:
+                if (config.showCustomChat() && config.CustomNpcSayEnabled()) {
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                }
+                if (config.showCustom2Chat() && config.Custom2NpcSayEnabled()) {
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                }
+                if (config.showCustom3Chat() && config.Custom3NpcSayEnabled()) {
                     chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
                 }
                 break;
@@ -646,6 +670,10 @@ public class ChatPanelPlugin extends Plugin
                 return "Engine" + cleanedName;
             case NPC_EXAMINE:
                 return "NPC Examine" + cleanedName;
+            case NPC_SAY:
+                return "NPC Say" + cleanedName;
+            case MESBOX:
+                return "Mesbox" + cleanedName;
             case SPAM:
                 return "Spam" + cleanedName;
             case DIALOG:
