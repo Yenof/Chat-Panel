@@ -306,6 +306,18 @@ public interface ChatPanelConfig extends Config {
         return publicChatColor();
     }
 
+    @ConfigItem(
+            keyName = "publicChatTimestampColor",
+            name = "Public Chat Timestamp Color",
+            description = "Configures the timestamp color for public chat.",
+            section = publicChatSection,
+            position = 2
+    )
+    default Color publicChatTimestampColor()
+    {
+        return publicChatColor();
+    }
+
     @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "publicChatFontSize",
@@ -351,6 +363,18 @@ public interface ChatPanelConfig extends Config {
             position = 2
     )
     default Color privateChatNameColor()
+    {
+        return privateChatColor();
+    }
+
+    @ConfigItem(
+            keyName = "privateChatTimestampColor",
+            name = "Private Chat Timestamp Color",
+            description = "Configures the timestamp color for private chat.",
+            section = privateChatSection,
+            position = 2
+    )
+    default Color privateChatTimestampColor()
     {
         return privateChatColor();
     }
@@ -404,6 +428,18 @@ public interface ChatPanelConfig extends Config {
         return clanChatColor();
     }
 
+    @ConfigItem(
+            keyName = "clanChatTimestampColor",
+            name = "Clan Chat Timestamp Color",
+            description = "Configures the timestamp color for clan chat.",
+            section = clanChatSection,
+            position = 2
+    )
+    default Color clanChatTimestampColor()
+    {
+        return clanChatColor();
+    }
+
     @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "clanChatFontSize",
@@ -449,6 +485,18 @@ public interface ChatPanelConfig extends Config {
             position = 2
     )
     default Color friendsChatNameColor()
+    {
+        return friendsChatColor();
+    }
+
+    @ConfigItem(
+            keyName = "friendsChatTimestampColor",
+            name = "Friends Chat Timestamp Color",
+            description = "Configures the timestamp color for friends chat.",
+            section = friendsChatSection,
+            position = 2
+    )
+    default Color friendsChatTimestampColor()
     {
         return friendsChatColor();
     }
@@ -502,6 +550,18 @@ public interface ChatPanelConfig extends Config {
         return gameChatColor();
     }
 
+    @ConfigItem(
+            keyName = "gameChatTimestampColor",
+            name = "Game Chat Timestamp Color",
+            description = "Configures the timestamp color for game chat.",
+            section = gameChatSection,
+            position = 2
+    )
+    default Color gameChatTimestampColor()
+    {
+        return gameChatColor();
+    }
+
     @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "gameChatFontSize",
@@ -547,6 +607,18 @@ public interface ChatPanelConfig extends Config {
             position = 2
     )
     default Color allChatNameColor()
+    {
+        return allChatColor();
+    }
+
+    @ConfigItem(
+            keyName = "allChatTimestampColor",
+            name = "All Chat Timestamp Color",
+            description = "Configures the timestamp color for all chat.",
+            section = allChatSection,
+            position = 2
+    )
+    default Color allChatTimestampColor()
     {
         return allChatColor();
     }
@@ -608,6 +680,18 @@ public interface ChatPanelConfig extends Config {
             position = 3
     )
     default Color customChatNameColor()
+    {
+        return customChatColor();
+    }
+
+    @ConfigItem(
+            keyName = "customChatTimestampColor",
+            name = "Timestamp Color",
+            description = "Configures the timestamp color.",
+            section = customChatSection,
+            position = 3
+    )
+    default Color customChatTimestampColor()
     {
         return customChatColor();
     }
@@ -685,6 +769,18 @@ public interface ChatPanelConfig extends Config {
         return custom2ChatColor();
     }
 
+    @ConfigItem(
+            keyName = "custom2ChatTimestampColor",
+            name = "Timestamp Color",
+            description = "Configures the timestamp color.",
+            section = custom2ChatSection,
+            position = 3
+    )
+    default Color custom2ChatTimestampColor()
+    {
+        return custom2ChatColor();
+    }
+
     @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "custom2ChatFontSize",
@@ -758,6 +854,18 @@ public interface ChatPanelConfig extends Config {
         return custom3ChatColor();
     }
 
+    @ConfigItem(
+            keyName = "custom3ChatTimestampColor",
+            name = "Timestamp Color",
+            description = "Configures the timestamp color.",
+            section = custom3ChatSection,
+            position = 3
+    )
+    default Color custom3ChatTimestampColor()
+    {
+        return custom3ChatColor();
+    }
+
     @Range(min = 5, max = 200)
     @ConfigItem(
             keyName = "custom3ChatFontSize",
@@ -815,6 +923,18 @@ public interface ChatPanelConfig extends Config {
             position = 3
     )
     default Color combatLabelColor()
+    {
+        return combatTextColor();
+    }
+
+    @ConfigItem(
+            keyName = "combatTimestampColor",
+            name = "Timestamp Color",
+            description = "Configures the timestamp color.",
+            section = combatSection,
+            position = 3
+    )
+    default Color combatTimestampColor()
     {
         return combatTextColor();
     }
@@ -1112,25 +1232,25 @@ public interface ChatPanelConfig extends Config {
     }
 
 	@ConfigItem(
-		keyName = "CustomTimestamp",
-		name = "Enable Custom Timestamp Color",
-		description = "Enables recoloring the timestamp, overriding chat colors. Select color below.",
+		keyName = "enableMyName",
+		name = "Enable My Name Color",
+		description = "Enables recoloring your username, overriding chat colors. Select color below.",
 		section = extrasSection,
 		position = 8
 	)
-	default boolean CustomTimestamp()
+	default boolean enableMyNameColor()
 	{
 		return false;
 	}
 
 	@ConfigItem(
-		keyName = "TimestampColorOverride",
-		name = "Timestamp Color",
-		description = "Configures the color of the Custom Timestamp override for all tabs. Requires Enable Custom Timestamp Color to be checked.",
+		keyName = "myNameColor",
+		name = "My Name Color",
+		description = "Configures the color of your username, overriding name color for chat tabs. Requires Enable My Name Color to be checked.",
 		section = extrasSection,
 		position = 9
 	)
-	default Color TimestampColorOverride()
+	default Color myNameColor()
 	{
 		return new Color(0xFFFFFF);
 	}

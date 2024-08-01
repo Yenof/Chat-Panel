@@ -1,5 +1,6 @@
 package com.chatpanel;
 
+import net.runelite.api.Client;
 import net.runelite.client.RuneLite;
 import net.runelite.client.ui.PluginPanel;
 import javax.swing.*;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,9 +54,11 @@ public class ChatPanelSidebar extends PluginPanel {
     private static final int AUTO_POP_DELAY_MS = 180; //This prevents the pop out window from messing up RL's icon.
     private Timer autoPopTimer;
     private final List<JFrame> popoutTabs = new ArrayList<>();
+    private final Client client;
 
-    public ChatPanelSidebar(ChatPanelConfig config) {
+    public ChatPanelSidebar(ChatPanelConfig config, Client client) {
         this.config = config;
+        this.client = client;
         setLayout(new BorderLayout());
         if (!config.hidepopoutButtons()) {
             popoutButton = new JButton("Pop out");
@@ -803,43 +807,71 @@ public class ChatPanelSidebar extends PluginPanel {
         combatArea.setForeground(adjustColor(config.combatTextColor(), offset));
     }
 
-    private Color NameColor(JTextPane chatArea) {
-        if (config.chatColorOffset()!= 0) {
-
-            int offset = config.chatColorOffset();}
-        else {
-            int offset = 0;
+    private static final String[] Identifiers = {"Public - ", "Clan - ", "Friends Chat - ", "ClanGuest - ", "ClanGIM - ", "ModChat - ", "ModPrivate - "};
+    private Color NameColor(JTextPane chatArea, String cleanedName) {
+        if (config.enableMyNameColor()) {
+            String baseName = cleanedName;
+            for (String identifier : Identifiers) {
+                if (cleanedName.startsWith(identifier)) {
+                    baseName = cleanedName.substring(identifier.length()).trim();
+                    break;
+                }
+            }
+            if (client.getLocalPlayer()!=null) {
+                if (Objects.equals(client.getLocalPlayer().getName(), baseName)) {
+                    return config.myNameColor();
+                }
+            }
         }
-        int offset = 0;
 
         if (chatArea == publicChatArea) {
-            return adjustColor(config.publicChatNameColor(), offset);
+            return config.publicChatNameColor();
         } else if (chatArea == privateChatArea) {
-            return adjustColor(config.privateChatNameColor(), offset);
+            return config.privateChatNameColor();
         } else if (chatArea == clanChatArea) {
-            return adjustColor(config.clanChatNameColor(), offset);
+            return config.clanChatNameColor();
         } else if (chatArea == friendsChatArea) {
-            return adjustColor(config.friendsChatNameColor(), offset);
+            return config.friendsChatNameColor();
         } else if (chatArea == gameChatArea) {
-            return adjustColor(config.gameChatNameColor(), offset);
+            return config.gameChatNameColor();
         } else if (chatArea == allChatArea) {
-            return adjustColor(config.allChatNameColor(), offset);
+            return config.allChatNameColor();
         } else if (chatArea == customChatArea) {
-            return adjustColor(config.customChatNameColor(), offset);
+            return config.customChatNameColor();
         } else if (chatArea == customChatArea2) {
-            return adjustColor(config.custom2ChatNameColor(), offset);
+            return config.custom2ChatNameColor();
         } else if (chatArea == customChatArea3) {
-            return adjustColor(config.custom3ChatNameColor(), offset);
+            return config.custom3ChatNameColor();
         } else if (chatArea == combatArea) {
-            return adjustColor(config.combatLabelColor(), offset);
+            return config.combatLabelColor();
         }
-        return adjustColor(Color.YELLOW, offset);
+        return (Color.YELLOW);
     }
 
-	private Color TimestampColor(JTextPane chatArea) {
-		config.CustomTimestamp();
-		return config.TimestampColorOverride();
-	}
+    private Color TimestampColor(JTextPane chatArea) {
+        if (chatArea == publicChatArea) {
+            return config.publicChatTimestampColor();
+        } else if (chatArea == privateChatArea) {
+            return config.privateChatTimestampColor();
+        } else if (chatArea == clanChatArea) {
+            return config.clanChatTimestampColor();
+        } else if (chatArea == friendsChatArea) {
+            return config.friendsChatTimestampColor();
+        } else if (chatArea == gameChatArea) {
+            return config.gameChatTimestampColor();
+        } else if (chatArea == allChatArea) {
+            return config.allChatTimestampColor();
+        } else if (chatArea == customChatArea) {
+            return config.customChatTimestampColor();
+        } else if (chatArea == customChatArea2) {
+            return config.custom2ChatTimestampColor();
+        } else if (chatArea == customChatArea3) {
+            return config.custom3ChatTimestampColor();
+        } else if (chatArea == combatArea) {
+            return config.combatTimestampColor();
+        }
+        return Color.YELLOW;
+    }
 
 
     private Color adjustColor(Color color, int offset) {
@@ -968,15 +1000,11 @@ public class ChatPanelSidebar extends PluginPanel {
 
             SimpleAttributeSet timestampAttrs = new SimpleAttributeSet();
             Color timestampColor;
-            if (config.CustomTimestamp()) {
-                timestampColor = isOddLine ? adjustColor(TimestampColor(chatArea), config.chatColorOffset()) : TimestampColor(chatArea);
-            } else {
-                timestampColor = isOddLine ? adjustColor(baseColor, config.chatColorOffset()) : baseColor;
-            }
+            timestampColor = isOddLine ? adjustColor(TimestampColor(chatArea), config.chatColorOffset()) : TimestampColor(chatArea);
             StyleConstants.setForeground(timestampAttrs, timestampColor);
 
             SimpleAttributeSet nameAttrs = new SimpleAttributeSet();
-            Color nameColor = isOddLine? adjustColor(NameColor(chatArea), config.chatColorOffset()) : NameColor(chatArea);
+            Color nameColor = isOddLine? adjustColor(NameColor(chatArea, cleanedName), config.chatColorOffset()) : NameColor(chatArea, cleanedName);
             StyleConstants.setForeground(nameAttrs, nameColor);
 
             SimpleAttributeSet messageAttrs = new SimpleAttributeSet();

@@ -32,6 +32,9 @@ public class ChatPanelPlugin extends Plugin
     @Inject
     private ChatPanelConfig config;
 
+    @Inject
+    private Client client;
+
     private ChatPanelSidebar chatPanelSidebar;
     private NavigationButton navButton;
 
@@ -44,7 +47,7 @@ public class ChatPanelPlugin extends Plugin
     @Override
     protected void startUp() throws Exception
     {
-        chatPanelSidebar = new ChatPanelSidebar(config);
+        chatPanelSidebar = new ChatPanelSidebar(config, client);
         if (!config.hideSidebarIcon()) {
             final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/ChatPanelimg.png");
 
