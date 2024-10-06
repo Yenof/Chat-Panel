@@ -7,7 +7,8 @@ The Chat Panel window can be moved freely like a normal windowed application, in
 
 
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/93b9e17f-f326-4a2e-a8ba-d4a0b977fd0a)![image](https://github.com/Yenof/chat-panel/assets/122739279/f7df8bd3-9ae9-4473-b032-b4375893397f)
+![image](https://github.com/Yenof/chat-panel/assets/122739279/93b9e17f-f326-4a2e-a8ba-d4a0b977fd0a)![fixedimage](https://github.com/user-attachments/assets/803ba7ca-ae16-4ac7-993b-2b4dd2853b5e)
+
 
 
 
@@ -27,24 +28,26 @@ The Chat Panel window can be moved freely like a normal windowed application, in
 There are many config groups that contain the plugin's settings.<br/>
 They can be expanded by clicking on the group name or little arrows.
 
-![Screenshot from 2024-06-18 19-56-35](https://github.com/Yenof/chat-panel/assets/122739279/60825c4e-da16-4536-9456-7a81ee3a8fe4) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc) 
+![Screenshot from 2024-06-18 19-56-35](https://github.com/Yenof/chat-panel/assets/122739279/60825c4e-da16-4536-9456-7a81ee3a8fe4) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc)
 
 
-Configurable text, background, and name colors per tab.
+Configurable text, background, timestamp, and name colors per tab.
 
-Adjustable Font sizes per tab. (Min size 5, max 50)
+Adjustable Font sizes per tab. (Min size 5, max 200)
 
-![Screenshot from 2024-06-18 19-57-54](https://github.com/Yenof/chat-panel/assets/122739279/0d9b9a98-1594-43c2-8cb8-210dcefd71c7)
+![Screenshot from 2024-08-21 16-55-26](https://github.com/user-attachments/assets/41cbed28-8bc1-4e5b-ba2c-23341f7506b1)
 
-"Odd Row Shading" tints alternating lines of chat for visability. Negative entries darken, positive lighten. 
+"Odd Row Shading" tints alternating lines of chat for visability. Negative entries darken, positive lighten.
 
 Line spacing adds space in between messages. (Max 10)
 
-Options for Bold, Italic, and Plain font styles.
+The font can be changed by selecting one of the several example fonts, or with the Custom Font option you can use a `.ttf` or `.otf` font file of your choice. (More info in [Usage](#usage) section)
+
+Options for Bold, Italic, Italic Bold, and Plain font styles.
 
 Timestamps can be set using SimpleDateFormat patterns. (HH:mm, yyyy.MM.dd, and more)
 
-![Screenshot from 2024-06-18 19-59-28](https://github.com/Yenof/chat-panel/assets/122739279/54917cf5-f0fc-4d50-b472-4cf0cbd6f9d6) ![Screenshot from 2024-06-18 19-59-14](https://github.com/Yenof/chat-panel/assets/122739279/94dac02c-0e24-4628-9a56-5aaf022212cd)
+![Screenshot from 2024-08-21 16-56-05](https://github.com/user-attachments/assets/9a2e785c-4a3e-4b5e-8083-452863599e70) ![Screenshot from 2024-08-21 16-56-26](https://github.com/user-attachments/assets/39385ad7-24c8-4568-8f72-6e8a16edd2c8)
 
 
 
@@ -54,8 +57,11 @@ The pop out window can be set to "Always on Top", keeping it on top of other win
 
 "Auto-Pop Out Window" allows the pop out window to spawn when RuneLite is started with the plugin on, or when the plugin is turned on.
 
+"Remember Pop Out Position" saves the size and location of the pop out window to be used next time the pop out window is opened.
 
-![image](https://github.com/Yenof/chat-panel/assets/122739279/da8a596f-0d14-420e-b677-1ea28b52f9f6) ![Screenshot from 2024-06-18 20-00-05](https://github.com/Yenof/chat-panel/assets/122739279/b8f441e8-6378-446f-84cd-08ee0991a74b)
+
+![image](https://github.com/Yenof/chat-panel/assets/122739279/da8a596f-0d14-420e-b677-1ea28b52f9f6) ![Screenshot from 2024-08-21 16-59-57](https://github.com/user-attachments/assets/bbcae4ad-2d9a-4547-bd68-53c516f94555)
+
 
 
 
@@ -70,13 +76,16 @@ The sidebar icon position can be adjusted or the icon hidden.
 
 Can hide the Pop out and Pop in buttons, except when the side panel is empty.
 
-The Timestamp Color can be overridden by enabling "Custom Timestamp Color", this will change the color of the Timestamp in all tabs to the color selected.
+Can disable the icon for the pop out windows.
 
-Chosen words can be highlighted with the "Highlight Words" option. "Partial Word Highlighting" allows highlight words like "Sell" to highlight part of "Selling".
+"Export Log Date" allows you to select a date format for the .txt file created by Export Log.
+
+By using "Enable My Name Color" and "My Name Color" you can set a name color for when a message has your username in the name field.
+
+Chosen words (Separated by commas) can be highlighted with the "Highlight Words" options. "Partial Word Highlighting" allows highlight words like "Sell" to highlight part of "Selling".
 
 
-
-![Screenshot from 2024-06-18 20-00-37](https://github.com/Yenof/chat-panel/assets/122739279/0d66776d-ed88-4985-8d40-2f40f9ca5508) ![image](https://github.com/Yenof/chat-panel/assets/122739279/a2d9f62d-a996-4bc3-b3d5-234f43c524ba)
+![Screenshot from 2024-08-21 17-00-19](https://github.com/user-attachments/assets/304e4d51-7fad-4c10-9eab-2bf4444181db) ![Screenshot from 2024-08-21 16-58-45](https://github.com/user-attachments/assets/e384bfdd-b981-4fd1-bf44-2e55a643b7cc)
 
 
 
@@ -85,7 +94,9 @@ Chosen words can be highlighted with the "Highlight Words" option. "Partial Word
 
 ## Usage:
 
-Right clicking on a tab shows additional options like "Pop Out", "Reset History", and "Export Log".
+Right-clicking on a tab shows additional options like "Pop Out", "Reset History", "Export Log", and "Search".
+
+The right-click "Search" option functions similarly to Ctrl+F; it finds, highlights, and jumps to instances of the search term within the tab.
 
 Clicking a tab with middle mouse button can also pop the tab out into it's own window.
 
@@ -97,8 +108,11 @@ Custom tabs start empty, and you must add desired chat channels through the Cust
 
 If you have "Hide Sidebar Icon" enabled and close the pop out window, you will need to toggle the plugin on/off with Auto-Pop enabled to have a new Chat Panel window created.
 
+To use a Custom Font, place a `.ttf` or `.otf` file named `customfont.ttf` into `%userprofile%\.runelite\chat-panel` on Windows or `~/.runelite/chat-panel` on Linux/OSX, then select -Custom Font- in Chat Panel's config. <br>
+It must be named exactly `customfont.ttf`, even if it is an `.otf` file. <br>
+Not all font files work, notably fonts with colors or pictures seem to not work.
 
- ![image](https://github.com/Yenof/chat-panel/assets/122739279/fdc47a4a-f70b-44fd-b4bb-4d56ba30458a) ![Screenshot from 2024-02-12 17-22-18](https://github.com/Yenof/chat-panel/assets/122739279/d0c3e199-f9a9-4e3d-b199-5d1acc1a6d96) 
+![Screenshot from 2024-08-21 17-01-28](https://github.com/user-attachments/assets/5f614adc-536d-43f9-9749-5332f29cdee1) ![Screenshot from 2024-09-15 19-18-22](https://github.com/user-attachments/assets/b572df9f-e5fa-4733-beda-dc189c1e61c8)
 
 
 
