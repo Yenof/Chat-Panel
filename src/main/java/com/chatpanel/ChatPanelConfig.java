@@ -198,7 +198,7 @@ public interface ChatPanelConfig extends Config {
     @ConfigItem(
             keyName = "fontFamily",
             name = "Font",
-            description = "Choose the font for the Chat Panel. <br>You can replace customfont.ttf in /.runelite/chat-panel/ with your own font. <br>See README for more info.",
+            description = "Choose the font for the Chat Panel. <br>You can place a font file named customfont.ttf into /.runelite/chat-panel/ to use your own font. <br>See README for more info.",
             section = generalSection,
             position = 4
     )
