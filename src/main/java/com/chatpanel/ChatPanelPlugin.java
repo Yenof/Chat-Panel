@@ -132,7 +132,7 @@ public class ChatPanelPlugin extends Plugin
             case PRIVATECHAT:
             case MODPRIVATECHAT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, event.getName(), cleanedMessage);}
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
