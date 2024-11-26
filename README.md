@@ -28,7 +28,7 @@ The Chat Panel window can be moved freely like a normal windowed application, in
 There are many config groups that contain the plugin's settings.<br/>
 They can be expanded by clicking on the group name or little arrows.
 
-![Screenshot from 2024-06-18 19-56-35](https://github.com/Yenof/chat-panel/assets/122739279/60825c4e-da16-4536-9456-7a81ee3a8fe4) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc)
+![image](https://github.com/user-attachments/assets/c9b42517-113f-4159-ac54-2444a6b870f0) ![image](https://github.com/Yenof/chat-panel/assets/122739279/b561e3ab-7a41-4c49-a90b-ae1fb9552dcc)
 
 
 Configurable text, background, timestamp, and name colors per tab.
@@ -69,6 +69,9 @@ The pop out window can be set to "Always on Top", keeping it on top of other win
 Can choose between many tabs to display: Public, Private, Clan, Friends Chat, Game, All, Combat, and Custom (1, 2, 3).
 
 For the Combat Tab, there are options to only show combat events related to you, hide zero damage events, and show deaths in chat.
+
+The Message Type Coloring section allows you to select a color for a chat type. (Public Chat green, Examine text red). <br>
+These choices persist through all Chat Tabs, overriding the text colors chosen in the Chat Tabs.
 
 The height of the Chat Area in the side panel can be adjusted, recommended to be less than the height of your client.
 
