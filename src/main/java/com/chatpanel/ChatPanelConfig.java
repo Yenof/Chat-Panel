@@ -1386,7 +1386,7 @@ public interface ChatPanelConfig extends Config {
     )
     default double getVersion()
     {
-        return 1.9;
+        return 0;
     }
 
     @ConfigItem(

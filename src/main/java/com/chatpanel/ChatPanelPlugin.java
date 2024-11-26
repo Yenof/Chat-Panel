@@ -71,16 +71,15 @@ public class ChatPanelPlugin extends Plugin
         chatPanelSidebar.closePopout();
     }
 
-    private static final double CURRENT_VERSION = 2.0;
+    private static final double CURRENT_VERSION = 2.1;
     private void displayUpdateMessage()
     {
         double lastVersionShown = config.getVersion();
         String name = "Update";
-        String updateMessage = "Welcome to Chat Panel v2.0!\nNew features include: Fonts, extra highlights, update messages, and more!  :)";
+        String updateMessage = "Chat Panel has been updated to v2.1!\nYou can now recolor messages based on type!   :)";
         String timestamp = getCurrentTimestamp();
         String eventName = "UPDATE_MESSAGE";
 
-        //The == 0 part will be changed to enable a first time welcome message after initial config settings placed with v2.0.
         if (lastVersionShown == 0){
             config.setVersion(CURRENT_VERSION);
             if (config.showPublicChat()) {
