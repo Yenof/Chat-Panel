@@ -78,34 +78,35 @@ public class ChatPanelPlugin extends Plugin
         String name = "Update";
         String updateMessage = "Welcome to Chat Panel v2.0!\nNew features include: Fonts, extra highlights, update messages, and more!  :)";
         String timestamp = getCurrentTimestamp();
+        String eventName = "UPDATE_MESSAGE";
 
         //The == 0 part will be changed to enable a first time welcome message after initial config settings placed with v2.0.
         if (lastVersionShown == 0){
             config.setVersion(CURRENT_VERSION);
             if (config.showPublicChat()) {
-                chatPanelSidebar.addPublicChatMessage("", "", "Welcome to Chat Panel!   :)\nThere are many config options waiting for you in Configuration > Chat Panel.");
+                chatPanelSidebar.addPublicChatMessage("", "", "Welcome to Chat Panel!   :)\nThere are many config options waiting for you in Configuration > Chat Panel.", eventName);
             }
         } else {
             if (lastVersionShown < CURRENT_VERSION)
             {
                 config.setVersion(CURRENT_VERSION);
                 if (config.showAllChat()) {
-                    chatPanelSidebar.addAllChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addAllChatMessage(timestamp, name, updateMessage, eventName);
                 }
                 if (config.showGameChat()) {
-                    chatPanelSidebar.addGameChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addGameChatMessage(timestamp, name, updateMessage, eventName);
                 }
                 if (config.showPublicChat()) {
-                    chatPanelSidebar.addPublicChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addPublicChatMessage(timestamp, name, updateMessage, eventName);
                 }
                 if (config.showCustomChat()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, name, updateMessage, eventName);
                 }
                 if (config.showCustom2Chat()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, name, updateMessage, eventName);
                 }
                 if (config.showCustom3Chat()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, name, updateMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, name, updateMessage, eventName);
                 }
             }
             //I think I only need this for testing and mistakes.
@@ -115,24 +116,23 @@ public class ChatPanelPlugin extends Plugin
             }
         }
     }
-
     @Subscribe
     public void onChatMessage(ChatMessage event) {
         String cleanedName = event.getType() == ChatMessageType.PRIVATECHATOUT ? "To " + cleanString(event.getName()) : event.getType() == ChatMessageType.PRIVATECHAT || event.getType() == ChatMessageType.MODPRIVATECHAT? "From " + cleanString(event.getName()) : cleanString(event.getName());
         String cleanedMessage = event.getType() == ChatMessageType.DIALOG ? cleanDialogMessage(event.getMessage()) : cleanString(event.getMessage());
         String timestamp = getCurrentTimestamp();
-
+        String eventName = event.getType().name();
 
         switch (event.getType()) {
             case PUBLICCHAT:
             case MODCHAT:
                 if (config.showPublicChat()) {
-                    chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addPublicChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case PRIVATECHAT:
             case MODPRIVATECHAT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case CLAN_CHAT:
             case CLAN_MESSAGE:
@@ -142,17 +142,17 @@ public class ChatPanelPlugin extends Plugin
             case CLAN_GUEST_CHAT:
             case CHALREQ_CLANCHAT:
                 if (config.showClanChat()) {
-                    chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addClanChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case PRIVATECHATOUT:
                 if (config.showPrivateChat()) {
-                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addPrivateChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case FRIENDSCHAT:
             case CHALREQ_FRIENDSCHAT:
             case FRIENDSCHATNOTIFICATION:
                 if (config.showFriendsChat()) {
-                    chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addFriendsChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case BROADCAST:
             case GAMEMESSAGE:
@@ -174,404 +174,403 @@ public class ChatPanelPlugin extends Plugin
             case IGNORENOTIFICATION:
             case FRIENDNOTIFICATION:
                 if (config.showGameChat()) {
-                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedName, cleanedMessage);}
+                    chatPanelSidebar.addGameChatMessage(timestamp, cleanedName, cleanedMessage, eventName);}
                 break;
             case UNKNOWN:
         }
         if (config.showAllChat()) {
-            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage);
+            chatPanelSidebar.addAllChatMessage(timestamp, cleanedName, cleanedMessage, eventName);
         }
         if (config.showCustomChat() || config.showCustom2Chat() || config.showCustom3Chat()) {
-            onCustomChatMessage(event, cleanedName, cleanedMessage, timestamp);
+            onCustomChatMessage(event, cleanedName, cleanedMessage, timestamp, eventName);
         }
     }
-
-    private void onCustomChatMessage(ChatMessage event, String cleanedName, String cleanedMessage, String timestamp) {
+    private void onCustomChatMessage(ChatMessage event, String cleanedName, String cleanedMessage, String timestamp, String eventName) {
         String identifier = getIdentifier(cleanedName, event);
         switch (event.getType()) {
             case PUBLICCHAT:
                 if (config.showCustomChat() && config.CustomPublicChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2PublicChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3PublicChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case MODCHAT:
                 if (config.showCustomChat() && config.CustomModChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ModChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ModChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case PRIVATECHAT:
                 if (config.showCustomChat() && config.CustomPrivateChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2PrivateChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3PrivateChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case MODPRIVATECHAT:
                 if (config.showCustomChat() && config.CustomModPrivateChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ModPrivateChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ModPrivateChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_CHAT:
                 if (config.showCustomChat() && config.CustomClanChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_MESSAGE:
                 if (config.showCustomChat() && config.CustomClanMessageEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanMessageEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanMessageEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_GUEST_MESSAGE:
                 if (config.showCustomChat() && config.CustomClanGuestMessageEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanGuestMessageEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanGuestMessageEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_GIM_CHAT:
                 if (config.showCustomChat() && config.CustomClanGimChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanGimChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanGimChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_GIM_MESSAGE:
                 if (config.showCustomChat() && config.CustomClanGimMessageEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanGimMessageEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanGimMessageEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CLAN_GUEST_CHAT:
                 if (config.showCustomChat() && config.CustomClanGuestChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ClanGuestChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ClanGuestChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CHALREQ_CLANCHAT:
                 if (config.showCustomChat() && config.CustomChalreqClanChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ChalreqClanChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ChalreqClanChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case PRIVATECHATOUT:
                 if (config.showCustomChat() && config.CustomPrivateChatoutEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2PrivateChatoutEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3PrivateChatoutEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case FRIENDSCHAT:
                 if (config.showCustomChat() && config.CustomFriendsChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2FriendsChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3FriendsChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CHALREQ_FRIENDSCHAT:
                 if (config.showCustomChat() && config.CustomChalreqFriendsChatEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ChalreqFriendsChatEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ChalreqFriendsChatEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case FRIENDSCHATNOTIFICATION:
                 if (config.showCustomChat() && config.CustomFriendsChatNotificationEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2FriendsChatNotificationEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3FriendsChatNotificationEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case BROADCAST:
                 if (config.showCustomChat() && config.CustomBroadcastEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2BroadcastEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3BroadcastEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case GAMEMESSAGE:
                 if (config.showCustomChat() && config.CustomGameMessageEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2GameMessageEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3GameMessageEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case ENGINE:
                 if (config.showCustomChat() && config.CustomEngineEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2EngineEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3EngineEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case MESBOX:
                 if (config.showCustomChat() && config.CustomMesboxEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2MesboxEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3MesboxEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case NPC_EXAMINE:
                 if (config.showCustomChat() && config.CustomNpcExamineEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2NpcExamineEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3NpcExamineEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case NPC_SAY:
                 if (config.showCustomChat() && config.CustomNpcSayEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2NpcSayEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3NpcSayEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case SPAM:
                 if (config.showCustomChat() && config.CustomSpamEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2SpamEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3SpamEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case DIALOG:
                 if (config.showCustomChat() && config.CustomDialogEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2DialogEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3DialogEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case ITEM_EXAMINE:
                 if (config.showCustomChat() && config.CustomItemExamineEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ItemExamineEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ItemExamineEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case OBJECT_EXAMINE:
                 if (config.showCustomChat() && config.CustomObjectExamineEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ObjectExamineEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ObjectExamineEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case WELCOME:
                 if (config.showCustomChat() && config.CustomWelcomeEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2WelcomeEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3WelcomeEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case TRADE:
                 if (config.showCustomChat() && config.CustomTradeEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2TradeEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3TradeEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case TRADE_SENT:
                 if (config.showCustomChat() && config.CustomTradeSentEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2TradeSentEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3TradeSentEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case TRADEREQ:
                 if (config.showCustomChat() && config.CustomTradeReqEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2TradeReqEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3TradeReqEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CONSOLE:
                 if (config.showCustomChat() && config.CustomConsoleEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ConsoleEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ConsoleEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case MODAUTOTYPER:
                 if (config.showCustomChat() && config.CustomModAutoTyperEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ModAutoTyperEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ModAutoTyperEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case CHALREQ_TRADE:
                 if (config.showCustomChat() && config.CustomChalreqTradeEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2ChalreqTradeEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3ChalreqTradeEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case IGNORENOTIFICATION:
                 if (config.showCustomChat() && config.CustomIgnoreNotificationEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2IgnoreNotificationEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3IgnoreNotificationEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case FRIENDNOTIFICATION:
                 if (config.showCustomChat() && config.CustomFriendNotificationEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2FriendNotificationEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3FriendNotificationEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
             case UNKNOWN:
                 if (config.showCustomChat() && config.CustomUnknownEnabled()) {
-                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom2Chat() && config.Custom2UnknownEnabled()) {
-                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 if (config.showCustom3Chat() && config.Custom3UnknownEnabled()) {
-                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage);
+                    chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : cleanedName, cleanedMessage, eventName);
                 }
                 break;
         }
@@ -593,20 +592,21 @@ public class ChatPanelPlugin extends Plugin
             }
             int damageAmount = hitsplat.getAmount();
             String identifier = "Combat";
+            String eventName = "COMBAT";
             String timestamp = getCurrentTimestamp();
             String combatMessage = (defender == null) ? defenderName + " was hit for: " + damageAmount
                     : attackerName + " hit " + defenderName + " for: " + damageAmount;
             if (config.showCombatTab()) {
-            chatPanelSidebar.addCombatMessage(timestamp, (config.identifierC()) ? "Combat" : "", combatMessage);
+            chatPanelSidebar.addCombatMessage(timestamp, (config.identifierC()) ? "Combat" : "", combatMessage, eventName);
             }
             if (config.showCustomChat() && config.CustomCombatEnabled()) {
-                chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : "", combatMessage);
+                chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : "", combatMessage, eventName);
             }
             if (config.showCustom2Chat() && config.Custom2CombatEnabled()) {
-                chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : "", combatMessage);
+                chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : "", combatMessage, eventName);
             }
             if (config.showCustom3Chat() && config.Custom3CombatEnabled()) {
-                chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", combatMessage);
+                chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", combatMessage, eventName);
             }
         }}
     }
@@ -616,20 +616,21 @@ public class ChatPanelPlugin extends Plugin
         String actorName = actor.getName();
 
         String identifier = "Death";
+        String eventName = "DEATH";
         String timestamp = getCurrentTimestamp();
         String deathMessage = actorName + " died.";
 
         if (config.showCombatTab() && config.displayDeaths()) {
-            chatPanelSidebar.addCombatMessage(timestamp, (config.identifierC()) ? "Death" : "", deathMessage);
+            chatPanelSidebar.addCombatMessage(timestamp, (config.identifierC()) ? "Death" : "", deathMessage, eventName);
         }
         if (config.showCustomChat() && config.CustomCombatEnabled() && config.displayDeaths()) {
-            chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : "", deathMessage);
+            chatPanelSidebar.addCustomChatMessage(timestamp, config.identifier1() ? identifier : "", deathMessage, eventName);
         }
         if (config.showCustom2Chat() && config.Custom2CombatEnabled() && config.displayDeaths()) {
-            chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : "", deathMessage);
+            chatPanelSidebar.addCustom2ChatMessage(timestamp, config.identifier2() ? identifier : "", deathMessage, eventName);
         }
         if (config.showCustom3Chat() && config.Custom3CombatEnabled() && config.displayDeaths()) {
-            chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", deathMessage);
+            chatPanelSidebar.addCustom3ChatMessage(timestamp, config.identifier3() ? identifier : "", deathMessage, eventName);
         }
     }
 

@@ -776,6 +776,132 @@ public class ChatPanelSidebar extends PluginPanel {
         }
     }
 
+
+    private Color getColorForCase(String eventName, JTextPane chatArea) {
+        Color color;
+
+        switch (eventName) {
+            case "BROADCAST":
+                color = config.broadcastColor();
+                break;
+            case "CHALREQ_CLANCHAT":
+                color = config.chalReqClanColor();
+                break;
+            case "CHALREQ_FRIENDSCHAT":
+                color = config.chalReqFriendsColor();
+                break;
+            case "CHALREQ_TRADE":
+                color = config.chalReqTradeColor();
+                break;
+            case "CLAN_CHAT":
+                color = config.clanColor();
+                break;
+            case "CLAN_GUEST_CHAT":
+                color = config.clanGuestChatColor();
+                break;
+            case "CLAN_GUEST_MESSAGE":
+                color = config.clanGuestMessageColor();
+                break;
+            case "CLAN_GIM_CHAT":
+                color = config.clanGimChatColor();
+                break;
+            case "CLAN_GIM_MESSAGE":
+                color = config.clanGimMessageColor();
+                break;
+            case "CLAN_MESSAGE":
+                color = config.clanMessageColor();
+                break;
+            case "COMBAT":
+                color = config.combatColor();
+                break;
+            case "CONSOLE":
+                color = config.consoleColor();
+                break;
+            case "DEATH":
+                color = config.deathColor();
+                break;
+            case "DIALOG":
+                color = config.dialogColor();
+                break;
+            case "ENGINE":
+                color = config.engineColor();
+                break;
+            case "FRIENDSCHAT":
+                color = config.friendsColor();
+                break;
+            case "FRIENDSCHATNOTIFICATION":
+                color = config.friendsChatNotificationColor();
+                break;
+            case "FRIENDNOTIFICATION":
+                color = config.friendNotificationColor();
+                break;
+            case "GAMEMESSAGE":
+                color = config.gameMessageColor();
+                break;
+            case "IGNORENOTIFICATION":
+                color = config.ignoreNotificationColor();
+                break;
+            case "ITEM_EXAMINE":
+                color = config.itemExamineColor();
+                break;
+            case "MESBOX":
+                color = config.mesboxColor();
+                break;
+            case "MODAUTOTYPER":
+                color = config.modAutoTyperColor();
+                break;
+            case "MODCHAT":
+                color = config.modChatColor();
+                break;
+            case "MODPRIVATECHAT":
+                color = config.modPrivateChatColor();
+                break;
+            case "NPC_EXAMINE":
+                color = config.npcExamineColor();
+                break;
+            case "NPC_SAY":
+                color = config.npcSayColor();
+                break;
+            case "OBJECT_EXAMINE":
+                color = config.objectExamineColor();
+                break;
+            case "PRIVATECHAT":
+                color = config.privateColor();
+                break;
+            case "PRIVATECHATOUT":
+                color = config.privateChatOutColor();
+                break;
+            case "PUBLICCHAT":
+                color = config.publicColor();
+                break;
+            case "SPAM":
+                color = config.spamColor();
+                break;
+            case "TRADE":
+                color = config.tradeColor();
+                break;
+            case "TRADE_SENT":
+                color = config.tradeSentColor();
+                break;
+            case "TRADEREQ":
+                color = config.tradeReqColor();
+                break;
+            case "UNKNOWN":
+                color = config.unknownColor();
+                break;
+            case "WELCOME":
+                color = config.welcomeColor();
+                break;
+            default:
+                color = config.allChatColor();
+        }
+
+        if (color == null) {
+            return chatArea.getForeground();
+        }
+        return color;
+    }
+
     private void setColors() {
 		if (config.chatColorOffset()!= 0) {
 
@@ -934,55 +1060,56 @@ public class ChatPanelSidebar extends PluginPanel {
             setScrollPaneSize((JScrollPane) tabbedPane.getComponentAt(9));
         }
     }
-    public void addPublicChatMessage(String timestamp, String cleanedName, String message) {
-        addMessageToChatArea(publicChatArea, timestamp, cleanedName, message);
+    public void addPublicChatMessage(String timestamp, String cleanedName, String message, String eventName) {
+        addMessageToChatArea(publicChatArea, timestamp, cleanedName, message, eventName);
     }
 
-    public void addPrivateChatMessage(String timestamp, String name, String message) {
-        addMessageToChatArea(privateChatArea, timestamp, name, message);
+    public void addPrivateChatMessage(String timestamp, String name, String message, String eventName) {
+        addMessageToChatArea(privateChatArea, timestamp, name, message, eventName);
     }
 
-    public void addClanChatMessage(String timestamp, String name, String message) {
-        addMessageToChatArea(clanChatArea, timestamp, name, message);
+    public void addClanChatMessage(String timestamp, String name, String message, String eventName) {
+        addMessageToChatArea(clanChatArea, timestamp, name, message, eventName);
     }
 
-    public void addFriendsChatMessage(String timestamp, String name, String message) {
-        addMessageToChatArea(friendsChatArea, timestamp, name, message);
+    public void addFriendsChatMessage(String timestamp, String name, String message, String eventName) {
+        addMessageToChatArea(friendsChatArea, timestamp, name, message, eventName);
     }
 
-    public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+    public void addAllChatMessage(String timestamp, String cleanedName, String cleanedMessage, String eventName) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        addMessageToChatArea(allChatArea, timestamp, cleanedName, cleanedMessage);
+        addMessageToChatArea(allChatArea, timestamp, cleanedName, cleanedMessage, eventName);
     }
 
-    public void addCustomChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+    public void addCustomChatMessage(String timestamp, String cleanedName, String cleanedMessage, String eventName) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        addMessageToChatArea(customChatArea, timestamp, cleanedName, cleanedMessage);
+        addMessageToChatArea(customChatArea, timestamp, cleanedName, cleanedMessage, eventName);
     }
 
-    public void addCustom2ChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+    public void addCustom2ChatMessage(String timestamp, String cleanedName, String cleanedMessage, String eventName) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        addMessageToChatArea(customChatArea2, timestamp, cleanedName, cleanedMessage);
+        addMessageToChatArea(customChatArea2, timestamp, cleanedName, cleanedMessage, eventName);
     }
 
-    public void addCustom3ChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+    public void addCustom3ChatMessage(String timestamp, String cleanedName, String cleanedMessage, String eventName) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        addMessageToChatArea(customChatArea3, timestamp, cleanedName, cleanedMessage);
+        addMessageToChatArea(customChatArea3, timestamp, cleanedName, cleanedMessage, eventName);
     }
 
-    public void addGameChatMessage(String timestamp, String cleanedName, String cleanedMessage) {
+    public void addGameChatMessage(String timestamp, String cleanedName, String cleanedMessage, String eventName) {
         cleanedMessage = filterAllChatMessage(cleanedMessage);
-        addMessageToChatArea(gameChatArea, timestamp, cleanedName, cleanedMessage);
+        addMessageToChatArea(gameChatArea, timestamp, cleanedName, cleanedMessage, eventName);
     }
-    public void addCombatMessage(String timestamp, String cleanedName, String combatMessage) {
-        addMessageToChatArea(combatArea, timestamp, cleanedName, combatMessage);
+
+    public void addCombatMessage(String timestamp, String cleanedName, String combatMessage, String eventName) {
+        addMessageToChatArea(combatArea, timestamp, cleanedName, combatMessage, eventName);
     }
 
     private String filterAllChatMessage(String message) {
         return message.replaceAll("<col=[0-9a-fA-F]+>|</col>", "").replace("<br>", " ").replace("<colHIGHLIGHT>", "").replace("<colNORMAL>", "");
     }
 
-    private void addMessageToChatArea(JTextPane chatArea, String timestamp, String cleanedName, String message) {
+    private void addMessageToChatArea(JTextPane chatArea, String timestamp, String cleanedName, String message, String eventName) {
         SwingUtilities.invokeLater(() -> {
             StyledDocument doc = chatArea.getStyledDocument();
             JScrollPane scrollPane = (JScrollPane) chatArea.getParent().getParent();
@@ -993,7 +1120,7 @@ public class ChatPanelSidebar extends PluginPanel {
             int extraLines = config.lineSpacing();
             int offset = extraLines;
 
-            Color baseColor = chatArea.getForeground();
+            Color baseColor = getColorForCase(eventName, chatArea);
             int lineCount = doc.getDefaultRootElement().getElementCount();
             int effectiveLineCount = (lineCount + extraLines - 1) / (extraLines + 1);
             boolean isOddLine = (effectiveLineCount - 1) % 2!= 0;

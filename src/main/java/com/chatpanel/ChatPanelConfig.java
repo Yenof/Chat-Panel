@@ -176,6 +176,14 @@ public interface ChatPanelConfig extends Config {
     String tabSection = "tabselection";
 
     @ConfigSection(
+            name = "Message Type Coloring",
+            description = "Override colors by chat message type. Affects all Chat Tabs.",
+            closedByDefault = true,
+            position = 15
+    )
+    String eventSection = "events";
+    
+    @ConfigSection(
             name = "Extras",
             description = "Additional settings and tweaks",
             closedByDefault = true,
@@ -2744,5 +2752,416 @@ public interface ChatPanelConfig extends Config {
     default boolean Custom3WelcomeEnabled()
     {
         return false;
+    }
+
+
+    // Start of type based coloring entries.
+
+
+    @ConfigItem(
+            keyName = "broadcastColor",
+            name = "Broadcast",
+            description = "Configures the text color for broadcast messages.",
+            section = eventSection,
+            position = 1
+    )
+    default Color broadcastColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "chalReqClanColor",
+            name = "ChalReq Clan",
+            description = "Configures the text color for clan challenge requests.",
+            section = eventSection,
+            position = 2
+    )
+    default Color chalReqClanColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "chalReqFriendsColor",
+            name = "ChalReq Friends",
+            description = "Configures the text color for friends challenge requests.",
+            section = eventSection,
+            position = 3
+    )
+    default Color chalReqFriendsColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "chalReqTradeColor",
+            name = "ChalReq Trade",
+            description = "Configures the text color for trade challenge requests.",
+            section = eventSection,
+            position = 4
+    )
+    default Color chalReqTradeColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanColor",
+            name = "Clan Chat",
+            description = "Configures the text color for clan chat messages.",
+            section = eventSection,
+            position = 5
+    )
+    default Color clanColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanGuestChatColor",
+            name = "Clan Guest Chat",
+            description = "Configures the text color for clan guest chat messages.",
+            section = eventSection,
+            position = 6
+    )
+    default Color clanGuestChatColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanGuestMessageColor",
+            name = "Clan Guest Message",
+            description = "Configures the text color for clan guest messages.",
+            section = eventSection,
+            position = 7
+    )
+    default Color clanGuestMessageColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanGimChatColor",
+            name = "Clan GIM Chat",
+            description = "Configures the text color for clan GIM chat messages.",
+            section = eventSection,
+            position = 8
+    )
+    default Color clanGimChatColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanGimMessageColor",
+            name = "Clan GIM Message",
+            description = "Configures the text color for clan GIM messages.",
+            section = eventSection,
+            position = 9
+    )
+    default Color clanGimMessageColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "clanMessageColor",
+            name = "Clan Message",
+            description = "Configures the text color for clan messages.",
+            section = eventSection,
+            position = 10
+    )
+    default Color clanMessageColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "combatColor",
+            name = "Combat",
+            description = "Configures the text color for combat messages.",
+            section = eventSection,
+            position = 11
+    )
+    default Color combatColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "consoleColor",
+            name = "Console",
+            description = "Configures the text color for console messages.",
+            section = eventSection,
+            position = 12
+    )
+    default Color consoleColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "deatholor",
+            name = "Death",
+            description = "Configures the text color for death messages.",
+            section = eventSection,
+            position = 13
+    )
+    default Color deathColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "dialogColor",
+            name = "Dialog",
+            description = "Configures the text color for dialog messages.",
+            section = eventSection,
+            position = 13
+    )
+    default Color dialogColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "engineColor",
+            name = "Engine",
+            description = "Configures the text color for engine messages.",
+            section = eventSection,
+            position = 14
+    )
+    default Color engineColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "friendNotificationColor",
+            name = "Friend Notification",
+            description = "Configures the text color for friend notifications.",
+            section = eventSection,
+            position = 15
+    )
+    default Color friendNotificationColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "friendsColor",
+            name = "Friends Chat",
+            description = "Configures the text color for friends chat messages.",
+            section = eventSection,
+            position = 16
+    )
+    default Color friendsColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "friendsChatNotificationColor",
+            name = "Friends Chat Notification",
+            description = "Configures the text color for friends chat notifications.",
+            section = eventSection,
+            position = 16
+    )
+    default Color friendsChatNotificationColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "gameMessageColor",
+            name = "Game Message",
+            description = "Configures the text color for game messages.",
+            section = eventSection,
+            position = 17
+    )
+    default Color gameMessageColor() {
+        return null;
+    }
+
+        @ConfigItem(
+            keyName = "ignoreNotificationColor",
+            name = "Ignore Notification",
+            description = "Configures the text color for ignore notifications.",
+            section = eventSection,
+            position = 18
+    )
+    default Color ignoreNotificationColor() {
+            return null;
+    }
+
+    @ConfigItem(
+            keyName = "itemExamineColor",
+            name = "Item Examine",
+            description = "Configures the text color for item examine messages.",
+            section = eventSection,
+            position = 18
+    )
+    default Color itemExamineColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "mesBoxColor",
+            name = "Message Box",
+            description = "Configures the text color for message box messages.",
+            section = eventSection,
+            position = 19
+    )
+    default Color mesboxColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "modAutoTyperColor",
+            name = "Mod Auto-Typer",
+            description = "Configures the text color for mod auto-typer messages.",
+            section = eventSection,
+            position = 20
+    )
+    default Color modAutoTyperColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "modChatColor",
+            name = "Mod Chat",
+            description = "Configures the text color for ModChat messages.",
+            section = eventSection,
+            position = 21
+    )
+    default Color modChatColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "modPrivateChatColor",
+            name = "Mod Private Chat",
+            description = "Configures the text color for Mod private chat messages.",
+            section = eventSection,
+            position = 22
+    )
+    default Color modPrivateChatColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "npcExamineColor",
+            name = "NPC Examine",
+            description = "Configures the text color for NPC examine messages.",
+            section = eventSection,
+            position = 23
+    )
+    default Color npcExamineColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "npcSayColor",
+            name = "NPC Say",
+            description = "Configures the text color for NPC messages.",
+            section = eventSection,
+            position = 24
+    )
+    default Color npcSayColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "objectExamineColor",
+            name = "Object Examine",
+            description = "Configures the font color of object Examine text.",
+            section = eventSection,
+            position = 24
+    )
+    default Color objectExamineColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "privateColor",
+            name = "Private Chat",
+            description = "Configures the text color for incoming private chat messages.",
+            section = eventSection,
+            position = 25
+    )
+    default Color privateColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "privateChatOutColor",
+            name = "Private Chat Out",
+            description = "Configures the text color for outgoing private chat messages.",
+            section = eventSection,
+            position = 26
+    )
+    default Color privateChatOutColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "publicColor",
+            name = "Public Chat",
+            description = "Configures the text color for public chat messages.",
+            section = eventSection,
+            position = 27
+    )
+    default Color publicColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "spamColor",
+            name = "Spam Message",
+            description = "Configures the text color for spam messages.",
+            section = eventSection,
+            position = 28
+    )
+    default Color spamColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "tradeColor",
+            name = "Trade Message",
+            description = "Configures the text color for trade messages.",
+            section = eventSection,
+            position = 29
+    )
+    default Color tradeColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "tradeReqColor",
+            name = "Trade Request",
+            description = "Configures the text color for trade requests.",
+            section = eventSection,
+            position = 30
+    )
+    default Color tradeReqColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "tradeSentColor",
+            name = "Trade Sent Message",
+            description = "Configures the text color for trade sent messages.",
+            section = eventSection,
+            position = 31
+    )
+    default Color tradeSentColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "unknownColor",
+            name = "Unknown Message",
+            description = "Configures the text color for unknown messages, spooky.",
+            section = eventSection,
+            position = 32
+    )
+    default Color unknownColor() {
+        return null;
+    }
+
+    @ConfigItem(
+            keyName = "welcomeColor",
+            name = "Welcome Message",
+            description = "Configures the text color for the welcome message.",
+            section = eventSection,
+            position = 33
+    )
+    default Color welcomeColor() {
+        return null;
     }
 }
